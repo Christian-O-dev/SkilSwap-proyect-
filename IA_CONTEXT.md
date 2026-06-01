@@ -2,11 +2,11 @@
 
 # Contexto para IA - SkillSwap
 
-Este archivo está pensado para que herramientas como Codex, ChatGPT u otros asistentes de IA entiendan rápidamente el proyecto y puedan ayudar sin cambiar decisiones importantes.
+Este archivo es la guía principal para cualquier IA que trabaje en este repositorio: ChatGPT, Codex u otro asistente. Su objetivo es evitar confusión, cambios de stack innecesarios y decisiones que se salgan del alcance inicial.
 
 ---
 
-## Nombre del proyecto
+## 1. Nombre del proyecto
 
 ```text
 SkillSwap
@@ -14,11 +14,13 @@ SkillSwap
 
 ---
 
-## Descripción corta
+## 2. Descripción corta
 
-SkillSwap es una aplicación web para intercambiar habilidades técnicas entre usuarios. Funciona como una comunidad o marketplace P2P, pero sin pagos directos. Los usuarios publican habilidades que ofrecen y pueden solicitar intercambios con otros usuarios.
+SkillSwap es una aplicación web para intercambiar habilidades técnicas entre usuarios.
 
-Flujo principal:
+Funciona como una comunidad o marketplace P2P, pero sin pagos directos. Los usuarios publican habilidades que ofrecen y pueden solicitar intercambios con otros usuarios.
+
+Flujo principal del MVP:
 
 ```text
 Registro → Login → Crear habilidad → Ver habilidades → Solicitar intercambio
@@ -26,7 +28,7 @@ Registro → Login → Crear habilidad → Ver habilidades → Solicitar interca
 
 ---
 
-## Objetivo actual
+## 3. Objetivo actual
 
 Preparar una **primera entrega funcional para el viernes 5 de junio de 2026**.
 
@@ -34,24 +36,27 @@ La entrega no debe ser perfecta ni completa. Debe demostrar que el proyecto func
 
 ---
 
-## Stack oficial del proyecto
+## 4. Stack oficial
 
-La IA debe respetar este stack salvo instrucción contraria del usuario.
+La IA debe respetar este stack salvo instrucción explícita del usuario.
 
 ```text
 Frontend: React + Vite
 Backend: Node.js + Express
 Base de datos: MySQL
 Autenticación: JWT
-Contraseñas: bcrypt
+Hash de contraseñas: bcrypt
+Conexión MySQL: mysql2
 Peticiones HTTP: Axios
+Rutas frontend: React Router DOM
+Variables de entorno: dotenv
 Control de versiones: Git + GitHub
 Editor: VS Code
 ```
 
 ---
 
-## Importante: no cambiar el stack
+## 5. Decisiones que NO debe cambiar la IA
 
 No convertir el proyecto a:
 
@@ -67,28 +72,32 @@ No convertir el proyecto a:
 
 Docker puede proponerse como mejora posterior, pero no debe bloquear la primera entrega.
 
----
-
-## Prioridad de la primera entrega
-
-La IA debe priorizar esto:
-
-1. Backend funcional.
-2. Base de datos conectada.
-3. Registro de usuario.
-4. Login con JWT.
-5. Rutas protegidas.
-6. Crear habilidad.
-7. Listar habilidades.
-8. Crear solicitud de intercambio.
-9. Frontend conectado al backend.
-10. CSS básico presentable.
+Swagger también puede quedar como mejora posterior; no debe ser obligatorio para el MVP.
 
 ---
 
-## Fuera de alcance para la primera entrega
+## 6. Prioridad máxima para empezar el proyecto
 
-No implementar todavía salvo que el usuario lo pida explícitamente:
+La IA debe priorizar:
+
+1. Crear backend funcional.
+2. Crear conexión a MySQL.
+3. Crear base de datos mínima.
+4. Implementar registro.
+5. Implementar login con JWT.
+6. Crear middleware de autenticación.
+7. Implementar listado de habilidades.
+8. Implementar creación de habilidades.
+9. Implementar solicitud de intercambio.
+10. Crear frontend básico conectado al backend.
+11. Añadir CSS simple y presentable.
+12. Preparar demo.
+
+---
+
+## 7. Fuera de alcance para la primera entrega
+
+No implementar todavía salvo petición explícita del usuario:
 
 - Chat.
 - Valoraciones.
@@ -103,11 +112,17 @@ No implementar todavía salvo que el usuario lo pida explícitamente:
 - Despliegue en producción.
 - Pasarela de pago.
 
+Regla:
+
+```text
+No añadir funciones grandes antes de cerrar el flujo principal.
+```
+
 ---
 
-## Modelo relacional del proyecto
+## 8. Modelo relacional resumido
 
-Entidades principales:
+Entidades completas del proyecto:
 
 ```text
 roles
@@ -141,7 +156,7 @@ ratings
 
 ---
 
-## Tablas mínimas
+## 9. Tablas mínimas
 
 ## `roles`
 
@@ -158,6 +173,8 @@ Roles iniciales:
 admin
 user
 ```
+
+---
 
 ## `users`
 
@@ -177,7 +194,10 @@ Notas:
 - `email` debe ser único.
 - `username` debe ser único.
 - `password` debe guardar hash, no texto plano.
-- `role_id` por defecto debe apuntar a `user`.
+- `role_id` debe apuntar a `roles.id`.
+- El rol por defecto debe ser `user`.
+
+---
 
 ## `skills`
 
@@ -195,6 +215,8 @@ Notas:
 
 - Cada habilidad pertenece a un usuario.
 - `user_id` viene del usuario autenticado.
+
+---
 
 ## `requests`
 
@@ -224,7 +246,51 @@ Notas:
 
 ---
 
-## Reglas de negocio
+## `exchanges`
+
+Tabla para fase posterior.
+
+Campos:
+
+```text
+id
+request_id
+agreed_at
+status
+```
+
+Notas:
+
+- Una solicitud aceptada genera como máximo un intercambio.
+- `request_id` debe ser `UNIQUE`.
+
+---
+
+## `ratings`
+
+Tabla para fase posterior.
+
+Campos:
+
+```text
+id
+exchange_id
+rated_by
+rated_to
+score
+comment
+created_at
+```
+
+Notas:
+
+- Sirve para valorar intercambios completados.
+- Un usuario no puede valorarse a sí mismo.
+- Un usuario solo puede valorar una vez por intercambio.
+
+---
+
+## 10. Reglas de negocio obligatorias
 
 La IA debe respetar estas reglas:
 
@@ -232,6 +298,8 @@ La IA debe respetar estas reglas:
 - Un usuario debe estar logueado para crear habilidades.
 - Un usuario debe estar logueado para crear solicitudes.
 - Un usuario no puede solicitar una habilidad que él mismo publicó.
+- Una habilidad pertenece siempre a un usuario.
+- Una habilidad puede recibir muchas solicitudes.
 - Las contraseñas siempre se guardan con `bcrypt`.
 - Las rutas privadas se protegen con JWT.
 - El frontend debe enviar el token como `Bearer Token`.
@@ -241,7 +309,7 @@ La IA debe respetar estas reglas:
 
 ---
 
-## Endpoints mínimos esperados
+## 11. Endpoints mínimos esperados
 
 ## Autenticación
 
@@ -275,7 +343,7 @@ GET /api/requests
 
 ---
 
-## Estructura backend recomendada
+## 12. Estructura backend recomendada
 
 ```text
 backend/
@@ -306,10 +374,12 @@ backend/
 
 ---
 
-## Estructura frontend recomendada
+## 13. Estructura frontend recomendada
 
 ```text
 frontend/
+├── package.json
+├── .env
 └── src/
     ├── main.jsx
     ├── App.jsx
@@ -334,19 +404,19 @@ frontend/
 
 ---
 
-## Convenciones de código
+## 14. Convenciones de código
 
 ## Backend
 
-- Usar CommonJS o ES Modules de forma consistente. No mezclar sin necesidad.
-- Preferible CommonJS si el proyecto ya empezó con `require`.
+- Usar CommonJS o ES Modules de forma consistente.
+- No mezclar `require` e `import` sin necesidad.
 - Usar `async/await`.
 - Separar rutas, controladores y modelos.
-- Los controladores no deben tener SQL largo si puede ir en modelos.
-- Las respuestas deben ser JSON.
+- Evitar SQL largo dentro de controladores si puede ir en modelos.
+- Responder siempre en JSON.
 - Usar códigos HTTP correctos.
 
-Códigos esperados:
+Códigos recomendados:
 
 ```text
 200 OK
@@ -365,12 +435,12 @@ Códigos esperados:
 - Separar servicios de API.
 - No repetir URLs del backend en todas las páginas.
 - Guardar la URL base en `services/api.js`.
-- Manejar errores con mensajes simples para el usuario.
+- Manejar errores con mensajes simples.
 - Mantener CSS claro y sencillo.
 
 ---
 
-## Variables de entorno
+## 15. Variables de entorno
 
 Backend:
 
@@ -391,7 +461,7 @@ VITE_API_URL=http://localhost:3000/api
 
 ---
 
-## Cómo debe trabajar la IA en este repositorio
+## 16. Cómo debe trabajar la IA en este repositorio
 
 Cuando la IA proponga o modifique código, debe:
 
@@ -408,7 +478,7 @@ Cuando la IA proponga o modifique código, debe:
 
 ---
 
-## Prompts útiles para Codex
+## 17. Prompts útiles para Codex
 
 ## Crear backend base
 
@@ -448,7 +518,7 @@ Revisa el proyecto para detectar errores de imports, rutas rotas, problemas de C
 
 ---
 
-## Criterios de aceptación de la entrega
+## 18. Criterios de aceptación de la entrega
 
 La primera entrega se considera funcional si se puede demostrar:
 
@@ -466,7 +536,7 @@ La primera entrega se considera funcional si se puede demostrar:
 
 ---
 
-## Demo esperada
+## 19. Demo esperada
 
 El día de clase se debe poder mostrar:
 
@@ -481,12 +551,10 @@ El día de clase se debe poder mostrar:
 
 ---
 
-## Recordatorio para la IA
-
-La prioridad es terminar una versión pequeña pero funcional. No añadir características grandes antes de cerrar el flujo principal.
-
-Regla principal:
+## 20. Regla principal para la IA
 
 ```text
 Primero que funcione. Después se mejora.
 ```
+
+La prioridad es terminar una versión pequeña pero funcional. No añadir características grandes antes de cerrar el flujo principal.
