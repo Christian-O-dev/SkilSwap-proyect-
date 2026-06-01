@@ -2,13 +2,17 @@
 
 # Roadmap de SkillSwap
 
-## Objetivo general
-
-Construir SkillSwap, una plataforma web de trueque de habilidades técnicas donde los usuarios puedan registrarse, iniciar sesión, publicar habilidades y solicitar intercambios con otros usuarios.
+Este documento define el plan de trabajo del proyecto. Su objetivo es ordenar las tareas para comenzar el desarrollo sin desviarse del MVP.
 
 ---
 
-## Primera entrega funcional
+## 1. Objetivo general
+
+Construir **SkillSwap**, una plataforma web de trueque de habilidades técnicas donde los usuarios puedan registrarse, iniciar sesión, publicar habilidades y solicitar intercambios con otros usuarios.
+
+---
+
+## 2. Primera entrega funcional
 
 Fecha objetivo:
 
@@ -16,7 +20,7 @@ Fecha objetivo:
 Viernes 5 de junio de 2026
 ```
 
-Objetivo de la entrega:
+Objetivo:
 
 ```text
 Tener un MVP funcional que permita demostrar el flujo principal de la aplicación.
@@ -30,11 +34,9 @@ Registro → Login → Crear habilidad → Ver habilidades → Solicitar interca
 
 ---
 
-## Estado de prioridades
+## 3. Alcance del MVP
 
-## Prioridad alta
-
-Estas tareas son necesarias para la primera entrega.
+## Incluido en la primera entrega
 
 - Backend base con Express.
 - Conexión a MySQL.
@@ -42,6 +44,7 @@ Estas tareas son necesarias para la primera entrega.
 - Registro de usuario.
 - Login con JWT.
 - Middleware de autenticación.
+- Rutas protegidas.
 - Listado de habilidades.
 - Creación de habilidades.
 - Creación de solicitudes de intercambio.
@@ -49,13 +52,43 @@ Estas tareas son necesarias para la primera entrega.
 - Pantallas de login, registro, dashboard y habilidades.
 - Conexión frontend-backend con Axios.
 - CSS básico.
-- README o instrucciones de ejecución.
+- Instrucciones de ejecución.
+
+## No incluido en la primera entrega
+
+- Chat.
+- Valoraciones.
+- Panel avanzado de administrador.
+- Notificaciones.
+- Recuperación de contraseña.
+- Subida de imágenes.
+- Swagger completo obligatorio.
+- Docker obligatorio.
+- Despliegue en producción.
+- Tests automáticos avanzados.
+
+---
+
+## 4. Prioridades
+
+## Prioridad alta
+
+Estas tareas son necesarias para la primera entrega.
+
+- Backend funcional.
+- Base de datos conectada.
+- Registro y login.
+- Token JWT.
+- CRUD mínimo de habilidades: listar y crear.
+- Solicitudes de intercambio.
+- Frontend conectado al backend.
+- Demo funcionando.
 
 ## Prioridad media
 
-Estas tareas ayudan a mejorar la entrega, pero no deben bloquear el MVP.
+Estas tareas ayudan, pero no deben bloquear el MVP.
 
-- Detalle de habilidad.
+- Ver detalle de habilidad.
 - Ver solicitudes del usuario.
 - Editar habilidad.
 - Eliminar habilidad.
@@ -67,28 +100,19 @@ Estas tareas ayudan a mejorar la entrega, pero no deben bloquear el MVP.
 
 ## Prioridad baja
 
-Estas tareas quedan para después.
+Estas tareas quedan para fases posteriores.
 
 - Chat.
 - Valoraciones.
 - Panel de administrador.
-- Notificaciones.
-- Recuperación de contraseña.
-- Subida de imágenes.
 - Swagger completo.
 - Docker.
-- Despliegue en producción.
-- Tests automáticos avanzados.
+- Deploy.
+- Tests avanzados.
 
 ---
 
-## Fase 0 - Documentación y enfoque
-
-Estado recomendado:
-
-```text
-En progreso
-```
+## 5. Fase 0 - Documentación y enfoque
 
 Objetivo:
 
@@ -96,25 +120,22 @@ Alinear el proyecto con una primera entrega realista y evitar desviarse hacia fu
 
 Tareas:
 
-- [ ] Revisar `modelo_relacional_completo.md`.
-- [ ] Revisar `plan_entrega1.md`.
-- [ ] Revisar `practica-2-arquitectura-proyecto.md`.
-- [ ] Revisar `ARCHITECTURE.md`.
-- [ ] Revisar `IA_CONTEXT.md`.
-- [ ] Revisar `ROADMAP.md`.
-- [ ] Confirmar stack oficial: React + Vite, Node.js + Express y MySQL.
-- [ ] Confirmar alcance del viernes.
-- [ ] Subir documentación a GitHub.
+- [x] Definir arquitectura del proyecto.
+- [x] Definir contexto para IA.
+- [x] Definir roadmap.
+- [x] Confirmar stack oficial: React + Vite, Node.js + Express y MySQL.
+- [x] Confirmar alcance del viernes.
+- [ ] Subir documentación final a GitHub.
 
 Resultado esperado:
 
 ```text
-La IA y los desarrolladores tienen contexto claro para trabajar sin cambiar el rumbo del proyecto.
+La IA y el desarrollador tienen contexto claro para trabajar sin cambiar el rumbo del proyecto.
 ```
 
 ---
 
-## Fase 1 - Preparación del proyecto
+## 6. Fase 1 - Preparación del proyecto
 
 Fecha recomendada:
 
@@ -150,6 +171,17 @@ npm install express mysql2 dotenv cors bcrypt jsonwebtoken
 npm install -D nodemon
 ```
 
+En `backend/package.json`, configurar scripts:
+
+```json
+{
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
+  }
+}
+```
+
 Comandos frontend:
 
 ```bash
@@ -167,7 +199,7 @@ Backend y frontend arrancan sin errores.
 
 ---
 
-## Fase 2 - Base de datos
+## 7. Fase 2 - Base de datos
 
 Fecha recomendada:
 
@@ -215,7 +247,7 @@ La base de datos existe y el backend puede conectarse a MySQL.
 
 ---
 
-## Fase 3 - Backend base
+## 8. Fase 3 - Backend base
 
 Fecha recomendada:
 
@@ -246,7 +278,7 @@ La API responde correctamente y está lista para añadir endpoints.
 
 ---
 
-## Fase 4 - Autenticación
+## 9. Fase 4 - Autenticación
 
 Fecha recomendada:
 
@@ -266,6 +298,7 @@ Tareas:
 - [ ] Implementar registro.
 - [ ] Hashear contraseña con `bcrypt`.
 - [ ] Validar email único.
+- [ ] Validar username único.
 - [ ] Implementar login.
 - [ ] Comparar contraseña con `bcrypt.compare`.
 - [ ] Generar JWT.
@@ -288,7 +321,7 @@ El usuario puede registrarse, iniciar sesión y recibir un token JWT.
 
 ---
 
-## Fase 5 - Habilidades
+## 10. Fase 5 - Habilidades
 
 Fecha recomendada:
 
@@ -329,7 +362,7 @@ Un usuario logueado puede crear habilidades y cualquier usuario puede ver el lis
 
 ---
 
-## Fase 6 - Solicitudes de intercambio
+## 11. Fase 6 - Solicitudes de intercambio
 
 Fecha recomendada:
 
@@ -369,7 +402,7 @@ Un usuario logueado puede solicitar una habilidad publicada por otro usuario.
 
 ---
 
-## Fase 7 - Frontend base
+## 12. Fase 7 - Frontend base
 
 Fecha recomendada:
 
@@ -404,7 +437,7 @@ El frontend tiene las pantallas principales creadas y puede navegar entre ellas.
 
 ---
 
-## Fase 8 - Conexión frontend-backend
+## 13. Fase 8 - Conexión frontend-backend
 
 Fecha recomendada:
 
@@ -436,7 +469,7 @@ El usuario puede usar el flujo principal desde la interfaz web.
 
 ---
 
-## Fase 9 - Diseño básico
+## 14. Fase 9 - Diseño básico
 
 Fecha recomendada:
 
@@ -467,7 +500,7 @@ La aplicación se ve limpia, clara y fácil de explicar.
 
 ---
 
-## Fase 10 - Pruebas finales
+## 15. Fase 10 - Pruebas finales
 
 Fecha recomendada:
 
@@ -495,7 +528,7 @@ Checklist:
 - [ ] No hay errores de CORS.
 - [ ] No hay imports rotos.
 - [ ] No hay rutas rotas.
-- [ ] El README explica cómo ejecutar el proyecto.
+- [ ] El README o documentación explica cómo ejecutar el proyecto.
 - [ ] Todo está subido a GitHub.
 
 Resultado esperado:
@@ -506,7 +539,7 @@ El proyecto está listo para presentarse.
 
 ---
 
-## Fase 11 - Demo de clase
+## 16. Demo de clase
 
 Fecha:
 
@@ -528,7 +561,7 @@ Guion recomendado:
 
 ---
 
-## Funciones para después de la primera entrega
+## 17. Funciones para después de la primera entrega
 
 ## Fase posterior 1 - Mejoras de habilidades
 
@@ -575,7 +608,7 @@ Guion recomendado:
 
 ---
 
-## Regla principal del roadmap
+## 18. Regla principal del roadmap
 
 ```text
 Primero cerrar el MVP. Después ampliar.
