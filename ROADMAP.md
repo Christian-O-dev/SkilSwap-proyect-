@@ -125,7 +125,7 @@ Tareas:
 - [x] Definir roadmap.
 - [x] Confirmar stack oficial: React + Vite, Node.js + Express y MySQL.
 - [x] Confirmar alcance del viernes.
-- [ ] Subir documentación final a GitHub.
+- [x] Subir documentación final a GitHub.
 
 Resultado esperado:
 
