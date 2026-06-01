@@ -2,73 +2,91 @@
 
 # Arquitectura de SkillSwap
 
-Este documento es la referencia tÃ©cnica principal del proyecto. AquÃ­ se define quÃ© es SkillSwap, quÃ© arquitectura usa, cÃ³mo se organiza el cÃ³digo, cuÃ¡l es el modelo de datos y quÃ© API mÃ­nima debe existir para comenzar el desarrollo.
+Este documento es la referencia técnica principal del proyecto. Define qué es SkillSwap, qué arquitectura usa, cómo se organiza el código, qué tecnologías forman parte del stack oficial y qué estructura debe seguir el frontend, backend y base de datos.
 
 ---
 
 ## 1. Resumen del proyecto
 
-**SkillSwap** es una aplicaciÃ³n web de trueque de habilidades tÃ©cnicas.
+**SkillSwap** es una aplicación web de trueque de habilidades técnicas.
 
 La idea principal es que los usuarios puedan:
 
 1. Registrarse.
-2. Iniciar sesiÃ³n.
+2. Iniciar sesión.
 3. Publicar habilidades que saben hacer.
 4. Ver habilidades publicadas por otros usuarios.
 5. Solicitar un intercambio de habilidades.
+6. Aceptar o rechazar solicitudes.
+7. Finalizar intercambios.
+8. Valorar a otros usuarios en la fase final.
 
 Ejemplo:
 
-- Un usuario ofrece enseÃ±ar HTML y CSS.
-- Otro usuario ofrece enseÃ±ar JavaScript.
+- Un usuario ofrece enseñar HTML y CSS.
+- Otro usuario ofrece enseñar JavaScript.
 - Ambos pueden acordar un intercambio de conocimientos sin pago directo.
 
-Flujo mÃ­nimo del MVP:
+Flujo mínimo del MVP:
 
 ```text
-Registro â†’ Login â†’ Crear habilidad â†’ Ver habilidades â†’ Solicitar intercambio
+Registro → Login → Crear habilidad → Ver habilidades → Solicitar intercambio
+```
+
+Flujo esperado para entrega final:
+
+```text
+Registro → Login → Crear habilidad → Solicitar intercambio → Aceptar solicitud → Completar intercambio → Valorar usuario
 ```
 
 ---
 
-## 2. Stack tecnolÃ³gico oficial
+## 2. Stack tecnológico oficial
 
-| Parte | TecnologÃ­a |
+| Parte | Tecnología |
 |---|---|
 | Frontend | React + Vite |
+| Estilos | Tailwind CSS |
+| Componentes UI | shadcn/ui |
+| Iconos | Lucide React |
 | Backend | Node.js + Express |
 | Base de datos | MySQL |
-| AutenticaciÃ³n | JWT |
-| Hash de contraseÃ±as | bcrypt |
-| ConexiÃ³n MySQL | mysql2 |
+| Autenticación | JWT |
+| Hash de contraseñas | bcrypt |
+| Conexión MySQL | mysql2 |
 | Peticiones HTTP | Axios |
 | Rutas frontend | React Router DOM |
 | Variables de entorno | dotenv |
 | Editor recomendado | VS Code |
 | Control de versiones | Git + GitHub |
 
-El stack oficial para este proyecto es **React + Vite, Node.js + Express y MySQL**.
+El stack oficial para este proyecto es:
+
+```text
+React + Vite + Tailwind CSS + shadcn/ui + Lucide React
+Node.js + Express
+MySQL
+```
 
 No cambiar a PHP, Laravel, MongoDB, Firebase, Next.js, NestJS o Docker obligatorio salvo que el usuario lo pida expresamente.
 
 ---
 
-## 3. Tipo de arquitectura
+## 3. Arquitectura general
 
 SkillSwap usa una arquitectura **cliente-servidor de 3 capas**:
 
 ```text
 Usuario
-  â†“
-Frontend React + Vite
-  â†“ HTTP / API REST
+  ↓
+Frontend React + Vite + Tailwind + shadcn/ui + Lucide React
+  ↓ HTTP / API REST
 Backend Node.js + Express
-  â†“ SQL
+  ↓ SQL
 Base de datos MySQL
 ```
 
-TambiÃ©n puede considerarse una **SPA** porque React permite cambiar de vistas sin recargar toda la pÃ¡gina.
+También puede considerarse una **SPA** porque React permite cambiar de vistas sin recargar toda la página.
 
 ---
 
@@ -77,6 +95,7 @@ TambiÃ©n puede considerarse una **SPA** porque React permite cambiar de vistas
 ```mermaid
 flowchart LR
     U[Usuario] --> F[Frontend React + Vite]
+    F --> UI[Tailwind CSS + shadcn/ui + Lucide React]
     F --> API[Backend Node.js + Express]
     API --> DB[(MySQL)]
     DB --> API
@@ -93,40 +112,47 @@ El frontend es la parte visual que utiliza el usuario desde el navegador.
 
 Responsabilidades:
 
-- Mostrar pÃ¡ginas.
+- Mostrar páginas.
 - Gestionar formularios.
 - Enviar peticiones HTTP al backend.
 - Guardar el token JWT en `localStorage`.
-- AÃ±adir el token a las peticiones protegidas.
-- Mostrar mensajes de error y Ã©xito.
-- Permitir registro, login, publicaciÃ³n de habilidades y solicitudes.
+- Añadir el token a las peticiones protegidas.
+- Mostrar mensajes de error y éxito.
+- Permitir registro, login, publicación de habilidades y solicitudes.
+- Usar Tailwind CSS para layout, espaciado, colores y responsive.
+- Usar shadcn/ui para componentes visuales reutilizables.
+- Usar Lucide React para iconos claros y consistentes.
 
-TecnologÃ­as principales:
+Tecnologías principales:
 
 - React.
 - Vite.
+- Tailwind CSS.
+- shadcn/ui.
+- Lucide React.
 - Axios.
 - React Router DOM.
-- CSS.
 
 ## Backend
 
-El backend contiene la lÃ³gica de negocio y protege los datos.
+El backend contiene la lógica de negocio y protege los datos.
 
 Responsabilidades:
 
 - Registrar usuarios.
-- Iniciar sesiÃ³n.
-- Cifrar contraseÃ±as con `bcrypt`.
+- Iniciar sesión.
+- Cifrar contraseñas con `bcrypt`.
 - Generar tokens JWT.
 - Verificar tokens JWT.
 - Proteger rutas privadas.
 - Conectar con MySQL.
-- Crear y listar habilidades.
-- Crear solicitudes de intercambio.
+- Crear, listar, editar y eliminar habilidades.
+- Crear, aceptar y rechazar solicitudes de intercambio.
+- Crear intercambios aceptados.
+- Registrar valoraciones en la fase final.
 - Aplicar reglas de negocio.
 
-TecnologÃ­as principales:
+Tecnologías principales:
 
 - Node.js.
 - Express.
@@ -138,7 +164,7 @@ TecnologÃ­as principales:
 
 ## Base de datos
 
-La base de datos guarda la informaciÃ³n permanente.
+La base de datos guarda la información permanente.
 
 Motor:
 
@@ -158,214 +184,345 @@ skillswap_db
 
 ```text
 SkillSwap/
-â”œâ”€â”€ backend/
-â”‚   â”œâ”€â”€ package.json
-â”‚   â”œâ”€â”€ .env
-â”‚   â””â”€â”€ src/
-â”‚       â”œâ”€â”€ app.js
-â”‚       â”œâ”€â”€ server.js
-â”‚       â”œâ”€â”€ routes/
-â”‚       â”‚   â”œâ”€â”€ auth.routes.js
-â”‚       â”‚   â”œâ”€â”€ users.routes.js
-â”‚       â”‚   â”œâ”€â”€ skills.routes.js
-â”‚       â”‚   â””â”€â”€ requests.routes.js
-â”‚       â”œâ”€â”€ controllers/
-â”‚       â”‚   â”œâ”€â”€ auth.controller.js
-â”‚       â”‚   â”œâ”€â”€ users.controller.js
-â”‚       â”‚   â”œâ”€â”€ skills.controller.js
-â”‚       â”‚   â””â”€â”€ requests.controller.js
-â”‚       â”œâ”€â”€ models/
-â”‚       â”‚   â”œâ”€â”€ user.model.js
-â”‚       â”‚   â”œâ”€â”€ skill.model.js
-â”‚       â”‚   â””â”€â”€ request.model.js
-â”‚       â”œâ”€â”€ middleware/
-â”‚       â”‚   â””â”€â”€ auth.middleware.js
-â”‚       â””â”€â”€ config/
-â”‚           â””â”€â”€ db.js
-â”‚
-â”œâ”€â”€ frontend/
-â”‚   â”œâ”€â”€ package.json
-â”‚   â”œâ”€â”€ .env
-â”‚   â””â”€â”€ src/
-â”‚       â”œâ”€â”€ main.jsx
-â”‚       â”œâ”€â”€ App.jsx
-â”‚       â”œâ”€â”€ pages/
-â”‚       â”‚   â”œâ”€â”€ LoginPage.jsx
-â”‚       â”‚   â”œâ”€â”€ RegisterPage.jsx
-â”‚       â”‚   â”œâ”€â”€ DashboardPage.jsx
-â”‚       â”‚   â””â”€â”€ SkillsPage.jsx
-â”‚       â”œâ”€â”€ components/
-â”‚       â”‚   â”œâ”€â”€ Navbar.jsx
-â”‚       â”‚   â””â”€â”€ SkillCard.jsx
-â”‚       â”œâ”€â”€ services/
-â”‚       â”‚   â”œâ”€â”€ api.js
-â”‚       â”‚   â”œâ”€â”€ authService.js
-â”‚       â”‚   â”œâ”€â”€ skillsService.js
-â”‚       â”‚   â””â”€â”€ requestsService.js
-â”‚       â”œâ”€â”€ context/
-â”‚       â”‚   â””â”€â”€ AuthContext.jsx
-â”‚       â””â”€â”€ styles/
-â”‚           â””â”€â”€ global.css
-â”‚
-â”œâ”€â”€ database/
-â”‚   â””â”€â”€ skillswap.sql
-â”‚
-â”œâ”€â”€ ARCHITECTURE.md
-â”œâ”€â”€ IA_CONTEXT.md
-â””â”€â”€ ROADMAP.md
+├── backend/
+│   ├── package.json
+│   ├── .env
+│   └── src/
+│       ├── app.js
+│       ├── server.js
+│       ├── routes/
+│       │   ├── auth.routes.js
+│       │   ├── users.routes.js
+│       │   ├── skills.routes.js
+│       │   ├── requests.routes.js
+│       │   ├── exchanges.routes.js
+│       │   └── ratings.routes.js
+│       ├── controllers/
+│       │   ├── auth.controller.js
+│       │   ├── users.controller.js
+│       │   ├── skills.controller.js
+│       │   ├── requests.controller.js
+│       │   ├── exchanges.controller.js
+│       │   └── ratings.controller.js
+│       ├── models/
+│       │   ├── user.model.js
+│       │   ├── skill.model.js
+│       │   ├── request.model.js
+│       │   ├── exchange.model.js
+│       │   └── rating.model.js
+│       ├── middleware/
+│       │   └── auth.middleware.js
+│       └── config/
+│           └── db.js
+│
+├── frontend/
+│   ├── package.json
+│   ├── .env
+│   ├── vite.config.js
+│   ├── jsconfig.json
+│   ├── components.json
+│   └── src/
+│       ├── main.jsx
+│       ├── App.jsx
+│       ├── index.css
+│       ├── pages/
+│       │   ├── HomePage.jsx
+│       │   ├── LoginPage.jsx
+│       │   ├── RegisterPage.jsx
+│       │   ├── DashboardPage.jsx
+│       │   ├── SkillsPage.jsx
+│       │   ├── SkillDetailPage.jsx
+│       │   ├── MyRequestsPage.jsx
+│       │   ├── ExchangesPage.jsx
+│       │   └── ProfilePage.jsx
+│       ├── components/
+│       │   ├── layout/
+│       │   │   └── Navbar.jsx
+│       │   ├── skills/
+│       │   │   ├── SkillCard.jsx
+│       │   │   └── SkillForm.jsx
+│       │   └── ui/
+│       │       └── componentes de shadcn/ui
+│       ├── services/
+│       │   ├── api.js
+│       │   ├── authService.js
+│       │   ├── skillsService.js
+│       │   ├── requestsService.js
+│       │   ├── exchangesService.js
+│       │   └── ratingsService.js
+│       ├── context/
+│       │   └── AuthContext.jsx
+│       ├── lib/
+│       │   └── utils.js
+│       └── styles/
+│           └── opcional si se necesitan estilos separados
+│
+├── database/
+│   └── skillswap.sql
+│
+└── docs/
+    ├── ARCHITECTURE.md
+    ├── IA_CONTEXT.md
+    └── ROADMAP.md
 ```
 
 ---
 
-## 7. Backend: detalle de carpetas
+## 7. Instalación del stack visual del frontend
 
-### `backend/src/app.js`
+Estos pasos se ejecutan dentro de la carpeta `frontend`.
 
-Configura Express:
-
-- `express.json()`.
-- `cors()`.
-- Rutas principales.
-- Ruta de prueba `/api/health`.
-- Manejo bÃ¡sico de errores.
-
-### `backend/src/server.js`
-
-Arranca el servidor.
-
-Puerto recomendado:
-
-```text
-3000
+```bash
+cd frontend
 ```
 
-### `backend/src/config/db.js`
+### 7.1 Instalar Tailwind CSS con Vite
 
-Crea la conexiÃ³n a MySQL usando `mysql2/promise`.
-
-Debe leer las variables desde `.env`.
-
-### `backend/src/routes`
-
-Define las rutas HTTP.
-
-Archivos mÃ­nimos:
-
-- `auth.routes.js`
-- `users.routes.js`
-- `skills.routes.js`
-- `requests.routes.js`
-
-### `backend/src/controllers`
-
-Contiene la lÃ³gica de cada endpoint:
-
-- Validar datos recibidos.
-- Llamar al modelo correspondiente.
-- Aplicar reglas de negocio.
-- Devolver respuesta JSON.
-
-### `backend/src/models`
-
-Contiene las consultas SQL.
-
-Regla obligatoria:
-
-```text
-Usar consultas preparadas. No concatenar SQL con datos del usuario.
+```bash
+npm install tailwindcss @tailwindcss/vite
 ```
 
-### `backend/src/middleware`
+Actualizar `frontend/vite.config.js`:
 
-Contiene middlewares.
+```js
+import { defineConfig } from "vite"
+import react from "@vitejs/plugin-react"
+import tailwindcss from "@tailwindcss/vite"
+import path from "path"
 
-El principal es:
-
-```text
-auth.middleware.js
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+})
 ```
 
-Sirve para verificar JWT y proteger rutas privadas.
+Actualizar `frontend/src/index.css`:
+
+```css
+@import "tailwindcss";
+```
+
+### 7.2 Configurar alias `@`
+
+Crear `frontend/jsconfig.json` si el proyecto usa JavaScript:
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+```
+
+Instalar tipos de Node para que Vite resuelva `path` correctamente:
+
+```bash
+npm install -D @types/node
+```
+
+### 7.3 Instalar shadcn/ui
+
+Inicializar shadcn/ui:
+
+```bash
+npx shadcn@latest init
+```
+
+Opciones recomendadas para este proyecto:
+
+```text
+Style: New York o Default
+Base color: Neutral o Slate
+CSS file: src/index.css
+Components: src/components/ui
+Utils: src/lib/utils.js
+React Server Components: No
+```
+
+Componentes recomendados para comenzar:
+
+```bash
+npx shadcn@latest add button card input label textarea badge dialog dropdown-menu select avatar separator skeleton alert
+```
+
+Uso esperado:
+
+```jsx
+import { Button } from "@/components/ui/button"
+
+export function ExampleButton() {
+  return <Button>Publicar habilidad</Button>
+}
+```
+
+### 7.4 Instalar Lucide React
+
+```bash
+npm install lucide-react
+```
+
+Uso esperado:
+
+```jsx
+import { Search, Plus, User, LogOut } from "lucide-react"
+
+export function ExampleIcon() {
+  return <Search className="h-4 w-4" />
+}
+```
 
 ---
 
-## 8. Frontend: detalle de carpetas
+## 8. Uso recomendado de Tailwind CSS
 
-### `frontend/src/pages`
+Tailwind debe usarse para:
 
-Pantallas principales:
+- Layout general.
+- Espaciados.
+- Responsive.
+- Colores.
+- Bordes.
+- Sombras.
+- Estados `hover`, `focus`, `disabled`.
 
-- `LoginPage.jsx`
-- `RegisterPage.jsx`
-- `DashboardPage.jsx`
-- `SkillsPage.jsx`
+Ejemplo:
 
-### `frontend/src/components`
-
-Componentes reutilizables:
-
-- `Navbar.jsx`
-- `SkillCard.jsx`
-
-### `frontend/src/services`
-
-Archivos para llamar al backend:
-
-- `api.js`: instancia de Axios con URL base.
-- `authService.js`: registro, login y usuario actual.
-- `skillsService.js`: listar y crear habilidades.
-- `requestsService.js`: crear y listar solicitudes.
-
-### `frontend/src/context`
-
-Estado global de sesiÃ³n:
-
-- `AuthContext.jsx`
-
-### `frontend/src/styles`
-
-Estilos globales:
-
-- `global.css`
+```jsx
+<div className="mx-auto max-w-6xl px-4 py-8">
+  <h1 className="text-3xl font-bold tracking-tight">SkillSwap</h1>
+</div>
+```
 
 ---
 
-## 9. API REST mÃ­nima
+## 9. Uso recomendado de shadcn/ui
+
+shadcn/ui debe usarse para componentes base:
+
+- Botones.
+- Inputs.
+- Labels.
+- Cards.
+- Textareas.
+- Badges.
+- Dialogs.
+- Selects.
+- Skeletons.
+- Alerts.
+
+Ejemplo para tarjetas de habilidades:
+
+```jsx
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+
+export function SkillCard({ skill }) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{skill.title}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p>{skill.description}</p>
+        <Badge>{skill.status || "Disponible"}</Badge>
+      </CardContent>
+    </Card>
+  )
+}
+```
+
+---
+
+## 10. Uso recomendado de Lucide React
+
+Lucide React debe usarse para iconos de navegación, acciones y estados.
+
+Iconos sugeridos:
+
+| Uso | Icono |
+|---|---|
+| Buscar | `Search` |
+| Crear | `Plus` |
+| Usuario | `User` |
+| Logout | `LogOut` |
+| Habilidades | `BookOpen` |
+| Solicitudes | `Handshake` |
+| Intercambios | `RefreshCcw` |
+| Valoraciones | `Star` |
+| Editar | `Pencil` |
+| Eliminar | `Trash2` |
+
+Ejemplo:
+
+```jsx
+import { BookOpen } from "lucide-react"
+
+export function SkillsTitle() {
+  return (
+    <div className="flex items-center gap-2">
+      <BookOpen className="h-5 w-5" />
+      <h2 className="text-xl font-semibold">Habilidades</h2>
+    </div>
+  )
+}
+```
+
+---
+
+## 11. API REST mínima
 
 ## Auth
 
-| MÃ©todo | Endpoint | DescripciÃ³n | Protegida |
+| Método | Endpoint | Descripción | Protegida |
 |---|---|---|---|
 | POST | `/api/auth/register` | Registrar usuario | No |
-| POST | `/api/auth/login` | Iniciar sesiÃ³n y devolver JWT | No |
-| GET | `/api/users/me` | Obtener usuario actual | SÃ­ |
+| POST | `/api/auth/login` | Iniciar sesión y devolver JWT | No |
+| GET | `/api/users/me` | Obtener usuario actual | Sí |
 
 ## Skills
 
-| MÃ©todo | Endpoint | DescripciÃ³n | Protegida |
+| Método | Endpoint | Descripción | Protegida |
 |---|---|---|---|
 | GET | `/api/skills` | Listar habilidades | No |
 | GET | `/api/skills/:id` | Ver detalle de habilidad | No |
-| POST | `/api/skills` | Crear habilidad | SÃ­ |
-| PUT | `/api/skills/:id` | Editar habilidad propia | SÃ­, opcional |
-| DELETE | `/api/skills/:id` | Eliminar habilidad propia | SÃ­, opcional |
+| POST | `/api/skills` | Crear habilidad | Sí |
+| PUT | `/api/skills/:id` | Editar habilidad propia | Sí |
+| DELETE | `/api/skills/:id` | Eliminar habilidad propia | Sí |
 
 ## Requests
 
-| MÃ©todo | Endpoint | DescripciÃ³n | Protegida |
+| Método | Endpoint | Descripción | Protegida |
 |---|---|---|---|
-| POST | `/api/requests` | Crear solicitud de intercambio | SÃ­ |
-| GET | `/api/requests` | Ver solicitudes del usuario | SÃ­ |
+| POST | `/api/requests` | Crear solicitud de intercambio | Sí |
+| GET | `/api/requests` | Ver solicitudes del usuario | Sí |
+| PUT | `/api/requests/:id/accept` | Aceptar solicitud recibida | Sí |
+| PUT | `/api/requests/:id/reject` | Rechazar solicitud recibida | Sí |
 
-## Exchanges, opcional para fase posterior
+## Exchanges
 
-| MÃ©todo | Endpoint | DescripciÃ³n | Protegida |
+| Método | Endpoint | Descripción | Protegida |
 |---|---|---|---|
-| POST | `/api/exchanges` | Crear intercambio desde solicitud aceptada | SÃ­ |
+| GET | `/api/exchanges` | Ver intercambios del usuario | Sí |
+| POST | `/api/exchanges` | Crear intercambio desde solicitud aceptada | Sí |
+| PUT | `/api/exchanges/:id/complete` | Marcar intercambio como completado | Sí |
+
+## Ratings
+
+| Método | Endpoint | Descripción | Protegida |
+|---|---|---|---|
+| POST | `/api/ratings` | Valorar usuario después de intercambio | Sí |
+| GET | `/api/users/:id/ratings` | Ver valoraciones de usuario | No |
 
 ---
 
-## 10. Modelo relacional
+## 12. Modelo relacional
 
 Entidades completas del proyecto:
 
@@ -378,30 +535,20 @@ exchanges
 ratings
 ```
 
-Para la primera entrega son obligatorias:
+Para la entrega final deben estar implementadas:
 
 ```text
 roles
 users
 skills
 requests
-```
-
-Opcional si hay tiempo:
-
-```text
 exchanges
-```
-
-Para fase final:
-
-```text
 ratings
 ```
 
 ---
 
-## 11. Diagrama ER
+## 13. Diagrama ER
 
 ```mermaid
 erDiagram
@@ -464,220 +611,25 @@ erDiagram
 
 ---
 
-## 12. Tablas principales
+## 14. Reglas de negocio
 
-## `roles`
-
-```text
-id
-name
-```
-
-Roles iniciales:
-
-```text
-admin
-user
-```
-
-## `users`
-
-```text
-id
-username
-email
-password
-role_id
-created_at
-```
-
-Notas:
-
-- `username` debe ser Ãºnico.
-- `email` debe ser Ãºnico.
-- `password` guarda hash con `bcrypt`.
-- `role_id` apunta a `roles.id`.
-
-## `skills`
-
-```text
-id
-user_id
-title
-description
-created_at
-```
-
-Notas:
-
-- Cada habilidad pertenece a un usuario.
-- `user_id` viene del usuario autenticado.
-
-## `requests`
-
-```text
-id
-requester_id
-skill_id
-status
-created_at
-```
-
-Estados:
-
-```text
-open
-accepted
-rejected
-```
-
-Notas:
-
-- `requester_id` viene del usuario autenticado.
-- `skill_id` apunta a la habilidad solicitada.
-- Un usuario no puede solicitar su propia habilidad.
-
-## `exchanges`
-
-```text
-id
-request_id
-agreed_at
-status
-```
-
-Estados:
-
-```text
-pending
-completed
-cancelled
-```
-
-Notas:
-
-- Una `request` aceptada genera como mÃ¡ximo un `exchange`.
-- `exchanges.request_id` debe ser `UNIQUE`.
-
-## `ratings`
-
-```text
-id
-exchange_id
-rated_by
-rated_to
-score
-comment
-created_at
-```
-
-Notas:
-
-- Un intercambio puede tener varias valoraciones.
-- `rated_by` indica quiÃ©n valora.
-- `rated_to` indica quiÃ©n recibe la valoraciÃ³n.
-- Un usuario no puede valorarse a sÃ­ mismo.
-- Un usuario solo puede valorar una vez por intercambio.
-
----
-
-## 13. SQL mÃ­nimo para empezar
-
-```sql
-CREATE DATABASE IF NOT EXISTS skillswap_db
-CHARACTER SET utf8mb4
-COLLATE utf8mb4_unicode_ci;
-
-USE skillswap_db;
-
-CREATE TABLE roles (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(50) NOT NULL UNIQUE
-);
-
-CREATE TABLE users (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  username VARCHAR(100) NOT NULL UNIQUE,
-  email VARCHAR(150) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL,
-  role_id INT NOT NULL DEFAULT 2,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (role_id) REFERENCES roles(id)
-);
-
-CREATE TABLE skills (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  title VARCHAR(150) NOT NULL,
-  description TEXT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
-
-CREATE TABLE requests (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  requester_id INT NOT NULL,
-  skill_id INT NOT NULL,
-  status ENUM('open','accepted','rejected') DEFAULT 'open',
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (requester_id) REFERENCES users(id) ON DELETE CASCADE,
-  FOREIGN KEY (skill_id) REFERENCES skills(id) ON DELETE CASCADE
-);
-
-INSERT INTO roles (name) VALUES ('admin'), ('user');
-```
-
----
-
-## 14. SQL completo para fase posterior
-
-```sql
-CREATE TABLE exchanges (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  request_id INT NOT NULL UNIQUE,
-  agreed_at TIMESTAMP NULL,
-  status ENUM('pending','completed','cancelled') DEFAULT 'pending',
-  FOREIGN KEY (request_id) REFERENCES requests(id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE ratings (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  exchange_id INT NOT NULL,
-  rated_by INT NOT NULL,
-  rated_to INT NOT NULL,
-  score INT NOT NULL,
-  comment TEXT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (exchange_id) REFERENCES exchanges(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (rated_by) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (rated_to) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT check_score CHECK (score BETWEEN 1 AND 5),
-  CONSTRAINT check_rated_users CHECK (rated_by <> rated_to),
-  UNIQUE KEY uq_rating_exchange_user (exchange_id, rated_by)
-);
-```
-
----
-
-## 15. Reglas de negocio
-
-- Un usuario debe estar registrado para iniciar sesiÃ³n.
+- Un usuario debe estar registrado para iniciar sesión.
 - Un usuario debe estar logueado para crear habilidades.
 - Un usuario debe estar logueado para crear solicitudes.
-- Un usuario no puede solicitar una habilidad que Ã©l mismo publicÃ³.
+- Un usuario no puede solicitar una habilidad que él mismo publicó.
 - Una habilidad pertenece a un solo usuario.
 - Una habilidad puede recibir muchas solicitudes.
-- Una solicitud aceptada puede generar un Ãºnico intercambio.
-- Solo se crea un `exchange` cuando una `request` estÃ¡ aceptada.
-- Una valoraciÃ³n solo se puede registrar cuando un intercambio estÃ¡ completado.
-- Un usuario no puede valorarse a sÃ­ mismo.
+- Una solicitud aceptada puede generar un único intercambio.
+- Solo se crea un `exchange` cuando una `request` está aceptada.
+- Una valoración solo se puede registrar cuando un intercambio está completado.
+- Un usuario no puede valorarse a sí mismo.
 - Un usuario solo puede valorar una vez por cada intercambio.
 
 ---
 
-## 16. Seguridad mÃ­nima
+## 15. Seguridad mínima
 
-- Guardar contraseÃ±as con `bcrypt`.
+- Guardar contraseñas con `bcrypt`.
 - No devolver `password` en respuestas JSON.
 - Usar JWT en rutas privadas.
 - Enviar token como `Authorization: Bearer TOKEN`.
@@ -688,7 +640,7 @@ CREATE TABLE ratings (
 
 ---
 
-## 17. Variables de entorno
+## 16. Variables de entorno
 
 Backend:
 
@@ -709,7 +661,7 @@ VITE_API_URL=http://localhost:3000/api
 
 ---
 
-## 18. Puertos de desarrollo
+## 17. Puertos de desarrollo
 
 ```text
 Frontend: http://localhost:5173
@@ -719,12 +671,20 @@ MySQL:    localhost:3306
 
 ---
 
-## 19. Criterio tÃ©cnico principal
+## 18. Referencias oficiales del stack visual
 
-La arquitectura debe permitir empezar rÃ¡pido, mantener el cÃ³digo ordenado y ampliar el proyecto despuÃ©s sin rehacerlo desde cero.
+- Tailwind CSS con Vite: https://tailwindcss.com/docs/installation/using-vite
+- shadcn/ui con Vite: https://ui.shadcn.com/docs/installation/vite
+- Lucide React: https://lucide.dev/guide/react
+
+---
+
+## 19. Criterio técnico principal
+
+La arquitectura debe permitir empezar rápido, mantener el código ordenado y ampliar el proyecto después sin rehacerlo desde cero.
 
 Prioridad:
 
 ```text
-Primero MVP funcional. DespuÃ©s mejoras.
+Primero MVP funcional. Después entrega final completa.
 ```
