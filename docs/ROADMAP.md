@@ -8,7 +8,7 @@ Este documento define el plan de trabajo del proyecto. Su objetivo es ordenar la
 
 ## 1. Objetivo general
 
-Construir **SkillSwap**, una plataforma web de trueque de habilidades técnicas donde los usuarios puedan registrarse, iniciar sesión, publicar habilidades y solicitar intercambios con otros usuarios.
+Construir **SkillSwap**, una plataforma web de trueque de habilidades tÃ©cnicas donde los usuarios puedan registrarse, iniciar sesiÃ³n, publicar habilidades y solicitar intercambios con otros usuarios.
 
 ---
 
@@ -23,13 +23,13 @@ Viernes 5 de junio de 2026
 Objetivo:
 
 ```text
-Tener un MVP funcional que permita demostrar el flujo principal de la aplicación.
+Tener un MVP funcional que permita demostrar el flujo principal de la aplicaciÃ³n.
 ```
 
 Flujo principal:
 
 ```text
-Registro → Login → Crear habilidad → Ver habilidades → Solicitar intercambio
+Registro â†’ Login â†’ Crear habilidad â†’ Ver habilidades â†’ Solicitar intercambio
 ```
 
 ---
@@ -39,20 +39,20 @@ Registro → Login → Crear habilidad → Ver habilidades → Solicitar interca
 ## Incluido en la primera entrega
 
 - Backend base con Express.
-- Conexión a MySQL.
+- ConexiÃ³n a MySQL.
 - Script SQL de base de datos.
 - Registro de usuario.
 - Login con JWT.
-- Middleware de autenticación.
+- Middleware de autenticaciÃ³n.
 - Rutas protegidas.
 - Listado de habilidades.
-- Creación de habilidades.
-- Creación de solicitudes de intercambio.
+- CreaciÃ³n de habilidades.
+- CreaciÃ³n de solicitudes de intercambio.
 - Frontend React + Vite.
 - Pantallas de login, registro, dashboard y habilidades.
-- Conexión frontend-backend con Axios.
-- CSS básico.
-- Instrucciones de ejecución.
+- ConexiÃ³n frontend-backend con Axios.
+- CSS bÃ¡sico.
+- Instrucciones de ejecuciÃ³n.
 
 ## No incluido en la primera entrega
 
@@ -60,12 +60,12 @@ Registro → Login → Crear habilidad → Ver habilidades → Solicitar interca
 - Valoraciones.
 - Panel avanzado de administrador.
 - Notificaciones.
-- Recuperación de contraseña.
-- Subida de imágenes.
+- RecuperaciÃ³n de contraseÃ±a.
+- Subida de imÃ¡genes.
 - Swagger completo obligatorio.
 - Docker obligatorio.
-- Despliegue en producción.
-- Tests automáticos avanzados.
+- Despliegue en producciÃ³n.
+- Tests automÃ¡ticos avanzados.
 
 ---
 
@@ -79,7 +79,7 @@ Estas tareas son necesarias para la primera entrega.
 - Base de datos conectada.
 - Registro y login.
 - Token JWT.
-- CRUD mínimo de habilidades: listar y crear.
+- CRUD mÃ­nimo de habilidades: listar y crear.
 - Solicitudes de intercambio.
 - Frontend conectado al backend.
 - Demo funcionando.
@@ -94,7 +94,7 @@ Estas tareas ayudan, pero no deben bloquear el MVP.
 - Eliminar habilidad.
 - Mejorar validaciones.
 - Mejorar mensajes de error.
-- Mejorar diseño responsive.
+- Mejorar diseÃ±o responsive.
 - Documentar endpoints.
 - Preparar datos de prueba.
 
@@ -112,7 +112,7 @@ Estas tareas quedan para fases posteriores.
 
 ---
 
-## 5. Fase 0 - Documentación y enfoque
+## 5. Fase 0 - DocumentaciÃ³n y enfoque
 
 Objetivo:
 
@@ -125,7 +125,7 @@ Tareas:
 - [x] Definir roadmap.
 - [x] Confirmar stack oficial: React + Vite, Node.js + Express y MySQL.
 - [x] Confirmar alcance del viernes.
-- [x] Subir documentación final a GitHub.
+- [x] Subir documentaciÃ³n final a GitHub.
 
 Resultado esperado:
 
@@ -135,7 +135,7 @@ La IA y el desarrollador tienen contexto claro para trabajar sin cambiar el rumb
 
 ---
 
-## 6. Fase 1 - Preparación del proyecto
+## 6. Fase 1 - PreparaciÃ³n del proyecto
 
 Fecha recomendada:
 
@@ -209,7 +209,7 @@ Lunes 1 de junio o martes 2 de junio de 2026
 
 Objetivo:
 
-Crear la base de datos mínima para la primera entrega.
+Crear la base de datos mÃ­nima para la primera entrega.
 
 Tareas:
 
@@ -220,7 +220,7 @@ Tareas:
 - [ ] Crear tabla `skills`.
 - [ ] Crear tabla `requests`.
 - [ ] Insertar roles `admin` y `user`.
-- [ ] Probar conexión desde backend.
+- [ ] Probar conexiÃ³n desde backend.
 - [ ] Verificar tablas en MySQL.
 
 Tablas obligatorias:
@@ -273,12 +273,12 @@ Tareas:
 Resultado esperado:
 
 ```text
-La API responde correctamente y está lista para añadir endpoints.
+La API responde correctamente y estÃ¡ lista para aÃ±adir endpoints.
 ```
 
 ---
 
-## 9. Fase 4 - Autenticación
+## 9. Fase 4 - AutenticaciÃ³n
 
 Fecha recomendada:
 
@@ -296,11 +296,11 @@ Tareas:
 - [ ] Crear `auth.controller.js`.
 - [ ] Crear `user.model.js`.
 - [ ] Implementar registro.
-- [ ] Hashear contraseña con `bcrypt`.
-- [ ] Validar email único.
-- [ ] Validar username único.
+- [ ] Hashear contraseÃ±a con `bcrypt`.
+- [ ] Validar email Ãºnico.
+- [ ] Validar username Ãºnico.
 - [ ] Implementar login.
-- [ ] Comparar contraseña con `bcrypt.compare`.
+- [ ] Comparar contraseÃ±a con `bcrypt.compare`.
 - [ ] Generar JWT.
 - [ ] Crear `auth.middleware.js`.
 - [ ] Proteger ruta `/api/users/me`.
@@ -316,7 +316,7 @@ GET /api/users/me
 Resultado esperado:
 
 ```text
-El usuario puede registrarse, iniciar sesión y recibir un token JWT.
+El usuario puede registrarse, iniciar sesiÃ³n y recibir un token JWT.
 ```
 
 ---
@@ -326,7 +326,7 @@ El usuario puede registrarse, iniciar sesión y recibir un token JWT.
 Fecha recomendada:
 
 ```text
-Miércoles 3 de junio de 2026
+MiÃ©rcoles 3 de junio de 2026
 ```
 
 Objetivo:
@@ -343,7 +343,7 @@ Tareas:
 - [ ] Implementar `POST /api/skills`.
 - [ ] Proteger `POST /api/skills` con JWT.
 - [ ] Usar `req.user.id` como `user_id`.
-- [ ] Probar creación de habilidades.
+- [ ] Probar creaciÃ³n de habilidades.
 - [ ] Probar listado de habilidades.
 
 Endpoints:
@@ -367,7 +367,7 @@ Un usuario logueado puede crear habilidades y cualquier usuario puede ver el lis
 Fecha recomendada:
 
 ```text
-Miércoles 3 de junio o jueves 4 de junio de 2026
+MiÃ©rcoles 3 de junio o jueves 4 de junio de 2026
 ```
 
 Objetivo:
@@ -385,7 +385,7 @@ Tareas:
 - [ ] Validar que la habilidad exista.
 - [ ] Validar que el usuario no solicite su propia habilidad.
 - [ ] Guardar solicitud con estado `open`.
-- [ ] Probar creación de solicitudes.
+- [ ] Probar creaciÃ³n de solicitudes.
 
 Endpoints:
 
@@ -412,7 +412,7 @@ Jueves 4 de junio de 2026
 
 Objetivo:
 
-Crear la interfaz mínima funcional.
+Crear la interfaz mÃ­nima funcional.
 
 Tareas:
 
@@ -437,7 +437,7 @@ El frontend tiene las pantallas principales creadas y puede navegar entre ellas.
 
 ---
 
-## 13. Fase 8 - Conexión frontend-backend
+## 13. Fase 8 - ConexiÃ³n frontend-backend
 
 Fecha recomendada:
 
@@ -454,12 +454,12 @@ Tareas:
 - [ ] Conectar registro con `POST /api/auth/register`.
 - [ ] Conectar login con `POST /api/auth/login`.
 - [ ] Guardar token en `localStorage`.
-- [ ] Añadir token automáticamente con Axios.
+- [ ] AÃ±adir token automÃ¡ticamente con Axios.
 - [ ] Conectar listado de habilidades.
-- [ ] Conectar creación de habilidades.
+- [ ] Conectar creaciÃ³n de habilidades.
 - [ ] Conectar solicitud de intercambio.
-- [ ] Mostrar errores básicos.
-- [ ] Mostrar mensajes de éxito.
+- [ ] Mostrar errores bÃ¡sicos.
+- [ ] Mostrar mensajes de Ã©xito.
 
 Resultado esperado:
 
@@ -469,7 +469,7 @@ El usuario puede usar el flujo principal desde la interfaz web.
 
 ---
 
-## 14. Fase 9 - Diseño básico
+## 14. Fase 9 - DiseÃ±o bÃ¡sico
 
 Fecha recomendada:
 
@@ -479,23 +479,23 @@ Jueves 4 de junio o viernes 5 de junio de 2026
 
 Objetivo:
 
-Hacer que la aplicación se vea presentable para clase.
+Hacer que la aplicaciÃ³n se vea presentable para clase.
 
 Tareas:
 
 - [ ] Crear `global.css`.
-- [ ] Diseñar navbar.
-- [ ] Diseñar formularios.
-- [ ] Diseñar tarjetas de habilidades.
-- [ ] Diseñar botones.
-- [ ] Añadir layout responsive básico.
+- [ ] DiseÃ±ar navbar.
+- [ ] DiseÃ±ar formularios.
+- [ ] DiseÃ±ar tarjetas de habilidades.
+- [ ] DiseÃ±ar botones.
+- [ ] AÃ±adir layout responsive bÃ¡sico.
 - [ ] Evitar pantalla desordenada.
 - [ ] Revisar colores y espaciados.
 
 Resultado esperado:
 
 ```text
-La aplicación se ve limpia, clara y fácil de explicar.
+La aplicaciÃ³n se ve limpia, clara y fÃ¡cil de explicar.
 ```
 
 ---
@@ -516,7 +516,7 @@ Checklist:
 
 - [ ] Backend arranca con `npm run dev`.
 - [ ] Frontend arranca con `npm run dev`.
-- [ ] MySQL está activo.
+- [ ] MySQL estÃ¡ activo.
 - [ ] La base de datos existe.
 - [ ] El registro funciona.
 - [ ] El login funciona.
@@ -528,13 +528,13 @@ Checklist:
 - [ ] No hay errores de CORS.
 - [ ] No hay imports rotos.
 - [ ] No hay rutas rotas.
-- [ ] El README o documentación explica cómo ejecutar el proyecto.
-- [ ] Todo está subido a GitHub.
+- [ ] El README o documentaciÃ³n explica cÃ³mo ejecutar el proyecto.
+- [ ] Todo estÃ¡ subido a GitHub.
 
 Resultado esperado:
 
 ```text
-El proyecto está listo para presentarse.
+El proyecto estÃ¡ listo para presentarse.
 ```
 
 ---
@@ -549,28 +549,28 @@ Viernes 5 de junio de 2026
 
 Guion recomendado:
 
-1. Explicar qué es SkillSwap.
+1. Explicar quÃ© es SkillSwap.
 2. Explicar arquitectura: React, Express y MySQL.
-3. Enseñar registro.
-4. Enseñar login.
+3. EnseÃ±ar registro.
+4. EnseÃ±ar login.
 5. Crear una habilidad.
 6. Ver listado de habilidades.
 7. Solicitar intercambio.
-8. Enseñar la base de datos en MySQL.
-9. Explicar qué queda para la fase final.
+8. EnseÃ±ar la base de datos en MySQL.
+9. Explicar quÃ© queda para la fase final.
 
 ---
 
-## 17. Funciones para después de la primera entrega
+## 17. Funciones para despuÃ©s de la primera entrega
 
 ## Fase posterior 1 - Mejoras de habilidades
 
 - [ ] Editar habilidad.
 - [ ] Eliminar habilidad.
 - [ ] Filtrar habilidades por texto.
-- [ ] Añadir categoría.
-- [ ] Añadir nivel.
-- [ ] Añadir fecha formateada.
+- [ ] AÃ±adir categorÃ­a.
+- [ ] AÃ±adir nivel.
+- [ ] AÃ±adir fecha formateada.
 
 ## Fase posterior 2 - Intercambios
 
@@ -583,12 +583,12 @@ Guion recomendado:
 ## Fase posterior 3 - Valoraciones
 
 - [ ] Crear tabla `ratings`.
-- [ ] Valorar usuario después de intercambio.
-- [ ] Mostrar puntuación media.
+- [ ] Valorar usuario despuÃ©s de intercambio.
+- [ ] Mostrar puntuaciÃ³n media.
 - [ ] Evitar valoraciones duplicadas.
-- [ ] Evitar que un usuario se valore a sí mismo.
+- [ ] Evitar que un usuario se valore a sÃ­ mismo.
 
-## Fase posterior 4 - Administración
+## Fase posterior 4 - AdministraciÃ³n
 
 - [ ] Panel de administrador.
 - [ ] Listar usuarios.
@@ -596,13 +596,13 @@ Guion recomendado:
 - [ ] Revisar solicitudes.
 - [ ] Bloquear usuarios.
 
-## Fase posterior 5 - Profesionalización
+## Fase posterior 5 - ProfesionalizaciÃ³n
 
 - [ ] Swagger.
 - [ ] Docker.
 - [ ] Tests.
 - [ ] Deploy.
-- [ ] Variables de entorno de producción.
+- [ ] Variables de entorno de producciÃ³n.
 - [ ] Mejoras de seguridad.
 - [ ] Mejoras visuales.
 
@@ -611,7 +611,7 @@ Guion recomendado:
 ## 18. Regla principal del roadmap
 
 ```text
-Primero cerrar el MVP. Después ampliar.
+Primero cerrar el MVP. DespuÃ©s ampliar.
 ```
 
 Para la primera entrega, es mejor tener pocas funciones funcionando bien que muchas funciones incompletas.

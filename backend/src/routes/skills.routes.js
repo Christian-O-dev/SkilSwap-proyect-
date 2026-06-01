@@ -1,13 +1,16 @@
 const express = require('express')
+const authMiddleware = require('../middleware/auth.middleware')
+const { createSkill, getSkill, listSkills } = require('../controllers/skills.controller')
 
 const router = express.Router()
 
-// Ruta temporal mientras construimos el CRUD de habilidades.
-router.get('/', (req, res) => {
-  res.json({
-    ok: true,
-    message: 'Modulo skills listo para la fase 5',
-  })
-})
+// Lista habilidades publicadas.
+router.get('/', listSkills)
+
+// Devuelve una habilidad concreta.
+router.get('/:id', getSkill)
+
+// Crea una habilidad nueva.
+router.post('/', authMiddleware, createSkill)
 
 module.exports = router

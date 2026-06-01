@@ -10,9 +10,9 @@ Este archivo resume lo que hicimos en esta sesion para poder continuar el proyec
 
 Se leyeron estos archivos antes de empezar:
 
-- [IA_CONTEXT.md](./IA_CONTEXT.md)
-- [ROADMAP.md](./ROADMAP.md)
-- [ARCHITECTURE.md](./ARCHITECTURE.md)
+- [docs/IA_CONTEXT.md](./IA_CONTEXT.md)
+- [docs/ROADMAP.md](./ROADMAP.md)
+- [docs/ARCHITECTURE.md](./ARCHITECTURE.md)
 
 Contexto confirmado:
 
@@ -62,27 +62,27 @@ Estructura creada:
 
 ```text
 backend/src/
-├── app.js
-├── server.js
-├── routes/
-├── controllers/
-├── models/
-├── middleware/
-└── config/
+â”œâ”€â”€ app.js
+â”œâ”€â”€ server.js
+â”œâ”€â”€ routes/
+â”œâ”€â”€ controllers/
+â”œâ”€â”€ models/
+â”œâ”€â”€ middleware/
+â””â”€â”€ config/
 ```
 
 ```text
 frontend/src/
-├── main.jsx
-├── App.jsx
-├── pages/
-├── components/
-├── services/
-├── context/
-└── styles/
+â”œâ”€â”€ main.jsx
+â”œâ”€â”€ App.jsx
+â”œâ”€â”€ pages/
+â”œâ”€â”€ components/
+â”œâ”€â”€ services/
+â”œâ”€â”€ context/
+â””â”€â”€ styles/
 ```
 
-Se añadieron archivos guia con comentarios cortos para orientacion.
+Se aÃ±adieron archivos guia con comentarios cortos para orientacion.
 
 ## Paso 2 - Backend inicializado
 

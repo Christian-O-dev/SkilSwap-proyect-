@@ -1,13 +1,13 @@
 const express = require('express')
+const authMiddleware = require('../middleware/auth.middleware')
+const { createRequest, listRequests } = require('../controllers/requests.controller')
 
 const router = express.Router()
 
-// Ruta temporal mientras construimos solicitudes reales.
-router.get('/', (req, res) => {
-  res.json({
-    ok: true,
-    message: 'Modulo requests listo para la fase 6',
-  })
-})
+// Lista solicitudes del usuario autenticado.
+router.get('/', authMiddleware, listRequests)
+
+// Crea una solicitud nueva.
+router.post('/', authMiddleware, createRequest)
 
 module.exports = router

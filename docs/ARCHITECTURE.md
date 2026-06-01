@@ -2,46 +2,46 @@
 
 # Arquitectura de SkillSwap
 
-Este documento es la referencia técnica principal del proyecto. Aquí se define qué es SkillSwap, qué arquitectura usa, cómo se organiza el código, cuál es el modelo de datos y qué API mínima debe existir para comenzar el desarrollo.
+Este documento es la referencia tÃ©cnica principal del proyecto. AquÃ­ se define quÃ© es SkillSwap, quÃ© arquitectura usa, cÃ³mo se organiza el cÃ³digo, cuÃ¡l es el modelo de datos y quÃ© API mÃ­nima debe existir para comenzar el desarrollo.
 
 ---
 
 ## 1. Resumen del proyecto
 
-**SkillSwap** es una aplicación web de trueque de habilidades técnicas.
+**SkillSwap** es una aplicaciÃ³n web de trueque de habilidades tÃ©cnicas.
 
 La idea principal es que los usuarios puedan:
 
 1. Registrarse.
-2. Iniciar sesión.
+2. Iniciar sesiÃ³n.
 3. Publicar habilidades que saben hacer.
 4. Ver habilidades publicadas por otros usuarios.
 5. Solicitar un intercambio de habilidades.
 
 Ejemplo:
 
-- Un usuario ofrece enseñar HTML y CSS.
-- Otro usuario ofrece enseñar JavaScript.
+- Un usuario ofrece enseÃ±ar HTML y CSS.
+- Otro usuario ofrece enseÃ±ar JavaScript.
 - Ambos pueden acordar un intercambio de conocimientos sin pago directo.
 
-Flujo mínimo del MVP:
+Flujo mÃ­nimo del MVP:
 
 ```text
-Registro → Login → Crear habilidad → Ver habilidades → Solicitar intercambio
+Registro â†’ Login â†’ Crear habilidad â†’ Ver habilidades â†’ Solicitar intercambio
 ```
 
 ---
 
-## 2. Stack tecnológico oficial
+## 2. Stack tecnolÃ³gico oficial
 
-| Parte | Tecnología |
+| Parte | TecnologÃ­a |
 |---|---|
 | Frontend | React + Vite |
 | Backend | Node.js + Express |
 | Base de datos | MySQL |
-| Autenticación | JWT |
-| Hash de contraseñas | bcrypt |
-| Conexión MySQL | mysql2 |
+| AutenticaciÃ³n | JWT |
+| Hash de contraseÃ±as | bcrypt |
+| ConexiÃ³n MySQL | mysql2 |
 | Peticiones HTTP | Axios |
 | Rutas frontend | React Router DOM |
 | Variables de entorno | dotenv |
@@ -60,15 +60,15 @@ SkillSwap usa una arquitectura **cliente-servidor de 3 capas**:
 
 ```text
 Usuario
-  ↓
+  â†“
 Frontend React + Vite
-  ↓ HTTP / API REST
+  â†“ HTTP / API REST
 Backend Node.js + Express
-  ↓ SQL
+  â†“ SQL
 Base de datos MySQL
 ```
 
-También puede considerarse una **SPA** porque React permite cambiar de vistas sin recargar toda la página.
+TambiÃ©n puede considerarse una **SPA** porque React permite cambiar de vistas sin recargar toda la pÃ¡gina.
 
 ---
 
@@ -93,15 +93,15 @@ El frontend es la parte visual que utiliza el usuario desde el navegador.
 
 Responsabilidades:
 
-- Mostrar páginas.
+- Mostrar pÃ¡ginas.
 - Gestionar formularios.
 - Enviar peticiones HTTP al backend.
 - Guardar el token JWT en `localStorage`.
-- Añadir el token a las peticiones protegidas.
-- Mostrar mensajes de error y éxito.
-- Permitir registro, login, publicación de habilidades y solicitudes.
+- AÃ±adir el token a las peticiones protegidas.
+- Mostrar mensajes de error y Ã©xito.
+- Permitir registro, login, publicaciÃ³n de habilidades y solicitudes.
 
-Tecnologías principales:
+TecnologÃ­as principales:
 
 - React.
 - Vite.
@@ -111,13 +111,13 @@ Tecnologías principales:
 
 ## Backend
 
-El backend contiene la lógica de negocio y protege los datos.
+El backend contiene la lÃ³gica de negocio y protege los datos.
 
 Responsabilidades:
 
 - Registrar usuarios.
-- Iniciar sesión.
-- Cifrar contraseñas con `bcrypt`.
+- Iniciar sesiÃ³n.
+- Cifrar contraseÃ±as con `bcrypt`.
 - Generar tokens JWT.
 - Verificar tokens JWT.
 - Proteger rutas privadas.
@@ -126,7 +126,7 @@ Responsabilidades:
 - Crear solicitudes de intercambio.
 - Aplicar reglas de negocio.
 
-Tecnologías principales:
+TecnologÃ­as principales:
 
 - Node.js.
 - Express.
@@ -138,7 +138,7 @@ Tecnologías principales:
 
 ## Base de datos
 
-La base de datos guarda la información permanente.
+La base de datos guarda la informaciÃ³n permanente.
 
 Motor:
 
@@ -158,61 +158,61 @@ skillswap_db
 
 ```text
 SkillSwap/
-├── backend/
-│   ├── package.json
-│   ├── .env
-│   └── src/
-│       ├── app.js
-│       ├── server.js
-│       ├── routes/
-│       │   ├── auth.routes.js
-│       │   ├── users.routes.js
-│       │   ├── skills.routes.js
-│       │   └── requests.routes.js
-│       ├── controllers/
-│       │   ├── auth.controller.js
-│       │   ├── users.controller.js
-│       │   ├── skills.controller.js
-│       │   └── requests.controller.js
-│       ├── models/
-│       │   ├── user.model.js
-│       │   ├── skill.model.js
-│       │   └── request.model.js
-│       ├── middleware/
-│       │   └── auth.middleware.js
-│       └── config/
-│           └── db.js
-│
-├── frontend/
-│   ├── package.json
-│   ├── .env
-│   └── src/
-│       ├── main.jsx
-│       ├── App.jsx
-│       ├── pages/
-│       │   ├── LoginPage.jsx
-│       │   ├── RegisterPage.jsx
-│       │   ├── DashboardPage.jsx
-│       │   └── SkillsPage.jsx
-│       ├── components/
-│       │   ├── Navbar.jsx
-│       │   └── SkillCard.jsx
-│       ├── services/
-│       │   ├── api.js
-│       │   ├── authService.js
-│       │   ├── skillsService.js
-│       │   └── requestsService.js
-│       ├── context/
-│       │   └── AuthContext.jsx
-│       └── styles/
-│           └── global.css
-│
-├── database/
-│   └── skillswap.sql
-│
-├── ARCHITECTURE.md
-├── IA_CONTEXT.md
-└── ROADMAP.md
+â”œâ”€â”€ backend/
+â”‚   â”œâ”€â”€ package.json
+â”‚   â”œâ”€â”€ .env
+â”‚   â””â”€â”€ src/
+â”‚       â”œâ”€â”€ app.js
+â”‚       â”œâ”€â”€ server.js
+â”‚       â”œâ”€â”€ routes/
+â”‚       â”‚   â”œâ”€â”€ auth.routes.js
+â”‚       â”‚   â”œâ”€â”€ users.routes.js
+â”‚       â”‚   â”œâ”€â”€ skills.routes.js
+â”‚       â”‚   â””â”€â”€ requests.routes.js
+â”‚       â”œâ”€â”€ controllers/
+â”‚       â”‚   â”œâ”€â”€ auth.controller.js
+â”‚       â”‚   â”œâ”€â”€ users.controller.js
+â”‚       â”‚   â”œâ”€â”€ skills.controller.js
+â”‚       â”‚   â””â”€â”€ requests.controller.js
+â”‚       â”œâ”€â”€ models/
+â”‚       â”‚   â”œâ”€â”€ user.model.js
+â”‚       â”‚   â”œâ”€â”€ skill.model.js
+â”‚       â”‚   â””â”€â”€ request.model.js
+â”‚       â”œâ”€â”€ middleware/
+â”‚       â”‚   â””â”€â”€ auth.middleware.js
+â”‚       â””â”€â”€ config/
+â”‚           â””â”€â”€ db.js
+â”‚
+â”œâ”€â”€ frontend/
+â”‚   â”œâ”€â”€ package.json
+â”‚   â”œâ”€â”€ .env
+â”‚   â””â”€â”€ src/
+â”‚       â”œâ”€â”€ main.jsx
+â”‚       â”œâ”€â”€ App.jsx
+â”‚       â”œâ”€â”€ pages/
+â”‚       â”‚   â”œâ”€â”€ LoginPage.jsx
+â”‚       â”‚   â”œâ”€â”€ RegisterPage.jsx
+â”‚       â”‚   â”œâ”€â”€ DashboardPage.jsx
+â”‚       â”‚   â””â”€â”€ SkillsPage.jsx
+â”‚       â”œâ”€â”€ components/
+â”‚       â”‚   â”œâ”€â”€ Navbar.jsx
+â”‚       â”‚   â””â”€â”€ SkillCard.jsx
+â”‚       â”œâ”€â”€ services/
+â”‚       â”‚   â”œâ”€â”€ api.js
+â”‚       â”‚   â”œâ”€â”€ authService.js
+â”‚       â”‚   â”œâ”€â”€ skillsService.js
+â”‚       â”‚   â””â”€â”€ requestsService.js
+â”‚       â”œâ”€â”€ context/
+â”‚       â”‚   â””â”€â”€ AuthContext.jsx
+â”‚       â””â”€â”€ styles/
+â”‚           â””â”€â”€ global.css
+â”‚
+â”œâ”€â”€ database/
+â”‚   â””â”€â”€ skillswap.sql
+â”‚
+â”œâ”€â”€ ARCHITECTURE.md
+â”œâ”€â”€ IA_CONTEXT.md
+â””â”€â”€ ROADMAP.md
 ```
 
 ---
@@ -227,7 +227,7 @@ Configura Express:
 - `cors()`.
 - Rutas principales.
 - Ruta de prueba `/api/health`.
-- Manejo básico de errores.
+- Manejo bÃ¡sico de errores.
 
 ### `backend/src/server.js`
 
@@ -241,7 +241,7 @@ Puerto recomendado:
 
 ### `backend/src/config/db.js`
 
-Crea la conexión a MySQL usando `mysql2/promise`.
+Crea la conexiÃ³n a MySQL usando `mysql2/promise`.
 
 Debe leer las variables desde `.env`.
 
@@ -249,7 +249,7 @@ Debe leer las variables desde `.env`.
 
 Define las rutas HTTP.
 
-Archivos mínimos:
+Archivos mÃ­nimos:
 
 - `auth.routes.js`
 - `users.routes.js`
@@ -258,7 +258,7 @@ Archivos mínimos:
 
 ### `backend/src/controllers`
 
-Contiene la lógica de cada endpoint:
+Contiene la lÃ³gica de cada endpoint:
 
 - Validar datos recibidos.
 - Llamar al modelo correspondiente.
@@ -318,7 +318,7 @@ Archivos para llamar al backend:
 
 ### `frontend/src/context`
 
-Estado global de sesión:
+Estado global de sesiÃ³n:
 
 - `AuthContext.jsx`
 
@@ -330,38 +330,38 @@ Estilos globales:
 
 ---
 
-## 9. API REST mínima
+## 9. API REST mÃ­nima
 
 ## Auth
 
-| Método | Endpoint | Descripción | Protegida |
+| MÃ©todo | Endpoint | DescripciÃ³n | Protegida |
 |---|---|---|---|
 | POST | `/api/auth/register` | Registrar usuario | No |
-| POST | `/api/auth/login` | Iniciar sesión y devolver JWT | No |
-| GET | `/api/users/me` | Obtener usuario actual | Sí |
+| POST | `/api/auth/login` | Iniciar sesiÃ³n y devolver JWT | No |
+| GET | `/api/users/me` | Obtener usuario actual | SÃ­ |
 
 ## Skills
 
-| Método | Endpoint | Descripción | Protegida |
+| MÃ©todo | Endpoint | DescripciÃ³n | Protegida |
 |---|---|---|---|
 | GET | `/api/skills` | Listar habilidades | No |
 | GET | `/api/skills/:id` | Ver detalle de habilidad | No |
-| POST | `/api/skills` | Crear habilidad | Sí |
-| PUT | `/api/skills/:id` | Editar habilidad propia | Sí, opcional |
-| DELETE | `/api/skills/:id` | Eliminar habilidad propia | Sí, opcional |
+| POST | `/api/skills` | Crear habilidad | SÃ­ |
+| PUT | `/api/skills/:id` | Editar habilidad propia | SÃ­, opcional |
+| DELETE | `/api/skills/:id` | Eliminar habilidad propia | SÃ­, opcional |
 
 ## Requests
 
-| Método | Endpoint | Descripción | Protegida |
+| MÃ©todo | Endpoint | DescripciÃ³n | Protegida |
 |---|---|---|---|
-| POST | `/api/requests` | Crear solicitud de intercambio | Sí |
-| GET | `/api/requests` | Ver solicitudes del usuario | Sí |
+| POST | `/api/requests` | Crear solicitud de intercambio | SÃ­ |
+| GET | `/api/requests` | Ver solicitudes del usuario | SÃ­ |
 
 ## Exchanges, opcional para fase posterior
 
-| Método | Endpoint | Descripción | Protegida |
+| MÃ©todo | Endpoint | DescripciÃ³n | Protegida |
 |---|---|---|---|
-| POST | `/api/exchanges` | Crear intercambio desde solicitud aceptada | Sí |
+| POST | `/api/exchanges` | Crear intercambio desde solicitud aceptada | SÃ­ |
 
 ---
 
@@ -493,8 +493,8 @@ created_at
 
 Notas:
 
-- `username` debe ser único.
-- `email` debe ser único.
+- `username` debe ser Ãºnico.
+- `email` debe ser Ãºnico.
 - `password` guarda hash con `bcrypt`.
 - `role_id` apunta a `roles.id`.
 
@@ -556,7 +556,7 @@ cancelled
 
 Notas:
 
-- Una `request` aceptada genera como máximo un `exchange`.
+- Una `request` aceptada genera como mÃ¡ximo un `exchange`.
 - `exchanges.request_id` debe ser `UNIQUE`.
 
 ## `ratings`
@@ -574,14 +574,14 @@ created_at
 Notas:
 
 - Un intercambio puede tener varias valoraciones.
-- `rated_by` indica quién valora.
-- `rated_to` indica quién recibe la valoración.
-- Un usuario no puede valorarse a sí mismo.
+- `rated_by` indica quiÃ©n valora.
+- `rated_to` indica quiÃ©n recibe la valoraciÃ³n.
+- Un usuario no puede valorarse a sÃ­ mismo.
 - Un usuario solo puede valorar una vez por intercambio.
 
 ---
 
-## 13. SQL mínimo para empezar
+## 13. SQL mÃ­nimo para empezar
 
 ```sql
 CREATE DATABASE IF NOT EXISTS skillswap_db
@@ -661,23 +661,23 @@ CREATE TABLE ratings (
 
 ## 15. Reglas de negocio
 
-- Un usuario debe estar registrado para iniciar sesión.
+- Un usuario debe estar registrado para iniciar sesiÃ³n.
 - Un usuario debe estar logueado para crear habilidades.
 - Un usuario debe estar logueado para crear solicitudes.
-- Un usuario no puede solicitar una habilidad que él mismo publicó.
+- Un usuario no puede solicitar una habilidad que Ã©l mismo publicÃ³.
 - Una habilidad pertenece a un solo usuario.
 - Una habilidad puede recibir muchas solicitudes.
-- Una solicitud aceptada puede generar un único intercambio.
-- Solo se crea un `exchange` cuando una `request` está aceptada.
-- Una valoración solo se puede registrar cuando un intercambio está completado.
-- Un usuario no puede valorarse a sí mismo.
+- Una solicitud aceptada puede generar un Ãºnico intercambio.
+- Solo se crea un `exchange` cuando una `request` estÃ¡ aceptada.
+- Una valoraciÃ³n solo se puede registrar cuando un intercambio estÃ¡ completado.
+- Un usuario no puede valorarse a sÃ­ mismo.
 - Un usuario solo puede valorar una vez por cada intercambio.
 
 ---
 
-## 16. Seguridad mínima
+## 16. Seguridad mÃ­nima
 
-- Guardar contraseñas con `bcrypt`.
+- Guardar contraseÃ±as con `bcrypt`.
 - No devolver `password` en respuestas JSON.
 - Usar JWT en rutas privadas.
 - Enviar token como `Authorization: Bearer TOKEN`.
@@ -719,12 +719,12 @@ MySQL:    localhost:3306
 
 ---
 
-## 19. Criterio técnico principal
+## 19. Criterio tÃ©cnico principal
 
-La arquitectura debe permitir empezar rápido, mantener el código ordenado y ampliar el proyecto después sin rehacerlo desde cero.
+La arquitectura debe permitir empezar rÃ¡pido, mantener el cÃ³digo ordenado y ampliar el proyecto despuÃ©s sin rehacerlo desde cero.
 
 Prioridad:
 
 ```text
-Primero MVP funcional. Después mejoras.
+Primero MVP funcional. DespuÃ©s mejoras.
 ```
