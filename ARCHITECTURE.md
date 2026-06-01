@@ -1,18 +1,30 @@
 # ARCHITECTURE.md
 
-# Arquitectura del proyecto SkillSwap
+# Arquitectura de SkillSwap
 
-## Resumen del proyecto
+Este documento es la referencia técnica principal del proyecto. Aquí se define qué es SkillSwap, qué arquitectura usa, cómo se organiza el código, cuál es el modelo de datos y qué API mínima debe existir para comenzar el desarrollo.
 
-SkillSwap es una aplicación web de trueque de habilidades técnicas. La idea principal es que los usuarios puedan publicar habilidades que saben hacer y solicitar intercambios con otros usuarios para aprender nuevas habilidades sin pagar dinero directamente.
+---
+
+## 1. Resumen del proyecto
+
+**SkillSwap** es una aplicación web de trueque de habilidades técnicas.
+
+La idea principal es que los usuarios puedan:
+
+1. Registrarse.
+2. Iniciar sesión.
+3. Publicar habilidades que saben hacer.
+4. Ver habilidades publicadas por otros usuarios.
+5. Solicitar un intercambio de habilidades.
 
 Ejemplo:
 
-- Un usuario publica que sabe HTML y CSS.
-- Otro usuario publica que sabe JavaScript.
-- Ambos pueden solicitar un intercambio de conocimientos.
+- Un usuario ofrece enseñar HTML y CSS.
+- Otro usuario ofrece enseñar JavaScript.
+- Ambos pueden acordar un intercambio de conocimientos sin pago directo.
 
-La primera entrega funcional debe permitir demostrar este flujo mínimo:
+Flujo mínimo del MVP:
 
 ```text
 Registro → Login → Crear habilidad → Ver habilidades → Solicitar intercambio
@@ -20,28 +32,31 @@ Registro → Login → Crear habilidad → Ver habilidades → Solicitar interca
 
 ---
 
-## Stack tecnológico oficial
+## 2. Stack tecnológico oficial
 
-| Capa | Tecnología |
+| Parte | Tecnología |
 |---|---|
 | Frontend | React + Vite |
 | Backend | Node.js + Express |
 | Base de datos | MySQL |
 | Autenticación | JWT |
-| Cifrado de contraseñas | bcrypt |
-| Conexión a MySQL | mysql2 |
-| Peticiones HTTP frontend | Axios |
+| Hash de contraseñas | bcrypt |
+| Conexión MySQL | mysql2 |
+| Peticiones HTTP | Axios |
 | Rutas frontend | React Router DOM |
 | Variables de entorno | dotenv |
-| Control de versiones | Git + GitHub |
 | Editor recomendado | VS Code |
-| Asistente IA | Codex / ChatGPT |
+| Control de versiones | Git + GitHub |
+
+El stack oficial para este proyecto es **React + Vite, Node.js + Express y MySQL**.
+
+No cambiar a PHP, Laravel, MongoDB, Firebase, Next.js, NestJS o Docker obligatorio salvo que el usuario lo pida expresamente.
 
 ---
 
-## Tipo de arquitectura
+## 3. Tipo de arquitectura
 
-La aplicación usa una arquitectura **cliente-servidor de 3 capas**.
+SkillSwap usa una arquitectura **cliente-servidor de 3 capas**:
 
 ```text
 Usuario
@@ -53,16 +68,16 @@ Backend Node.js + Express
 Base de datos MySQL
 ```
 
-También puede considerarse una aplicación tipo **SPA** porque React permite cambiar de vistas sin recargar completamente la página.
+También puede considerarse una **SPA** porque React permite cambiar de vistas sin recargar toda la página.
 
 ---
 
-## Diagrama general
+## 4. Diagrama general
 
 ```mermaid
 flowchart LR
     U[Usuario] --> F[Frontend React + Vite]
-    F --> API[Backend API REST Node + Express]
+    F --> API[Backend Node.js + Express]
     API --> DB[(MySQL)]
     DB --> API
     API --> F
@@ -70,23 +85,23 @@ flowchart LR
 
 ---
 
-## Responsabilidad de cada capa
+## 5. Responsabilidad de cada capa
 
-## 1. Frontend
+## Frontend
 
-El frontend es la parte visual que usa el usuario desde el navegador.
+El frontend es la parte visual que utiliza el usuario desde el navegador.
 
 Responsabilidades:
 
 - Mostrar páginas.
 - Gestionar formularios.
-- Enviar peticiones al backend.
+- Enviar peticiones HTTP al backend.
 - Guardar el token JWT en `localStorage`.
-- Mostrar errores y mensajes de éxito.
-- Proteger rutas visuales según si el usuario está logueado.
-- Permitir crear habilidades y solicitar intercambios.
+- Añadir el token a las peticiones protegidas.
+- Mostrar mensajes de error y éxito.
+- Permitir registro, login, publicación de habilidades y solicitudes.
 
-Tecnologías:
+Tecnologías principales:
 
 - React.
 - Vite.
@@ -94,11 +109,9 @@ Tecnologías:
 - React Router DOM.
 - CSS.
 
----
+## Backend
 
-## 2. Backend
-
-El backend contiene la lógica principal de la aplicación.
+El backend contiene la lógica de negocio y protege los datos.
 
 Responsabilidades:
 
@@ -109,12 +122,11 @@ Responsabilidades:
 - Verificar tokens JWT.
 - Proteger rutas privadas.
 - Conectar con MySQL.
-- Crear habilidades.
-- Listar habilidades.
+- Crear y listar habilidades.
 - Crear solicitudes de intercambio.
 - Aplicar reglas de negocio.
 
-Tecnologías:
+Tecnologías principales:
 
 - Node.js.
 - Express.
@@ -124,11 +136,9 @@ Tecnologías:
 - dotenv.
 - cors.
 
----
+## Base de datos
 
-## 3. Base de datos
-
-La base de datos guarda la información persistente de la aplicación.
+La base de datos guarda la información permanente.
 
 Motor:
 
@@ -136,27 +146,15 @@ Motor:
 MySQL
 ```
 
-Base recomendada:
+Nombre recomendado:
 
 ```text
 skillswap_db
 ```
 
-Tablas principales para la primera entrega:
-
-- `roles`
-- `users`
-- `skills`
-- `requests`
-
-Tablas preparadas para fases posteriores:
-
-- `exchanges`
-- `ratings`
-
 ---
 
-## Estructura recomendada del proyecto
+## 6. Estructura recomendada del proyecto
 
 ```text
 SkillSwap/
@@ -187,6 +185,7 @@ SkillSwap/
 │
 ├── frontend/
 │   ├── package.json
+│   ├── .env
 │   └── src/
 │       ├── main.jsx
 │       ├── App.jsx
@@ -213,29 +212,26 @@ SkillSwap/
 │
 ├── ARCHITECTURE.md
 ├── IA_CONTEXT.md
-├── ROADMAP.md
-├── modelo_relacional_completo.md
-├── practica-2-arquitectura-proyecto.md
-└── plan_entrega1.md
+└── ROADMAP.md
 ```
 
 ---
 
-## Backend: organización interna
+## 7. Backend: detalle de carpetas
 
-### `app.js`
+### `backend/src/app.js`
 
-Debe configurar Express:
+Configura Express:
 
 - `express.json()`.
 - `cors()`.
 - Rutas principales.
-- Ruta de prueba.
+- Ruta de prueba `/api/health`.
 - Manejo básico de errores.
 
-### `server.js`
+### `backend/src/server.js`
 
-Debe arrancar el servidor.
+Arranca el servidor.
 
 Puerto recomendado:
 
@@ -243,53 +239,47 @@ Puerto recomendado:
 3000
 ```
 
-### `config/db.js`
+### `backend/src/config/db.js`
 
-Debe crear la conexión a MySQL usando `mysql2/promise`.
+Crea la conexión a MySQL usando `mysql2/promise`.
 
-Debe leer variables desde `.env`.
+Debe leer las variables desde `.env`.
 
-### `routes`
+### `backend/src/routes`
 
 Define las rutas HTTP.
 
-Endpoints principales:
+Archivos mínimos:
 
-```text
-POST /api/auth/register
-POST /api/auth/login
-GET /api/users/me
-GET /api/skills
-GET /api/skills/:id
-POST /api/skills
-POST /api/requests
-GET /api/requests
-```
+- `auth.routes.js`
+- `users.routes.js`
+- `skills.routes.js`
+- `requests.routes.js`
 
-### `controllers`
+### `backend/src/controllers`
 
 Contiene la lógica de cada endpoint:
 
-- Validar datos.
-- Llamar al modelo.
+- Validar datos recibidos.
+- Llamar al modelo correspondiente.
 - Aplicar reglas de negocio.
 - Devolver respuesta JSON.
 
-### `models`
+### `backend/src/models`
 
-Contiene consultas SQL.
+Contiene las consultas SQL.
 
-Regla importante:
+Regla obligatoria:
 
 ```text
 Usar consultas preparadas. No concatenar SQL con datos del usuario.
 ```
 
-### `middleware`
+### `backend/src/middleware`
 
-Contiene funciones intermedias.
+Contiene middlewares.
 
-El middleware principal es:
+El principal es:
 
 ```text
 auth.middleware.js
@@ -299,9 +289,9 @@ Sirve para verificar JWT y proteger rutas privadas.
 
 ---
 
-## Frontend: organización interna
+## 8. Frontend: detalle de carpetas
 
-### `pages`
+### `frontend/src/pages`
 
 Pantallas principales:
 
@@ -310,29 +300,29 @@ Pantallas principales:
 - `DashboardPage.jsx`
 - `SkillsPage.jsx`
 
-### `components`
+### `frontend/src/components`
 
 Componentes reutilizables:
 
 - `Navbar.jsx`
 - `SkillCard.jsx`
 
-### `services`
+### `frontend/src/services`
 
 Archivos para llamar al backend:
 
-- `api.js`: instancia de Axios.
-- `authService.js`: login y registro.
-- `skillsService.js`: habilidades.
-- `requestsService.js`: solicitudes.
+- `api.js`: instancia de Axios con URL base.
+- `authService.js`: registro, login y usuario actual.
+- `skillsService.js`: listar y crear habilidades.
+- `requestsService.js`: crear y listar solicitudes.
 
-### `context`
+### `frontend/src/context`
 
-Estado global del login:
+Estado global de sesión:
 
 - `AuthContext.jsx`
 
-### `styles`
+### `frontend/src/styles`
 
 Estilos globales:
 
@@ -340,14 +330,14 @@ Estilos globales:
 
 ---
 
-## API REST mínima
+## 9. API REST mínima
 
 ## Auth
 
 | Método | Endpoint | Descripción | Protegida |
 |---|---|---|---|
 | POST | `/api/auth/register` | Registrar usuario | No |
-| POST | `/api/auth/login` | Iniciar sesión | No |
+| POST | `/api/auth/login` | Iniciar sesión y devolver JWT | No |
 | GET | `/api/users/me` | Obtener usuario actual | Sí |
 
 ## Skills
@@ -357,8 +347,8 @@ Estilos globales:
 | GET | `/api/skills` | Listar habilidades | No |
 | GET | `/api/skills/:id` | Ver detalle de habilidad | No |
 | POST | `/api/skills` | Crear habilidad | Sí |
-| PUT | `/api/skills/:id` | Editar habilidad | Sí, opcional |
-| DELETE | `/api/skills/:id` | Eliminar habilidad | Sí, opcional |
+| PUT | `/api/skills/:id` | Editar habilidad propia | Sí, opcional |
+| DELETE | `/api/skills/:id` | Eliminar habilidad propia | Sí, opcional |
 
 ## Requests
 
@@ -367,15 +357,127 @@ Estilos globales:
 | POST | `/api/requests` | Crear solicitud de intercambio | Sí |
 | GET | `/api/requests` | Ver solicitudes del usuario | Sí |
 
+## Exchanges, opcional para fase posterior
+
+| Método | Endpoint | Descripción | Protegida |
+|---|---|---|---|
+| POST | `/api/exchanges` | Crear intercambio desde solicitud aceptada | Sí |
+
 ---
 
-## Modelo de datos mínimo
+## 10. Modelo relacional
+
+Entidades completas del proyecto:
+
+```text
+roles
+users
+skills
+requests
+exchanges
+ratings
+```
+
+Para la primera entrega son obligatorias:
+
+```text
+roles
+users
+skills
+requests
+```
+
+Opcional si hay tiempo:
+
+```text
+exchanges
+```
+
+Para fase final:
+
+```text
+ratings
+```
+
+---
+
+## 11. Diagrama ER
+
+```mermaid
+erDiagram
+    roles {
+      INT id PK
+      VARCHAR name
+    }
+
+    users {
+      INT id PK
+      VARCHAR username
+      VARCHAR email
+      VARCHAR password
+      INT role_id FK
+      TIMESTAMP created_at
+    }
+
+    skills {
+      INT id PK
+      INT user_id FK
+      VARCHAR title
+      TEXT description
+      TIMESTAMP created_at
+    }
+
+    requests {
+      INT id PK
+      INT requester_id FK
+      INT skill_id FK
+      ENUM status
+      TIMESTAMP created_at
+    }
+
+    exchanges {
+      INT id PK
+      INT request_id FK
+      TIMESTAMP agreed_at
+      ENUM status
+    }
+
+    ratings {
+      INT id PK
+      INT exchange_id FK
+      INT rated_by FK
+      INT rated_to FK
+      INT score
+      TEXT comment
+      TIMESTAMP created_at
+    }
+
+    roles ||--o{ users : "tiene"
+    users ||--o{ skills : "publica"
+    users ||--o{ requests : "solicita"
+    skills ||--o{ requests : "recibe"
+    requests ||--o| exchanges : "genera"
+    exchanges ||--o{ ratings : "recibe"
+    users ||--o{ ratings : "emite"
+    users ||--o{ ratings : "recibe"
+```
+
+---
+
+## 12. Tablas principales
 
 ## `roles`
 
 ```text
 id
 name
+```
+
+Roles iniciales:
+
+```text
+admin
+user
 ```
 
 ## `users`
@@ -389,6 +491,13 @@ role_id
 created_at
 ```
 
+Notas:
+
+- `username` debe ser único.
+- `email` debe ser único.
+- `password` guarda hash con `bcrypt`.
+- `role_id` apunta a `roles.id`.
+
 ## `skills`
 
 ```text
@@ -398,6 +507,11 @@ title
 description
 created_at
 ```
+
+Notas:
+
+- Cada habilidad pertenece a un usuario.
+- `user_id` viene del usuario autenticado.
 
 ## `requests`
 
@@ -409,6 +523,20 @@ status
 created_at
 ```
 
+Estados:
+
+```text
+open
+accepted
+rejected
+```
+
+Notas:
+
+- `requester_id` viene del usuario autenticado.
+- `skill_id` apunta a la habilidad solicitada.
+- Un usuario no puede solicitar su propia habilidad.
+
 ## `exchanges`
 
 ```text
@@ -417,6 +545,19 @@ request_id
 agreed_at
 status
 ```
+
+Estados:
+
+```text
+pending
+completed
+cancelled
+```
+
+Notas:
+
+- Una `request` aceptada genera como máximo un `exchange`.
+- `exchanges.request_id` debe ser `UNIQUE`.
 
 ## `ratings`
 
@@ -430,51 +571,126 @@ comment
 created_at
 ```
 
+Notas:
+
+- Un intercambio puede tener varias valoraciones.
+- `rated_by` indica quién valora.
+- `rated_to` indica quién recibe la valoración.
+- Un usuario no puede valorarse a sí mismo.
+- Un usuario solo puede valorar una vez por intercambio.
+
 ---
 
-## Reglas de negocio importantes
+## 13. SQL mínimo para empezar
 
-- Un usuario puede publicar muchas habilidades.
+```sql
+CREATE DATABASE IF NOT EXISTS skillswap_db
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+
+USE skillswap_db;
+
+CREATE TABLE roles (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(100) NOT NULL UNIQUE,
+  email VARCHAR(150) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  role_id INT NOT NULL DEFAULT 2,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
+CREATE TABLE skills (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  title VARCHAR(150) NOT NULL,
+  description TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE requests (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  requester_id INT NOT NULL,
+  skill_id INT NOT NULL,
+  status ENUM('open','accepted','rejected') DEFAULT 'open',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (requester_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (skill_id) REFERENCES skills(id) ON DELETE CASCADE
+);
+
+INSERT INTO roles (name) VALUES ('admin'), ('user');
+```
+
+---
+
+## 14. SQL completo para fase posterior
+
+```sql
+CREATE TABLE exchanges (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  request_id INT NOT NULL UNIQUE,
+  agreed_at TIMESTAMP NULL,
+  status ENUM('pending','completed','cancelled') DEFAULT 'pending',
+  FOREIGN KEY (request_id) REFERENCES requests(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE ratings (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  exchange_id INT NOT NULL,
+  rated_by INT NOT NULL,
+  rated_to INT NOT NULL,
+  score INT NOT NULL,
+  comment TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (exchange_id) REFERENCES exchanges(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (rated_by) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (rated_to) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT check_score CHECK (score BETWEEN 1 AND 5),
+  CONSTRAINT check_rated_users CHECK (rated_by <> rated_to),
+  UNIQUE KEY uq_rating_exchange_user (exchange_id, rated_by)
+);
+```
+
+---
+
+## 15. Reglas de negocio
+
+- Un usuario debe estar registrado para iniciar sesión.
+- Un usuario debe estar logueado para crear habilidades.
+- Un usuario debe estar logueado para crear solicitudes.
+- Un usuario no puede solicitar una habilidad que él mismo publicó.
 - Una habilidad pertenece a un solo usuario.
-- Un usuario puede solicitar muchas habilidades.
 - Una habilidad puede recibir muchas solicitudes.
-- Un usuario no puede solicitar su propia habilidad.
 - Una solicitud aceptada puede generar un único intercambio.
-- Una valoración solo debe existir después de un intercambio completado.
-- Para la primera entrega, `ratings` no es obligatorio.
-- Para la primera entrega, `exchanges` puede quedar preparado pero no es obligatorio en interfaz.
+- Solo se crea un `exchange` cuando una `request` está aceptada.
+- Una valoración solo se puede registrar cuando un intercambio está completado.
+- Un usuario no puede valorarse a sí mismo.
+- Un usuario solo puede valorar una vez por cada intercambio.
 
 ---
 
-## Flujo de autenticación
+## 16. Seguridad mínima
 
-```text
-1. Usuario envía email y contraseña.
-2. Backend busca el usuario por email.
-3. Backend compara contraseña con bcrypt.
-4. Backend genera JWT.
-5. Frontend guarda JWT en localStorage.
-6. Frontend envía JWT en Authorization Bearer.
-7. Backend verifica JWT en rutas privadas.
-```
-
-Formato del header:
-
-```text
-Authorization: Bearer TOKEN
-```
+- Guardar contraseñas con `bcrypt`.
+- No devolver `password` en respuestas JSON.
+- Usar JWT en rutas privadas.
+- Enviar token como `Authorization: Bearer TOKEN`.
+- Usar consultas SQL preparadas.
+- Validar campos obligatorios.
+- Guardar secretos en `.env`.
+- Configurar CORS para el frontend de Vite.
 
 ---
 
-## Variables de entorno del backend
+## 17. Variables de entorno
 
-Archivo:
-
-```text
-backend/.env
-```
-
-Contenido recomendado:
+Backend:
 
 ```env
 PORT=3000
@@ -485,17 +701,7 @@ DB_NAME=skillswap_db
 JWT_SECRET=skillswap_secret_dev
 ```
 
----
-
-## Variables de entorno del frontend
-
-Archivo:
-
-```text
-frontend/.env
-```
-
-Contenido recomendado:
+Frontend:
 
 ```env
 VITE_API_URL=http://localhost:3000/api
@@ -503,57 +709,22 @@ VITE_API_URL=http://localhost:3000/api
 
 ---
 
-## CORS
-
-El backend debe permitir peticiones desde el frontend de Vite.
-
-Frontend habitual:
+## 18. Puertos de desarrollo
 
 ```text
-http://localhost:5173
-```
-
-Backend habitual:
-
-```text
-http://localhost:3000
+Frontend: http://localhost:5173
+Backend:  http://localhost:3000
+MySQL:    localhost:3306
 ```
 
 ---
 
-## Seguridad mínima
+## 19. Criterio técnico principal
 
-- Usar `bcrypt` para guardar contraseñas.
-- No guardar contraseñas en texto plano.
-- Usar JWT para rutas privadas.
-- Usar consultas preparadas.
-- Validar campos obligatorios.
-- No devolver `password` en respuestas de usuario.
-- No permitir que un usuario solicite su propia habilidad.
-- Guardar secretos en `.env`.
+La arquitectura debe permitir empezar rápido, mantener el código ordenado y ampliar el proyecto después sin rehacerlo desde cero.
 
----
+Prioridad:
 
-## Alcance de la primera entrega
-
-Para el viernes 5 de junio de 2026, la arquitectura debe soportar:
-
-- Registro.
-- Login.
-- Token JWT.
-- Listado de habilidades.
-- Creación de habilidades.
-- Creación de solicitudes.
-- Base de datos MySQL.
-- Frontend conectado al backend.
-
-No es obligatorio para la primera entrega:
-
-- Chat.
-- Valoraciones.
-- Panel completo de administrador.
-- Swagger completo.
-- Docker.
-- Filtros avanzados.
-- Sistema de notificaciones.
-- Subida de imágenes.
+```text
+Primero MVP funcional. Después mejoras.
+```
