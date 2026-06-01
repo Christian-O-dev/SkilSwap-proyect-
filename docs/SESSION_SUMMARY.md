@@ -1,537 +1,98 @@
-# SESSION_SUMMARY.md
+# Session Summary - SkillSwap
 
-# Resumen de trabajo - SkillSwap
+Este archivo resume de forma breve lo que se hizo en el proyecto para poder retomarlo rapido desde cualquier PC.
 
-Este archivo resume lo que hicimos en esta sesion para poder continuar el proyecto desde otra PC sin perder el contexto.
+## Resumen General
 
----
+- Se confirmo el stack oficial: React + Vite, Node.js + Express, MySQL, JWT, bcrypt, mysql2, Axios, React Router DOM y dotenv.
+- Se mantuvo el objetivo del MVP: Registro -> Login -> Crear habilidad -> Ver habilidades -> Solicitar intercambio.
+- Se preparo la estructura base del proyecto con `backend/`, `frontend/` y `database/`.
 
-## 1. Contexto revisado
+## Lo Hecho Por Fases
 
-Se leyeron estos archivos antes de empezar:
+### Fase 1
 
-- [docs/IA_CONTEXT.md](./IA_CONTEXT.md)
-- [docs/ROADMAP.md](./ROADMAP.md)
-- [docs/ARCHITECTURE.md](./ARCHITECTURE.md)
+- Se creo la base del proyecto en backend y frontend.
+- Se instalaron las dependencias necesarias.
+- Se dejaron listos los archivos `.env` de desarrollo.
+- Se confirmo que el backend y el frontend podian arrancar.
 
-Contexto confirmado:
+### Fase 2
 
-```text
-SkillSwap es una app web para intercambio de habilidades tecnicas.
-```
+- Se creo el script SQL de `skillswap_db`.
+- Se definieron las tablas `roles`, `users`, `skills`, `requests`, `exchanges` y `ratings`.
 
-Flujo MVP confirmado:
+### Fase 3
 
-```text
-Registro -> Login -> Crear habilidad -> Ver habilidades -> Solicitar intercambio
-```
+- Se construyo la API base con Express.
+- Se agrego `GET /api/health`.
+- Se conectaron las rutas principales del backend.
 
-Stack oficial confirmado:
+### Fase 4
 
-```text
-Frontend: React + Vite
-Backend: Node.js + Express
-Base de datos: MySQL
-Auth: JWT
-Hash: bcrypt
-Conexion MySQL: mysql2
-HTTP: Axios
-Rutas frontend: React Router DOM
-Env: dotenv
-```
+- Se implemento autenticacion real con JWT.
+- Se agregaron `POST /api/auth/register`, `POST /api/auth/login` y `GET /api/users/me`.
+- Se guardan passwords con bcrypt y se usan consultas preparadas en MySQL.
 
-Regla importante seguida durante toda la sesion:
+### Fase 7
 
-```text
-No tocar ROADMAP.md porque ya tenia cambios locales del usuario.
-```
+- Se reemplazo la demo inicial de Vite por la base real de SkillSwap.
+- Se agrego router con React Router DOM.
+- Se crearon `Navbar`, `LoginPage`, `RegisterPage`, `DashboardPage`, `SkillsPage` y `SkillCard`.
+- Se preparo el contexto global de autenticacion.
+- Se crearon los servicios `api.js`, `authService.js`, `skillsService.js` y `requestsService.js`.
+- Se aplico un diseño visual propio con CSS.
 
----
+### Fase 8
 
-## 2. Fase 1 completada
+- Se conecto el frontend con el backend real.
+- Login y registro ya consumen la API.
+- Se sincroniza el token JWT en `localStorage` y en Axios.
+- Se implemento backend real para habilidades y solicitudes.
+- Se conectaron `GET /api/skills`, `GET /api/skills/:id`, `POST /api/skills`, `GET /api/requests` y `POST /api/requests`.
+- La pantalla de habilidades ya permite listar, crear habilidades y crear solicitudes.
 
-## Paso 1 - Estructura base
+### Fase 9
 
-Se crearon:
+- Se mejoro el diseño general de la interfaz.
+- Se pulieron fondos, tarjetas, botones, formularios, estados hover/focus y responsividad.
+- Se hizo una interfaz mas limpia y presentable para demo.
+- Se valido que el build de frontend siguiera funcionando.
 
-- `backend/`
-- `frontend/`
-- `database/`
+### Fase 10
 
-Estructura creada:
+- Se dejo el proyecto listo para pruebas finales.
+- Se verifico que backend y frontend siguieran funcionando.
+- Se reorganizo la documentacion.
+- Se movieron los Markdown a la carpeta `docs/`.
+- En la raiz solo quedo `README.md`.
 
-```text
-backend/src/
-â”œâ”€â”€ app.js
-â”œâ”€â”€ server.js
-â”œâ”€â”€ routes/
-â”œâ”€â”€ controllers/
-â”œâ”€â”€ models/
-â”œâ”€â”€ middleware/
-â””â”€â”€ config/
-```
+## Cambios Importantes Recientes
 
-```text
-frontend/src/
-â”œâ”€â”€ main.jsx
-â”œâ”€â”€ App.jsx
-â”œâ”€â”€ pages/
-â”œâ”€â”€ components/
-â”œâ”€â”€ services/
-â”œâ”€â”€ context/
-â””â”€â”€ styles/
-```
+- Se creo `backend/.env` real para que MySQL y JWT carguen correctamente.
+- Se resolvio el error de registro `500` causado por la falta de variables de entorno.
+- Se confirmo que `POST /api/auth/register` ya responde correctamente.
+- Se elimino la carpeta `private`.
 
-Se aÃ±adieron archivos guia con comentarios cortos para orientacion.
+## Estado Actual
 
-## Paso 2 - Backend inicializado
+- Backend funcionando.
+- Frontend funcionando.
+- Registro y login conectados.
+- Habilidades y solicitudes conectadas.
+- Base visual lista para demo.
+- Documentacion ordenada en `docs/`.
 
-Comandos usados:
+## Estructura De Documentacion Actual
 
-```bash
-npm init -y
-npm install express mysql2 dotenv cors bcrypt jsonwebtoken
-npm install -D nodemon
-```
+- `README.md`
+- `docs/ARCHITECTURE.md`
+- `docs/IA_CONTEXT.md`
+- `docs/ROADMAP.md`
+- `docs/SESSION_SUMMARY.md`
 
-Scripts dejados en `backend/package.json`:
+## Siguiente Paso Natural
 
-```json
-"dev": "nodemon src/server.js",
-"start": "node src/server.js"
-```
-
-## Paso 3 - Frontend con Vite
-
-Problema detectado:
-
-```text
-Vite cancelo la generacion porque la carpeta frontend/ ya tenia archivos guia.
-```
-
-Leccion importante:
-
-```text
-No generar Vite directamente sobre una carpeta que ya tenga contenido preparado.
-```
-
-Solucion aplicada:
-
-- se genero una plantilla React + Vite en una carpeta temporal
-- luego se copio a `frontend/`
-- despues se instalaron dependencias
-
-Comandos usados:
-
-```bash
-npm install
-npm install axios react-router-dom
-```
-
-Estado del frontend:
-
-- Vite listo
-- React listo
-- `axios` instalado
-- `react-router-dom` instalado
-- sigue visible la demo inicial de Vite
-
-## Paso 4 - Env y gitignore
-
-Archivos creados:
-
-- `backend/.gitignore`
-- `backend/.env`
-- `backend/.env.example`
-- `frontend/.env`
-- `frontend/.env.example`
-
-Variables base del backend:
-
-```env
-PORT=3000
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_USER=root
-DB_PASSWORD=
-DB_NAME=skillswap_db
-JWT_SECRET=skillswap_secret_key
-```
-
-Variable base del frontend:
-
-```env
-VITE_API_URL=http://localhost:3000/api
-```
-
-## Paso 5 - Arranque minimo
-
-Se implemento un backend minimo funcional:
-
-- `express`
-- `cors`
-- `express.json()`
-- `GET /api/health`
-- respuesta `404`
-
-Resultado:
-
-- backend arranca
-- frontend compila
-
----
-
-## 3. Fase 2 completada
-
-Se creo [database/skillswap.sql](./database/skillswap.sql) con:
-
-- creacion de `skillswap_db`
-- tabla `roles`
-- tabla `users`
-- tabla `skills`
-- tabla `requests`
-- tabla `exchanges`
-- tabla `ratings`
-- claves foraneas
-- restricciones `UNIQUE`
-- `CHECK` para score y auto valoracion
-- insercion inicial de roles `admin` y `user`
-
-Tablas incluidas:
-
-```text
-roles
-users
-skills
-requests
-exchanges
-ratings
-```
-
-Nota importante:
-
-```text
-El SQL esta escrito, pero no se confirmo aun una importacion correcta porque hubo problemas de acceso a MySQL en el entorno local del usuario.
-```
-
----
-
-## 4. Fase 3 completada
-
-Se construyo la API base del backend.
-
-Archivos actualizados:
-
-- `backend/src/app.js`
-- `backend/src/server.js`
-- `backend/src/config/db.js`
-- `backend/src/routes/auth.routes.js`
-- `backend/src/routes/users.routes.js`
-- `backend/src/routes/skills.routes.js`
-- `backend/src/routes/requests.routes.js`
-
-## `backend/src/config/db.js`
-
-Ahora contiene:
-
-- `mysql2/promise`
-- un `pool` reutilizable
-- `testDatabaseConnection()` para probar acceso a MySQL
-
-## `backend/src/app.js`
-
-Ahora contiene:
-
-- `cors`
-- `express.json()`
-- `GET /api/health`
-- montaje de rutas:
-  - `/api/auth`
-  - `/api/users`
-  - `/api/skills`
-  - `/api/requests`
-- middleware basico de error `500`
-- middleware `404`
-
-## Rutas base temporales
-
-Durante esta fase se dejaron respuestas JSON simples para:
-
-- `/api/auth`
-- `/api/users`
-- `/api/skills`
-- `/api/requests`
-
-Esto sirvio como columna vertebral antes de meter logica real.
-
----
-
-## 5. Fase 4 completada
-
-Se implemento autenticacion real con JWT.
-
-Archivos actualizados:
-
-- `backend/src/models/user.model.js`
-- `backend/src/controllers/auth.controller.js`
-- `backend/src/controllers/users.controller.js`
-- `backend/src/middleware/auth.middleware.js`
-- `backend/src/routes/auth.routes.js`
-- `backend/src/routes/users.routes.js`
-
-## Modelo de usuario
-
-`backend/src/models/user.model.js` ahora incluye consultas preparadas para:
-
-- buscar usuario por email
-- buscar usuario por username
-- crear usuario
-- buscar usuario por id
-
-## Auth controller
-
-`backend/src/controllers/auth.controller.js` ahora implementa:
-
-- `POST /api/auth/register`
-- `POST /api/auth/login`
-
-Incluye:
-
-- validacion basica de datos
-- validacion de email unico
-- validacion de username unico
-- hash de password con `bcrypt`
-- comparacion con `bcrypt.compare`
-- generacion de JWT con expiracion de `7d`
-
-## Users controller
-
-`backend/src/controllers/users.controller.js` ahora implementa:
-
-- `GET /api/users/me`
-
-## Middleware JWT
-
-`backend/src/middleware/auth.middleware.js` ahora:
-
-- lee `Authorization: Bearer token`
-- verifica el JWT
-- guarda el usuario decodificado en `req.user`
-- bloquea acceso si el token falta o es invalido
-
----
-
-## 6. Estado actual del backend
-
-Endpoints ya implementados:
-
-```text
-GET  /api/health
-POST /api/auth/register
-POST /api/auth/login
-GET  /api/users/me
-GET  /api/skills
-GET  /api/requests
-```
-
-Importante:
-
-- `GET /api/skills` y `GET /api/requests` siguen siendo respuestas temporales
-- la logica real de skills y requests todavia no esta hecha
-- auth ya esta implementado
-
----
-
-## 7. Pruebas realizadas
-
-## Backend
-
-Probado:
-
-```bash
-cd backend
-npm run start
-```
-
-Resultado visto:
-
-```text
-Servidor backend escuchando en http://localhost:3000
-```
-
-Tambien se comprobo que los archivos de auth cargan sin errores de sintaxis.
-
-## Frontend
-
-Probado:
-
-```bash
-cd frontend
-npm run build
-```
-
-Resultado:
-
-```text
-Build correcta con Vite, sin errores.
-```
-
----
-
-## 8. Problema detectado con MySQL en Mac + XAMPP
-
-El usuario reporto este error al ejecutar SQL o probar conexion:
-
-```text
-Error: Access denied for user 'root'@'localhost' (using password: YES)
-```
-
-Diagnostico importante:
-
-- el error no venia del backend minimo inicial
-- despues, al entrar en auth real, si puede venir de la conexion MySQL
-- en VS Code o en la extension SQL parece que se esta usando password aunque en `.env` esta vacia
-
-Estado actual:
-
-```text
-La parte de codigo de auth ya esta lista, pero hace falta que MySQL/XAMPP acepte bien la conexion para probar register y login de verdad.
-```
-
-Configuracion recomendada en `.env`:
-
-```env
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_USER=root
-DB_PASSWORD=
-DB_NAME=skillswap_db
-```
-
----
-
-## 9. Como probar el proyecto ahora
-
-## Backend
-
-```bash
-cd backend
-npm install
-npm run dev
-```
-
-Probar salud:
-
-```bash
-curl http://localhost:3000/api/health
-```
-
-## Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Abrir la URL de Vite, normalmente:
-
-```text
-http://localhost:5173
-```
-
-## Cuando MySQL este funcionando
-
-### Registro
-
-```bash
-curl -X POST http://localhost:3000/api/auth/register \
--H "Content-Type: application/json" \
--d '{"username":"alex","email":"alex@test.com","password":"123456"}'
-```
-
-### Login
-
-```bash
-curl -X POST http://localhost:3000/api/auth/login \
--H "Content-Type: application/json" \
--d '{"email":"alex@test.com","password":"123456"}'
-```
-
-### Usuario autenticado
-
-```bash
-curl http://localhost:3000/api/users/me \
--H "Authorization: Bearer TU_TOKEN"
-```
-
----
-
-## 10. Archivos clave ahora mismo
-
-Backend:
-
-- `backend/package.json`
-- `backend/.env`
-- `backend/src/app.js`
-- `backend/src/server.js`
-- `backend/src/config/db.js`
-- `backend/src/models/user.model.js`
-- `backend/src/controllers/auth.controller.js`
-- `backend/src/controllers/users.controller.js`
-- `backend/src/middleware/auth.middleware.js`
-
-Frontend:
-
-- `frontend/package.json`
-- `frontend/.env`
-- `frontend/src/main.jsx`
-- `frontend/src/App.jsx`
-
-Base de datos:
-
-- `database/skillswap.sql`
-
-Documentacion:
-
-- `IA_CONTEXT.md`
-- `ROADMAP.md`
-- `ARCHITECTURE.md`
-- `SESSION_SUMMARY.md`
-
----
-
-## 11. Siguiente paso recomendado
-
-Siguiente fase natural:
-
-```text
-Fase 5 - Habilidades
-```
-
-Tareas recomendadas:
-
-1. Implementar `skill.model.js`
-2. Implementar `skills.controller.js`
-3. Crear:
-   - `GET /api/skills`
-   - `GET /api/skills/:id`
-   - `POST /api/skills`
-4. Proteger `POST /api/skills` con JWT
-5. Usar `req.user.id` como `user_id`
-
-Antes de eso conviene dejar resuelto MySQL en XAMPP para poder probar de verdad las consultas reales.
-
----
-
-## 12. Resumen corto del estado actual
-
-```text
-Fase 1 completada.
-Fase 2 escrita en SQL.
-Fase 3 completada.
-Fase 4 completada en codigo.
-Frontend base listo pero aun con demo de Vite.
-Backend con auth real ya implementado.
-Falta resolver bien la conexion MySQL local para validar register y login.
-```
+- Probar el flujo completo en navegador.
+- Revisar errores de demo.
+- Seguir con mejoras posteriores si hace falta.
