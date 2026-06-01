@@ -2,109 +2,110 @@
 
 # Roadmap de SkillSwap
 
-Este documento define el plan de trabajo del proyecto. Su objetivo es ordenar las tareas para comenzar el desarrollo sin desviarse del MVP.
+Este documento define el plan de trabajo del proyecto. Su objetivo es ordenar las tareas para comenzar el desarrollo y avanzar hacia la entrega final sin desviarse del stack oficial.
 
 ---
 
 ## 1. Objetivo general
 
-Construir **SkillSwap**, una plataforma web de trueque de habilidades tÃ©cnicas donde los usuarios puedan registrarse, iniciar sesiÃ³n, publicar habilidades y solicitar intercambios con otros usuarios.
+Construir **SkillSwap**, una plataforma web de trueque de habilidades técnicas donde los usuarios puedan registrarse, iniciar sesión, publicar habilidades, solicitar intercambios, aceptar solicitudes, completar intercambios y valorar a otros usuarios.
 
 ---
 
-## 2. Primera entrega funcional
-
-Fecha objetivo:
+## 2. Stack oficial de entrega final
 
 ```text
-Viernes 5 de junio de 2026
-```
-
-Objetivo:
-
-```text
-Tener un MVP funcional que permita demostrar el flujo principal de la aplicaciÃ³n.
-```
-
-Flujo principal:
-
-```text
-Registro â†’ Login â†’ Crear habilidad â†’ Ver habilidades â†’ Solicitar intercambio
+Frontend: React + Vite
+Estilos: Tailwind CSS
+Componentes UI: shadcn/ui
+Iconos: Lucide React
+Backend: Node.js + Express
+Base de datos: MySQL
+Autenticación: JWT
+Contraseñas: bcrypt
+Peticiones HTTP: Axios
+Rutas frontend: React Router DOM
 ```
 
 ---
 
-## 3. Alcance del MVP
+## 3. Flujo final esperado
 
-## Incluido en la primera entrega
+```text
+Registro → Login → Crear habilidad → Ver habilidades → Solicitar intercambio → Aceptar solicitud → Completar intercambio → Valorar usuario
+```
+
+---
+
+## 4. Alcance de la entrega final
+
+## Incluido
 
 - Backend base con Express.
-- ConexiÃ³n a MySQL.
+- Conexión a MySQL.
 - Script SQL de base de datos.
 - Registro de usuario.
 - Login con JWT.
-- Middleware de autenticaciÃ³n.
+- Middleware de autenticación.
 - Rutas protegidas.
-- Listado de habilidades.
-- CreaciÃ³n de habilidades.
-- CreaciÃ³n de solicitudes de intercambio.
-- Frontend React + Vite.
-- Pantallas de login, registro, dashboard y habilidades.
-- ConexiÃ³n frontend-backend con Axios.
-- CSS bÃ¡sico.
-- Instrucciones de ejecuciÃ³n.
-
-## No incluido en la primera entrega
-
-- Chat.
+- CRUD de habilidades.
+- Solicitudes de intercambio.
+- Aceptar y rechazar solicitudes.
+- Creación de intercambios.
+- Completar intercambios.
 - Valoraciones.
-- Panel avanzado de administrador.
-- Notificaciones.
-- RecuperaciÃ³n de contraseÃ±a.
-- Subida de imÃ¡genes.
-- Swagger completo obligatorio.
+- Frontend React + Vite.
+- Tailwind CSS instalado y funcionando.
+- shadcn/ui configurado y usado.
+- Lucide React instalado y usado.
+- Pantallas principales.
+- Conexión frontend-backend con Axios.
+- Interfaz clara y responsive.
+- Instrucciones de ejecución.
+
+## No incluido salvo que sobre tiempo
+
+- Chat en tiempo real.
+- Subida de imágenes.
+- Notificaciones por email.
 - Docker obligatorio.
-- Despliegue en producciÃ³n.
-- Tests automÃ¡ticos avanzados.
+- Deploy en producción.
+- Tests automáticos avanzados.
+- Pasarela de pago.
 
 ---
 
-## 4. Prioridades
+## 5. Prioridades
 
 ## Prioridad alta
 
-Estas tareas son necesarias para la primera entrega.
-
-- Backend funcional.
+- Estructura backend y frontend.
 - Base de datos conectada.
 - Registro y login.
 - Token JWT.
-- CRUD mÃ­nimo de habilidades: listar y crear.
+- Tailwind CSS, shadcn/ui y Lucide React configurados.
+- CRUD de habilidades.
 - Solicitudes de intercambio.
+- Intercambios.
+- Valoraciones.
 - Frontend conectado al backend.
-- Demo funcionando.
+- Demo final funcionando.
 
 ## Prioridad media
 
-Estas tareas ayudan, pero no deben bloquear el MVP.
-
-- Ver detalle de habilidad.
-- Ver solicitudes del usuario.
-- Editar habilidad.
-- Eliminar habilidad.
+- Filtros de habilidades.
+- Buscador por título o descripción.
+- Vista de perfil.
+- Ver solicitudes enviadas y recibidas.
 - Mejorar validaciones.
 - Mejorar mensajes de error.
-- Mejorar diseÃ±o responsive.
-- Documentar endpoints.
-- Preparar datos de prueba.
+- Mejorar diseño responsive.
+- Datos de prueba.
 
 ## Prioridad baja
 
-Estas tareas quedan para fases posteriores.
-
 - Chat.
-- Valoraciones.
-- Panel de administrador.
+- Panel avanzado de administrador.
 - Swagger completo.
 - Docker.
 - Deploy.
@@ -112,11 +113,11 @@ Estas tareas quedan para fases posteriores.
 
 ---
 
-## 5. Fase 0 - DocumentaciÃ³n y enfoque
+## 6. Fase 0 - Preparación documental
 
 Objetivo:
 
-Alinear el proyecto con una primera entrega realista y evitar desviarse hacia funciones demasiado grandes.
+Tener la documentación clara para que el proyecto pueda ser trabajado por una IA o por el desarrollador sin perder contexto.
 
 Tareas:
 
@@ -124,24 +125,19 @@ Tareas:
 - [x] Definir contexto para IA.
 - [x] Definir roadmap.
 - [x] Confirmar stack oficial: React + Vite, Node.js + Express y MySQL.
-- [x] Confirmar alcance del viernes.
-- [x] Subir documentaciÃ³n final a GitHub.
+- [x] Añadir Tailwind CSS, shadcn/ui y Lucide React al stack oficial.
+- [x] Confirmar alcance de entrega final.
+- [x] Subir documentación actualizada a GitHub.
 
 Resultado esperado:
 
 ```text
-La IA y el desarrollador tienen contexto claro para trabajar sin cambiar el rumbo del proyecto.
+La IA y el desarrollador tienen contexto claro para comenzar el proyecto.
 ```
 
 ---
 
-## 6. Fase 1 - PreparaciÃ³n del proyecto
-
-Fecha recomendada:
-
-```text
-Lunes 1 de junio de 2026
-```
+## 7. Fase 1 - Preparación del proyecto
 
 Objetivo:
 
@@ -171,7 +167,7 @@ npm install express mysql2 dotenv cors bcrypt jsonwebtoken
 npm install -D nodemon
 ```
 
-En `backend/package.json`, configurar scripts:
+Configurar scripts en `backend/package.json`:
 
 ```json
 {
@@ -199,17 +195,136 @@ Backend y frontend arrancan sin errores.
 
 ---
 
-## 7. Fase 2 - Base de datos
-
-Fecha recomendada:
-
-```text
-Lunes 1 de junio o martes 2 de junio de 2026
-```
+## 8. Fase 2 - Instalar stack visual frontend
 
 Objetivo:
 
-Crear la base de datos mÃ­nima para la primera entrega.
+Configurar Tailwind CSS, shadcn/ui y Lucide React para que el frontend tenga una base visual moderna y mantenible.
+
+Todos los comandos se ejecutan dentro de `frontend`.
+
+```bash
+cd frontend
+```
+
+### 8.1 Instalar Tailwind CSS con Vite
+
+```bash
+npm install tailwindcss @tailwindcss/vite
+```
+
+Actualizar `frontend/vite.config.js`:
+
+```js
+import { defineConfig } from "vite"
+import react from "@vitejs/plugin-react"
+import tailwindcss from "@tailwindcss/vite"
+import path from "path"
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+})
+```
+
+Actualizar `frontend/src/index.css`:
+
+```css
+@import "tailwindcss";
+```
+
+### 8.2 Configurar alias `@`
+
+Crear `frontend/jsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+```
+
+Instalar tipos de Node:
+
+```bash
+npm install -D @types/node
+```
+
+### 8.3 Inicializar shadcn/ui
+
+```bash
+npx shadcn@latest init
+```
+
+Opciones recomendadas:
+
+```text
+Style: New York o Default
+Base color: Neutral o Slate
+CSS file: src/index.css
+Components: src/components/ui
+Utils: src/lib/utils.js
+React Server Components: No
+```
+
+Añadir componentes base:
+
+```bash
+npx shadcn@latest add button card input label textarea badge dialog dropdown-menu select avatar separator skeleton alert
+```
+
+### 8.4 Instalar Lucide React
+
+```bash
+npm install lucide-react
+```
+
+Ejemplo de uso:
+
+```jsx
+import { Search, Plus, User, LogOut } from "lucide-react"
+
+export function ExampleIcon() {
+  return <Search className="h-4 w-4" />
+}
+```
+
+### 8.5 Probar que funciona
+
+Ejecutar:
+
+```bash
+npm run dev
+```
+
+Comprobar:
+
+- La app abre en `http://localhost:5173`.
+- Tailwind aplica estilos.
+- Los componentes de shadcn/ui importan sin error.
+- Los iconos de Lucide React importan sin error.
+
+Resultado esperado:
+
+```text
+Frontend visual listo para comenzar pantallas.
+```
+
+---
+
+## 9. Fase 3 - Base de datos
+
+Objetivo:
+
+Crear la base de datos completa para la entrega final.
 
 Tareas:
 
@@ -219,22 +334,19 @@ Tareas:
 - [ ] Crear tabla `users`.
 - [ ] Crear tabla `skills`.
 - [ ] Crear tabla `requests`.
+- [ ] Crear tabla `exchanges`.
+- [ ] Crear tabla `ratings`.
 - [ ] Insertar roles `admin` y `user`.
-- [ ] Probar conexiÃ³n desde backend.
+- [ ] Probar conexión desde backend.
 - [ ] Verificar tablas en MySQL.
 
-Tablas obligatorias:
+Tablas obligatorias para entrega final:
 
 ```text
 roles
 users
 skills
 requests
-```
-
-Tablas opcionales:
-
-```text
 exchanges
 ratings
 ```
@@ -242,18 +354,12 @@ ratings
 Resultado esperado:
 
 ```text
-La base de datos existe y el backend puede conectarse a MySQL.
+La base de datos completa existe y el backend puede conectarse a MySQL.
 ```
 
 ---
 
-## 8. Fase 3 - Backend base
-
-Fecha recomendada:
-
-```text
-Martes 2 de junio de 2026
-```
+## 10. Fase 4 - Backend base
 
 Objetivo:
 
@@ -273,18 +379,12 @@ Tareas:
 Resultado esperado:
 
 ```text
-La API responde correctamente y estÃ¡ lista para aÃ±adir endpoints.
+La API responde correctamente y está lista para añadir endpoints.
 ```
 
 ---
 
-## 9. Fase 4 - AutenticaciÃ³n
-
-Fecha recomendada:
-
-```text
-Martes 2 de junio de 2026
-```
+## 11. Fase 5 - Autenticación
 
 Objetivo:
 
@@ -296,11 +396,11 @@ Tareas:
 - [ ] Crear `auth.controller.js`.
 - [ ] Crear `user.model.js`.
 - [ ] Implementar registro.
-- [ ] Hashear contraseÃ±a con `bcrypt`.
-- [ ] Validar email Ãºnico.
-- [ ] Validar username Ãºnico.
+- [ ] Hashear contraseña con `bcrypt`.
+- [ ] Validar email único.
+- [ ] Validar username único.
 - [ ] Implementar login.
-- [ ] Comparar contraseÃ±a con `bcrypt.compare`.
+- [ ] Comparar contraseña con `bcrypt.compare`.
 - [ ] Generar JWT.
 - [ ] Crear `auth.middleware.js`.
 - [ ] Proteger ruta `/api/users/me`.
@@ -316,18 +416,12 @@ GET /api/users/me
 Resultado esperado:
 
 ```text
-El usuario puede registrarse, iniciar sesiÃ³n y recibir un token JWT.
+El usuario puede registrarse, iniciar sesión y recibir un token JWT.
 ```
 
 ---
 
-## 10. Fase 5 - Habilidades
-
-Fecha recomendada:
-
-```text
-MiÃ©rcoles 3 de junio de 2026
-```
+## 12. Fase 6 - Habilidades
 
 Objetivo:
 
@@ -341,10 +435,12 @@ Tareas:
 - [ ] Implementar `GET /api/skills`.
 - [ ] Implementar `GET /api/skills/:id`.
 - [ ] Implementar `POST /api/skills`.
-- [ ] Proteger `POST /api/skills` con JWT.
+- [ ] Implementar `PUT /api/skills/:id`.
+- [ ] Implementar `DELETE /api/skills/:id`.
+- [ ] Proteger creación, edición y eliminación con JWT.
 - [ ] Usar `req.user.id` como `user_id`.
-- [ ] Probar creaciÃ³n de habilidades.
-- [ ] Probar listado de habilidades.
+- [ ] Validar que solo el propietario edite o elimine.
+- [ ] Probar creación, listado, edición y eliminación.
 
 Endpoints:
 
@@ -352,27 +448,23 @@ Endpoints:
 GET /api/skills
 GET /api/skills/:id
 POST /api/skills
+PUT /api/skills/:id
+DELETE /api/skills/:id
 ```
 
 Resultado esperado:
 
 ```text
-Un usuario logueado puede crear habilidades y cualquier usuario puede ver el listado.
+Un usuario puede gestionar sus habilidades y ver las de otros usuarios.
 ```
 
 ---
 
-## 11. Fase 6 - Solicitudes de intercambio
-
-Fecha recomendada:
-
-```text
-MiÃ©rcoles 3 de junio o jueves 4 de junio de 2026
-```
+## 13. Fase 7 - Solicitudes de intercambio
 
 Objetivo:
 
-Permitir que un usuario solicite una habilidad de otro usuario.
+Permitir que un usuario solicite una habilidad de otro usuario y que el dueño pueda aceptar o rechazar.
 
 Tareas:
 
@@ -381,53 +473,122 @@ Tareas:
 - [ ] Crear `request.model.js`.
 - [ ] Implementar `POST /api/requests`.
 - [ ] Implementar `GET /api/requests`.
+- [ ] Implementar `PUT /api/requests/:id/accept`.
+- [ ] Implementar `PUT /api/requests/:id/reject`.
 - [ ] Proteger rutas con JWT.
 - [ ] Validar que la habilidad exista.
 - [ ] Validar que el usuario no solicite su propia habilidad.
 - [ ] Guardar solicitud con estado `open`.
-- [ ] Probar creaciÃ³n de solicitudes.
+- [ ] Al aceptar, permitir crear intercambio.
 
 Endpoints:
 
 ```text
 POST /api/requests
 GET /api/requests
+PUT /api/requests/:id/accept
+PUT /api/requests/:id/reject
 ```
 
 Resultado esperado:
 
 ```text
-Un usuario logueado puede solicitar una habilidad publicada por otro usuario.
+Un usuario puede solicitar habilidades y el propietario puede aceptar o rechazar solicitudes.
 ```
 
 ---
 
-## 12. Fase 7 - Frontend base
-
-Fecha recomendada:
-
-```text
-Jueves 4 de junio de 2026
-```
+## 14. Fase 8 - Intercambios
 
 Objetivo:
 
-Crear la interfaz mÃ­nima funcional.
+Crear y gestionar intercambios a partir de solicitudes aceptadas.
+
+Tareas:
+
+- [ ] Crear `exchanges.routes.js`.
+- [ ] Crear `exchanges.controller.js`.
+- [ ] Crear `exchange.model.js`.
+- [ ] Implementar `GET /api/exchanges`.
+- [ ] Implementar `POST /api/exchanges`.
+- [ ] Implementar `PUT /api/exchanges/:id/complete`.
+- [ ] Validar que solo exista un intercambio por solicitud.
+- [ ] Validar que la solicitud esté aceptada.
+- [ ] Permitir marcar intercambio como completado.
+
+Endpoints:
+
+```text
+GET /api/exchanges
+POST /api/exchanges
+PUT /api/exchanges/:id/complete
+```
+
+Resultado esperado:
+
+```text
+Una solicitud aceptada puede convertirse en intercambio y completarse.
+```
+
+---
+
+## 15. Fase 9 - Valoraciones
+
+Objetivo:
+
+Permitir valorar a otro usuario después de completar un intercambio.
+
+Tareas:
+
+- [ ] Crear `ratings.routes.js`.
+- [ ] Crear `ratings.controller.js`.
+- [ ] Crear `rating.model.js`.
+- [ ] Implementar `POST /api/ratings`.
+- [ ] Implementar `GET /api/users/:id/ratings`.
+- [ ] Validar que el intercambio esté completado.
+- [ ] Validar que el usuario participe en el intercambio.
+- [ ] Validar que el usuario no se valore a sí mismo.
+- [ ] Validar que solo valore una vez por intercambio.
+
+Endpoints:
+
+```text
+POST /api/ratings
+GET /api/users/:id/ratings
+```
+
+Resultado esperado:
+
+```text
+Los usuarios pueden recibir valoraciones después de intercambios completados.
+```
+
+---
+
+## 16. Fase 10 - Frontend base
+
+Objetivo:
+
+Crear la interfaz mínima funcional con React, Tailwind CSS, shadcn/ui y Lucide React.
 
 Tareas:
 
 - [ ] Configurar React Router.
-- [ ] Crear `Navbar.jsx`.
-- [ ] Crear `LoginPage.jsx`.
-- [ ] Crear `RegisterPage.jsx`.
-- [ ] Crear `DashboardPage.jsx`.
-- [ ] Crear `SkillsPage.jsx`.
-- [ ] Crear `SkillCard.jsx`.
-- [ ] Crear `AuthContext.jsx`.
-- [ ] Crear `api.js`.
-- [ ] Crear `authService.js`.
-- [ ] Crear `skillsService.js`.
-- [ ] Crear `requestsService.js`.
+- [ ] Crear layout principal.
+- [ ] Crear `Navbar` con shadcn/ui y Lucide React.
+- [ ] Crear `HomePage`.
+- [ ] Crear `LoginPage`.
+- [ ] Crear `RegisterPage`.
+- [ ] Crear `DashboardPage`.
+- [ ] Crear `SkillsPage`.
+- [ ] Crear `SkillDetailPage`.
+- [ ] Crear `MyRequestsPage`.
+- [ ] Crear `ExchangesPage`.
+- [ ] Crear `ProfilePage`.
+- [ ] Crear `SkillCard`.
+- [ ] Crear `SkillForm`.
+- [ ] Crear `AuthContext`.
+- [ ] Crear servicios API.
 
 Resultado esperado:
 
@@ -437,13 +598,7 @@ El frontend tiene las pantallas principales creadas y puede navegar entre ellas.
 
 ---
 
-## 13. Fase 8 - ConexiÃ³n frontend-backend
-
-Fecha recomendada:
-
-```text
-Jueves 4 de junio de 2026
-```
+## 17. Fase 11 - Conexión frontend-backend
 
 Objetivo:
 
@@ -454,59 +609,56 @@ Tareas:
 - [ ] Conectar registro con `POST /api/auth/register`.
 - [ ] Conectar login con `POST /api/auth/login`.
 - [ ] Guardar token en `localStorage`.
-- [ ] AÃ±adir token automÃ¡ticamente con Axios.
+- [ ] Añadir token automáticamente con Axios.
 - [ ] Conectar listado de habilidades.
-- [ ] Conectar creaciÃ³n de habilidades.
+- [ ] Conectar creación de habilidades.
+- [ ] Conectar edición y eliminación de habilidades.
 - [ ] Conectar solicitud de intercambio.
-- [ ] Mostrar errores bÃ¡sicos.
-- [ ] Mostrar mensajes de Ã©xito.
+- [ ] Conectar aceptar y rechazar solicitudes.
+- [ ] Conectar intercambios.
+- [ ] Conectar valoraciones.
+- [ ] Mostrar errores básicos.
+- [ ] Mostrar mensajes de éxito.
 
 Resultado esperado:
 
 ```text
-El usuario puede usar el flujo principal desde la interfaz web.
+El usuario puede usar el flujo final desde la interfaz web.
 ```
 
 ---
 
-## 14. Fase 9 - DiseÃ±o bÃ¡sico
-
-Fecha recomendada:
-
-```text
-Jueves 4 de junio o viernes 5 de junio de 2026
-```
+## 18. Fase 12 - Diseño final
 
 Objetivo:
 
-Hacer que la aplicaciÃ³n se vea presentable para clase.
+Hacer que la aplicación se vea presentable para clase.
 
 Tareas:
 
-- [ ] Crear `global.css`.
-- [ ] DiseÃ±ar navbar.
-- [ ] DiseÃ±ar formularios.
-- [ ] DiseÃ±ar tarjetas de habilidades.
-- [ ] DiseÃ±ar botones.
-- [ ] AÃ±adir layout responsive bÃ¡sico.
-- [ ] Evitar pantalla desordenada.
-- [ ] Revisar colores y espaciados.
+- [ ] Diseñar navbar.
+- [ ] Diseñar home.
+- [ ] Diseñar formularios.
+- [ ] Diseñar tarjetas de habilidades.
+- [ ] Diseñar páginas de solicitudes.
+- [ ] Diseñar página de intercambios.
+- [ ] Diseñar perfil.
+- [ ] Añadir iconos con Lucide React.
+- [ ] Usar componentes shadcn/ui.
+- [ ] Revisar responsive.
+- [ ] Revisar colores, espaciado y legibilidad.
+- [ ] Añadir estados loading con Skeleton.
+- [ ] Añadir alertas de error o éxito.
 
 Resultado esperado:
 
 ```text
-La aplicaciÃ³n se ve limpia, clara y fÃ¡cil de explicar.
+La aplicación se ve limpia, clara y fácil de explicar.
 ```
 
 ---
 
-## 15. Fase 10 - Pruebas finales
-
-Fecha recomendada:
-
-```text
-Viernes 5 de junio de 2026
-```
+## 19. Fase 13 - Pruebas finales
 
 Objetivo:
 
@@ -516,102 +668,78 @@ Checklist:
 
 - [ ] Backend arranca con `npm run dev`.
 - [ ] Frontend arranca con `npm run dev`.
-- [ ] MySQL estÃ¡ activo.
+- [ ] MySQL está activo.
 - [ ] La base de datos existe.
+- [ ] Tailwind CSS funciona.
+- [ ] shadcn/ui funciona.
+- [ ] Lucide React funciona.
 - [ ] El registro funciona.
 - [ ] El login funciona.
 - [ ] El token se guarda.
 - [ ] Las rutas protegidas funcionan.
 - [ ] Se puede crear una habilidad.
 - [ ] Se puede listar habilidades.
+- [ ] Se puede editar una habilidad propia.
+- [ ] Se puede eliminar una habilidad propia.
 - [ ] Se puede solicitar intercambio.
+- [ ] Se puede aceptar solicitud.
+- [ ] Se puede rechazar solicitud.
+- [ ] Se puede crear o ver intercambio.
+- [ ] Se puede completar intercambio.
+- [ ] Se puede valorar usuario.
 - [ ] No hay errores de CORS.
 - [ ] No hay imports rotos.
 - [ ] No hay rutas rotas.
-- [ ] El README o documentaciÃ³n explica cÃ³mo ejecutar el proyecto.
-- [ ] Todo estÃ¡ subido a GitHub.
+- [ ] La documentación explica cómo ejecutar el proyecto.
+- [ ] Todo está subido a GitHub.
 
 Resultado esperado:
 
 ```text
-El proyecto estÃ¡ listo para presentarse.
+El proyecto está listo para presentarse.
 ```
 
 ---
 
-## 16. Demo de clase
-
-Fecha:
-
-```text
-Viernes 5 de junio de 2026
-```
+## 20. Demo de clase
 
 Guion recomendado:
 
-1. Explicar quÃ© es SkillSwap.
-2. Explicar arquitectura: React, Express y MySQL.
-3. EnseÃ±ar registro.
-4. EnseÃ±ar login.
+1. Explicar qué es SkillSwap.
+2. Explicar arquitectura: React, Tailwind, shadcn/ui, Lucide React, Express y MySQL.
+3. Enseñar registro.
+4. Enseñar login.
 5. Crear una habilidad.
 6. Ver listado de habilidades.
-7. Solicitar intercambio.
-8. EnseÃ±ar la base de datos en MySQL.
-9. Explicar quÃ© queda para la fase final.
+7. Solicitar intercambio con otro usuario.
+8. Aceptar solicitud.
+9. Ver intercambio.
+10. Completar intercambio.
+11. Valorar usuario.
+12. Enseñar la base de datos en MySQL.
+13. Explicar mejoras futuras.
 
 ---
 
-## 17. Funciones para despuÃ©s de la primera entrega
+## 21. Mejoras posteriores
 
-## Fase posterior 1 - Mejoras de habilidades
-
-- [ ] Editar habilidad.
-- [ ] Eliminar habilidad.
-- [ ] Filtrar habilidades por texto.
-- [ ] AÃ±adir categorÃ­a.
-- [ ] AÃ±adir nivel.
-- [ ] AÃ±adir fecha formateada.
-
-## Fase posterior 2 - Intercambios
-
-- [ ] Aceptar solicitud.
-- [ ] Rechazar solicitud.
-- [ ] Crear intercambio al aceptar.
-- [ ] Marcar intercambio como completado.
-- [ ] Cancelar intercambio.
-
-## Fase posterior 3 - Valoraciones
-
-- [ ] Crear tabla `ratings`.
-- [ ] Valorar usuario despuÃ©s de intercambio.
-- [ ] Mostrar puntuaciÃ³n media.
-- [ ] Evitar valoraciones duplicadas.
-- [ ] Evitar que un usuario se valore a sÃ­ mismo.
-
-## Fase posterior 4 - AdministraciÃ³n
-
-- [ ] Panel de administrador.
-- [ ] Listar usuarios.
-- [ ] Eliminar habilidades inapropiadas.
-- [ ] Revisar solicitudes.
-- [ ] Bloquear usuarios.
-
-## Fase posterior 5 - ProfesionalizaciÃ³n
-
-- [ ] Swagger.
-- [ ] Docker.
-- [ ] Tests.
-- [ ] Deploy.
-- [ ] Variables de entorno de producciÃ³n.
-- [ ] Mejoras de seguridad.
-- [ ] Mejoras visuales.
+- Chat entre usuarios.
+- Subida de imágenes de perfil.
+- Categorías avanzadas.
+- Buscador avanzado.
+- Notificaciones por email.
+- Panel administrador.
+- Swagger.
+- Docker.
+- Deploy.
+- Tests.
 
 ---
 
-## 18. Regla principal del roadmap
+## 22. Regla principal del roadmap
 
 ```text
-Primero cerrar el MVP. DespuÃ©s ampliar.
+Primero cerrar el flujo funcional. Después mejorar el diseño.
 ```
 
-Para la primera entrega, es mejor tener pocas funciones funcionando bien que muchas funciones incompletas.
+Para la entrega final, es mejor tener el flujo completo funcionando con una interfaz clara que muchas funciones incompletas.
