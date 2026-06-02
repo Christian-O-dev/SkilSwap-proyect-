@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom'
 import { BookOpen, Handshake, Star, User } from 'lucide-react'
 import EmptyState from '@/components/common/EmptyState.jsx'
+import ErrorState from '@/components/common/ErrorState.jsx'
+import {
+  PageHeaderSkeleton,
+  ProfileLoadingSkeleton,
+} from '@/components/common/LoadingSkeleton.jsx'
 import PageHeader from '@/components/common/PageHeader.jsx'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -24,7 +29,7 @@ function ProfileMetric({ icon: Icon, label, value }) {
 }
 
 function ProfilePage() {
-  const { exchanges, mySkills, requests, token, user } = useSkillSwapData()
+  const { error, exchanges, loading, mySkills, requests, token, user } = useSkillSwapData()
 
   if (!token) {
     return (
@@ -32,11 +37,34 @@ function ProfilePage() {
         <EmptyState
           title="Necesitas iniciar sesión"
           description="Accede a tu cuenta para ver tu perfil y actividad."
+          tone="warning"
           action={
             <Button asChild className="rounded-full">
               <Link to="/login">Ir al login</Link>
             </Button>
           }
+        />
+      </section>
+    )
+  }
+
+  if (loading) {
+    return (
+      <section className="space-y-6">
+        <PageHeaderSkeleton stats={3} />
+        <ProfileLoadingSkeleton />
+      </section>
+    )
+  }
+
+  if (error) {
+    return (
+      <section className="space-y-6">
+        <ErrorState
+          title="No se pudo cargar tu perfil"
+          description={error}
+          actionLabel="Recargar página"
+          onRetry={() => window.location.reload()}
         />
       </section>
     )
@@ -134,6 +162,7 @@ function ProfilePage() {
                 title="Aún no hay valoraciones visibles"
                 description="Cuando completes intercambios y recibas valoraciones, aparecerá aquí su resumen."
                 className="border-slate-200 bg-white shadow-sm"
+                tone="warning"
               />
             )}
 
@@ -144,7 +173,7 @@ function ProfilePage() {
 
             <div className="flex flex-wrap gap-3">
               <Button asChild className="rounded-full">
-                <Link to="/my-skills">Ver mis habilidades</Link>
+                <Link to="/my-skills?tab=list">Ver mis habilidades</Link>
               </Button>
               <Button asChild variant="outline" className="rounded-full">
                 <Link to="/exchanges">Ver intercambios</Link>

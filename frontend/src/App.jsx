@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
+import { AppBootSkeleton } from './components/common/LoadingSkeleton.jsx'
 import Navbar from './components/Navbar.jsx'
 import { useAuth } from './context/AuthContext.jsx'
 import AdminPage from './pages/AdminPage.jsx'
@@ -23,11 +24,7 @@ function App() {
       <div className="app-shell">
         <div className="app-background" aria-hidden="true" />
         <main className="app-loading">
-          <div className="loading-card">
-            <span className="eyebrow">SkillSwap</span>
-            <h1>Cargando SkillSwap</h1>
-            <p>Preparando tu experiencia.</p>
-          </div>
+          <AppBootSkeleton />
         </main>
       </div>
     )

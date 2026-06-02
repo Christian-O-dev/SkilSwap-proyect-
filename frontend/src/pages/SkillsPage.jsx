@@ -1,8 +1,15 @@
+import { Compass, Search, Sparkles } from 'lucide-react'
 import EmptyState from '@/components/common/EmptyState.jsx'
-import LoadingSkeleton from '@/components/common/LoadingSkeleton.jsx'
+import ErrorState from '@/components/common/ErrorState.jsx'
+import {
+  FilterBarSkeleton,
+  ListLoadingSkeleton,
+  PageHeaderSkeleton,
+} from '@/components/common/LoadingSkeleton.jsx'
 import PageHeader from '@/components/common/PageHeader.jsx'
 import SkillCard from '@/components/skills/SkillCard.jsx'
 import SkillSearchBar from '@/components/skills/SkillSearchBar.jsx'
+import { Button } from '@/components/ui/button'
 import { useSkillSwapData } from '@/hooks/useSkillSwapData.js'
 
 function SkillsPage() {
@@ -12,12 +19,23 @@ function SkillsPage() {
     loading,
     notice,
     requestingSkillId,
+    requestedSkillIds,
     searchText,
     token,
     user,
     handleRequestSkill,
     setSearchText,
   } = useSkillSwapData()
+
+  if (loading) {
+    return (
+      <section className="space-y-6">
+        <PageHeaderSkeleton stats={1} />
+        <FilterBarSkeleton />
+        <ListLoadingSkeleton count={4} />
+      </section>
+    )
+  }
 
   return (
     <section className="space-y-6">
@@ -46,12 +64,15 @@ function SkillsPage() {
         </div>
       ) : null}
 
-      {loading ? <LoadingSkeleton /> : null}
       {error ? (
-        <p className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
-          {error}
-        </p>
+        <ErrorState
+          title="No se pudo cargar el catálogo"
+          description={error}
+          actionLabel="Recargar página"
+          onRetry={() => window.location.reload()}
+        />
       ) : null}
+
       {notice ? (
         <p className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
           {notice}
@@ -60,29 +81,53 @@ function SkillsPage() {
 
       <div className="grid gap-4">
         {filteredSkills.map((skill) => (
-          <SkillCard
-            key={skill.id}
-            skill={skill}
-            onRequest={handleRequestSkill}
-            disabled={Boolean(requestingSkillId) || (token && skill.user_id === user?.id)}
-            isOwner={false}
-            actionLabel={
-              token && skill.user_id === user?.id
-                ? 'Es tu habilidad'
-                : requestingSkillId === skill.id
-                  ? 'Enviando...'
-                  : 'Solicitar intercambio'
-            }
-          />
+          (() => {
+            const isOwnerSkill = token && skill.user_id === user?.id
+            const alreadyRequested = requestedSkillIds.has(skill.id)
+
+            return (
+              <SkillCard
+                key={skill.id}
+                skill={skill}
+                onRequest={handleRequestSkill}
+                disabled={Boolean(requestingSkillId) || isOwnerSkill || alreadyRequested}
+                isOwner={false}
+                requested={alreadyRequested}
+                actionLabel={
+                  isOwnerSkill
+                    ? 'Es tu habilidad'
+                    : alreadyRequested
+                      ? 'Solicitud enviada'
+                      : requestingSkillId === skill.id
+                        ? 'Enviando...'
+                        : 'Enviar solicitud'
+                }
+              />
+            )
+          })()
         ))}
 
-        {!loading && filteredSkills.length === 0 ? (
+        {filteredSkills.length === 0 ? (
           <EmptyState
+            icon={searchText.trim() ? Search : Sparkles}
+            tone={searchText.trim() ? 'warning' : 'info'}
             title={searchText.trim() ? 'No hay coincidencias' : 'No hay habilidades cargadas'}
             description={
               searchText.trim()
                 ? 'Prueba con otra búsqueda para encontrar más habilidades.'
                 : 'Aún no hay publicaciones disponibles.'
+            }
+            action={
+              searchText.trim() ? (
+                <Button type="button" variant="outline" className="rounded-full" onClick={() => setSearchText('')}>
+                  Limpiar búsqueda
+                </Button>
+              ) : (
+                <Button type="button" variant="outline" className="rounded-full">
+                  <Compass size={16} aria-hidden="true" />
+                  Vuelve más tarde
+                </Button>
+              )
             }
           />
         ) : null}

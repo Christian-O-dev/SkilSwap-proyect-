@@ -122,6 +122,16 @@ export function useSkillSwapData() {
     [skills, token, user?.id],
   )
 
+  const requestedSkillIds = useMemo(
+    () =>
+      new Set(
+        requests
+          .filter((request) => request.status === 'open' || request.status === 'accepted')
+          .map((request) => request.skill_id),
+      ),
+    [requests],
+  )
+
   useEffect(() => {
     let isMounted = true
 
@@ -255,6 +265,10 @@ export function useSkillSwapData() {
 
     if (skill.user_id && user?.id && skill.user_id === user.id) {
       setError('No puedes solicitar tu propia habilidad')
+      return
+    }
+
+    if (requestedSkillIds.has(skill.id)) {
       return
     }
 
@@ -438,6 +452,7 @@ export function useSkillSwapData() {
     skills,
     filteredSkills,
     mySkills,
+    requestedSkillIds,
     requests,
     receivedRequests,
     exchanges,

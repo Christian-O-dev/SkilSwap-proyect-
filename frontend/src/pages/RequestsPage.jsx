@@ -1,5 +1,10 @@
+import { BellRing } from 'lucide-react'
 import EmptyState from '@/components/common/EmptyState.jsx'
-import LoadingSkeleton from '@/components/common/LoadingSkeleton.jsx'
+import ErrorState from '@/components/common/ErrorState.jsx'
+import {
+  PageHeaderSkeleton,
+  TabsPageLoadingSkeleton,
+} from '@/components/common/LoadingSkeleton.jsx'
 import PageHeader from '@/components/common/PageHeader.jsx'
 import RequestsList from '@/components/requests/RequestsList.jsx'
 import { Card, CardContent } from '@/components/ui/card'
@@ -16,6 +21,15 @@ function RequestsPage() {
     updatingRequestId,
     handleIncomingRequest,
   } = useSkillSwapData()
+
+  if (loading) {
+    return (
+      <section className="space-y-6">
+        <PageHeaderSkeleton stats={2} />
+        <TabsPageLoadingSkeleton count={3} />
+      </section>
+    )
+  }
 
   return (
     <section className="space-y-6">
@@ -40,20 +54,24 @@ function RequestsPage() {
       />
 
       {error ? (
-        <p className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
-          {error}
-        </p>
+        <ErrorState
+          title="No se pudieron cargar las solicitudes"
+          description={error}
+          actionLabel="Recargar página"
+          onRetry={() => window.location.reload()}
+        />
       ) : null}
+
       {notice ? (
         <p className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
           {notice}
         </p>
       ) : null}
 
-      {loading ? <LoadingSkeleton /> : null}
-
-      {!loading && requests.length === 0 && receivedRequests.length === 0 ? (
+      {requests.length === 0 && receivedRequests.length === 0 ? (
         <EmptyState
+          icon={BellRing}
+          tone="info"
           title="No hay solicitudes disponibles"
           description="Cuando envíes o recibas solicitudes aparecerán aquí."
         />

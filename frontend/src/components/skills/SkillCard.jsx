@@ -26,6 +26,7 @@ function SkillCard({
   onRequest,
   disabled = false,
   isOwner = false,
+  requested = false,
   actionLabel = 'Solicitar intercambio',
 }) {
   const ratingText =
@@ -96,7 +97,13 @@ function SkillCard({
         ) : (
           <Button
             type="button"
-            className="w-full rounded-full bg-slate-900 text-white hover:bg-slate-800"
+            variant={requested ? 'outline' : 'default'}
+            className={cn(
+              'w-full rounded-full',
+              requested
+                ? 'border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-50'
+                : 'bg-slate-900 text-white hover:bg-slate-800',
+            )}
             onClick={() => onRequest?.(skill)}
             disabled={disabled}
           >

@@ -1,6 +1,11 @@
 import { useState } from 'react'
+import { Repeat2 } from 'lucide-react'
 import EmptyState from '@/components/common/EmptyState.jsx'
-import LoadingSkeleton from '@/components/common/LoadingSkeleton.jsx'
+import ErrorState from '@/components/common/ErrorState.jsx'
+import {
+  PageHeaderSkeleton,
+  TabsPageLoadingSkeleton,
+} from '@/components/common/LoadingSkeleton.jsx'
 import PageHeader from '@/components/common/PageHeader.jsx'
 import ExchangeCard from '@/components/exchanges/ExchangeCard.jsx'
 import { Card, CardContent } from '@/components/ui/card'
@@ -40,6 +45,15 @@ function ExchangesPage() {
     }
   }
 
+  if (loading) {
+    return (
+      <section className="space-y-6">
+        <PageHeaderSkeleton stats={3} />
+        <TabsPageLoadingSkeleton count={3} />
+      </section>
+    )
+  }
+
   return (
     <section className="space-y-6">
       <PageHeader
@@ -71,20 +85,24 @@ function ExchangesPage() {
       />
 
       {error ? (
-        <p className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
-          {error}
-        </p>
+        <ErrorState
+          title="No se pudieron cargar los intercambios"
+          description={error}
+          actionLabel="Recargar página"
+          onRetry={() => window.location.reload()}
+        />
       ) : null}
+
       {notice ? (
         <p className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
           {notice}
         </p>
       ) : null}
 
-      {loading ? <LoadingSkeleton /> : null}
-
-      {!loading && exchanges.length === 0 ? (
+      {exchanges.length === 0 ? (
         <EmptyState
+          icon={Repeat2}
+          tone="info"
           title="Todavía no tienes intercambios"
           description="Cuando una solicitud sea aceptada, el intercambio aparecerá en esta página."
         />
@@ -120,11 +138,12 @@ function ExchangesPage() {
                     onCreateRating={handleCreateRating}
                   />
                 ))}
-                {!loading && activeExchanges.length === 0 ? (
+                {activeExchanges.length === 0 ? (
                   <EmptyState
                     title="No hay intercambios activos"
                     description="Cuando una solicitud sea aceptada, aparecerá aquí como intercambio pendiente."
                     className="border-slate-200 bg-white shadow-sm"
+                    tone="warning"
                   />
                 ) : null}
               </div>
@@ -145,11 +164,12 @@ function ExchangesPage() {
                     onCreateRating={handleCreateRating}
                   />
                 ))}
-                {!loading && completedExchanges.length === 0 ? (
+                {completedExchanges.length === 0 ? (
                   <EmptyState
                     title="No hay intercambios completados"
                     description="Los intercambios finalizados aparecerán aquí para que puedas revisarlos y valorarlos."
                     className="border-slate-200 bg-white shadow-sm"
+                    tone="warning"
                   />
                 ) : null}
               </div>
@@ -170,11 +190,12 @@ function ExchangesPage() {
                     onCreateRating={handleCreateRating}
                   />
                 ))}
-                {!loading && cancelledExchanges.length === 0 ? (
+                {cancelledExchanges.length === 0 ? (
                   <EmptyState
                     title="No hay intercambios cancelados"
                     description="Si un intercambio se cancela, quedará registrado en esta pestaña."
                     className="border-slate-200 bg-white shadow-sm"
+                    tone="warning"
                   />
                 ) : null}
               </div>
