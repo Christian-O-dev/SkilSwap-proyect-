@@ -2,7 +2,7 @@
 
 # Arquitectura de SkillSwap
 
-Este documento es la referencia técnica principal del proyecto. Define qué es SkillSwap, qué arquitectura usa, cómo se organiza el código, qué tecnologías forman parte del stack oficial y qué estructura debe seguir el frontend, backend y base de datos.
+Este documento es la referencia técnica principal del proyecto. Define qué es SkillSwap, qué arquitectura usa, cómo se organiza el código, cuál es el modelo de datos y qué API debe existir para mantener el proyecto claro.
 
 ---
 
@@ -18,37 +18,22 @@ La idea principal es que los usuarios puedan:
 4. Ver habilidades publicadas por otros usuarios.
 5. Solicitar un intercambio de habilidades.
 6. Aceptar o rechazar solicitudes.
-7. Finalizar intercambios.
-8. Valorar a otros usuarios en la fase final.
+7. Completar intercambios.
+8. Valorar a otros usuarios.
 
-Ejemplo:
-
-- Un usuario ofrece enseñar HTML y CSS.
-- Otro usuario ofrece enseñar JavaScript.
-- Ambos pueden acordar un intercambio de conocimientos sin pago directo.
-
-Flujo mínimo del MVP:
+Flujo principal:
 
 ```text
-Registro → Login → Crear habilidad → Ver habilidades → Solicitar intercambio
-```
-
-Flujo esperado para entrega final:
-
-```text
-Registro → Login → Crear habilidad → Solicitar intercambio → Aceptar solicitud → Completar intercambio → Valorar usuario
+Registro → Login → Crear habilidad → Ver habilidades → Solicitar intercambio → Aceptar solicitud → Completar intercambio → Valorar usuario
 ```
 
 ---
 
-## 2. Stack tecnológico oficial
+## 2. Stack tecnológico base
 
 | Parte | Tecnología |
 |---|---|
 | Frontend | React + Vite |
-| Estilos | Tailwind CSS |
-| Componentes UI | shadcn/ui |
-| Iconos | Lucide React |
 | Backend | Node.js + Express |
 | Base de datos | MySQL |
 | Autenticación | JWT |
@@ -60,26 +45,42 @@ Registro → Login → Crear habilidad → Solicitar intercambio → Aceptar sol
 | Editor recomendado | VS Code |
 | Control de versiones | Git + GitHub |
 
-El stack oficial para este proyecto es:
+Este stack base ya no debe cambiarse.
 
-```text
-React + Vite + Tailwind CSS + shadcn/ui + Lucide React
-Node.js + Express
-MySQL
-```
-
-No cambiar a PHP, Laravel, MongoDB, Firebase, Next.js, NestJS o Docker obligatorio salvo que el usuario lo pida expresamente.
+No convertir el proyecto a PHP, Laravel, MongoDB, Firebase, Next.js, NestJS o Docker obligatorio salvo que el usuario lo pida expresamente.
 
 ---
 
-## 3. Arquitectura general
+## 3. Mejora visual para la última fase
+
+Para la **última fase de entrega definitiva**, se añadirá el siguiente stack visual al frontend ya existente:
+
+| Uso | Tecnología |
+|---|---|
+| Estilos utilitarios | Tailwind CSS |
+| Componentes visuales | shadcn/ui |
+| Iconos | Lucide React |
+
+Estas tecnologías se añaden para mejorar la interfaz, no para rehacer la arquitectura ni cambiar el flujo funcional ya terminado.
+
+Objetivo de esta fase visual:
+
+- Mejorar el diseño general.
+- Ordenar el layout.
+- Crear componentes reutilizables.
+- Dar aspecto profesional a formularios, tarjetas, botones y navegación.
+- Añadir iconos claros para acciones principales.
+
+---
+
+## 4. Arquitectura general
 
 SkillSwap usa una arquitectura **cliente-servidor de 3 capas**:
 
 ```text
 Usuario
   ↓
-Frontend React + Vite + Tailwind + shadcn/ui + Lucide React
+Frontend React + Vite
   ↓ HTTP / API REST
 Backend Node.js + Express
   ↓ SQL
@@ -90,12 +91,11 @@ También puede considerarse una **SPA** porque React permite cambiar de vistas s
 
 ---
 
-## 4. Diagrama general
+## 5. Diagrama general
 
 ```mermaid
 flowchart LR
     U[Usuario] --> F[Frontend React + Vite]
-    F --> UI[Tailwind CSS + shadcn/ui + Lucide React]
     F --> API[Backend Node.js + Express]
     API --> DB[(MySQL)]
     DB --> API
@@ -104,7 +104,7 @@ flowchart LR
 
 ---
 
-## 5. Responsabilidad de cada capa
+## 6. Responsabilidad de cada capa
 
 ## Frontend
 
@@ -118,20 +118,8 @@ Responsabilidades:
 - Guardar el token JWT en `localStorage`.
 - Añadir el token a las peticiones protegidas.
 - Mostrar mensajes de error y éxito.
-- Permitir registro, login, publicación de habilidades y solicitudes.
-- Usar Tailwind CSS para layout, espaciado, colores y responsive.
-- Usar shadcn/ui para componentes visuales reutilizables.
-- Usar Lucide React para iconos claros y consistentes.
-
-Tecnologías principales:
-
-- React.
-- Vite.
-- Tailwind CSS.
-- shadcn/ui.
-- Lucide React.
-- Axios.
-- React Router DOM.
+- Permitir registro, login, publicación de habilidades, solicitudes, intercambios y valoraciones.
+- En la última fase, mejorar la interfaz con Tailwind CSS, shadcn/ui y Lucide React.
 
 ## Backend
 
@@ -147,20 +135,10 @@ Responsabilidades:
 - Proteger rutas privadas.
 - Conectar con MySQL.
 - Crear, listar, editar y eliminar habilidades.
-- Crear, aceptar y rechazar solicitudes de intercambio.
-- Crear intercambios aceptados.
-- Registrar valoraciones en la fase final.
+- Crear, aceptar y rechazar solicitudes.
+- Gestionar intercambios.
+- Registrar valoraciones.
 - Aplicar reglas de negocio.
-
-Tecnologías principales:
-
-- Node.js.
-- Express.
-- mysql2.
-- bcrypt.
-- jsonwebtoken.
-- dotenv.
-- cors.
 
 ## Base de datos
 
@@ -180,7 +158,7 @@ skillswap_db
 
 ---
 
-## 6. Estructura recomendada del proyecto
+## 7. Estructura recomendada del proyecto
 
 ```text
 SkillSwap/
@@ -191,71 +169,27 @@ SkillSwap/
 │       ├── app.js
 │       ├── server.js
 │       ├── routes/
-│       │   ├── auth.routes.js
-│       │   ├── users.routes.js
-│       │   ├── skills.routes.js
-│       │   ├── requests.routes.js
-│       │   ├── exchanges.routes.js
-│       │   └── ratings.routes.js
 │       ├── controllers/
-│       │   ├── auth.controller.js
-│       │   ├── users.controller.js
-│       │   ├── skills.controller.js
-│       │   ├── requests.controller.js
-│       │   ├── exchanges.controller.js
-│       │   └── ratings.controller.js
 │       ├── models/
-│       │   ├── user.model.js
-│       │   ├── skill.model.js
-│       │   ├── request.model.js
-│       │   ├── exchange.model.js
-│       │   └── rating.model.js
 │       ├── middleware/
-│       │   └── auth.middleware.js
 │       └── config/
-│           └── db.js
 │
 ├── frontend/
 │   ├── package.json
 │   ├── .env
 │   ├── vite.config.js
-│   ├── jsconfig.json
-│   ├── components.json
 │   └── src/
 │       ├── main.jsx
 │       ├── App.jsx
 │       ├── index.css
 │       ├── pages/
-│       │   ├── HomePage.jsx
-│       │   ├── LoginPage.jsx
-│       │   ├── RegisterPage.jsx
-│       │   ├── DashboardPage.jsx
-│       │   ├── SkillsPage.jsx
-│       │   ├── SkillDetailPage.jsx
-│       │   ├── MyRequestsPage.jsx
-│       │   ├── ExchangesPage.jsx
-│       │   └── ProfilePage.jsx
 │       ├── components/
 │       │   ├── layout/
-│       │   │   └── Navbar.jsx
 │       │   ├── skills/
-│       │   │   ├── SkillCard.jsx
-│       │   │   └── SkillForm.jsx
 │       │   └── ui/
-│       │       └── componentes de shadcn/ui
 │       ├── services/
-│       │   ├── api.js
-│       │   ├── authService.js
-│       │   ├── skillsService.js
-│       │   ├── requestsService.js
-│       │   ├── exchangesService.js
-│       │   └── ratingsService.js
 │       ├── context/
-│       │   └── AuthContext.jsx
-│       ├── lib/
-│       │   └── utils.js
-│       └── styles/
-│           └── opcional si se necesitan estilos separados
+│       └── lib/
 │
 ├── database/
 │   └── skillswap.sql
@@ -266,17 +200,19 @@ SkillSwap/
     └── ROADMAP.md
 ```
 
+La carpeta `frontend/src/components/ui` se usará para los componentes de shadcn/ui en la última fase visual.
+
 ---
 
-## 7. Instalación del stack visual del frontend
+## 8. Pasos técnicos para añadir Tailwind CSS, shadcn/ui y Lucide React
 
-Estos pasos se ejecutan dentro de la carpeta `frontend`.
+Estos pasos se ejecutan dentro de `frontend`.
 
 ```bash
 cd frontend
 ```
 
-### 7.1 Instalar Tailwind CSS con Vite
+### 8.1 Instalar Tailwind CSS con Vite
 
 ```bash
 npm install tailwindcss @tailwindcss/vite
@@ -306,9 +242,9 @@ Actualizar `frontend/src/index.css`:
 @import "tailwindcss";
 ```
 
-### 7.2 Configurar alias `@`
+### 8.2 Configurar alias `@`
 
-Crear `frontend/jsconfig.json` si el proyecto usa JavaScript:
+Crear o revisar `frontend/jsconfig.json`:
 
 ```json
 {
@@ -321,21 +257,19 @@ Crear `frontend/jsconfig.json` si el proyecto usa JavaScript:
 }
 ```
 
-Instalar tipos de Node para que Vite resuelva `path` correctamente:
+Instalar tipos de Node si Vite necesita resolver `path`:
 
 ```bash
 npm install -D @types/node
 ```
 
-### 7.3 Instalar shadcn/ui
-
-Inicializar shadcn/ui:
+### 8.3 Inicializar shadcn/ui
 
 ```bash
 npx shadcn@latest init
 ```
 
-Opciones recomendadas para este proyecto:
+Opciones recomendadas:
 
 ```text
 Style: New York o Default
@@ -346,32 +280,22 @@ Utils: src/lib/utils.js
 React Server Components: No
 ```
 
-Componentes recomendados para comenzar:
+Componentes recomendados para la entrega definitiva:
 
 ```bash
 npx shadcn@latest add button card input label textarea badge dialog dropdown-menu select avatar separator skeleton alert
 ```
 
-Uso esperado:
-
-```jsx
-import { Button } from "@/components/ui/button"
-
-export function ExampleButton() {
-  return <Button>Publicar habilidad</Button>
-}
-```
-
-### 7.4 Instalar Lucide React
+### 8.4 Instalar Lucide React
 
 ```bash
 npm install lucide-react
 ```
 
-Uso esperado:
+Ejemplo de uso:
 
 ```jsx
-import { Search, Plus, User, LogOut } from "lucide-react"
+import { Search, Plus, User, LogOut, BookOpen, Handshake, Star } from "lucide-react"
 
 export function ExampleIcon() {
   return <Search className="h-4 w-4" />
@@ -380,11 +304,13 @@ export function ExampleIcon() {
 
 ---
 
-## 8. Uso recomendado de Tailwind CSS
+## 9. Uso recomendado en la última fase visual
 
-Tailwind debe usarse para:
+## Tailwind CSS
 
-- Layout general.
+Usar para:
+
+- Layout.
 - Espaciados.
 - Responsive.
 - Colores.
@@ -392,91 +318,40 @@ Tailwind debe usarse para:
 - Sombras.
 - Estados `hover`, `focus`, `disabled`.
 
-Ejemplo:
+## shadcn/ui
 
-```jsx
-<div className="mx-auto max-w-6xl px-4 py-8">
-  <h1 className="text-3xl font-bold tracking-tight">SkillSwap</h1>
-</div>
-```
-
----
-
-## 9. Uso recomendado de shadcn/ui
-
-shadcn/ui debe usarse para componentes base:
+Usar para:
 
 - Botones.
 - Inputs.
 - Labels.
-- Cards.
 - Textareas.
+- Cards.
 - Badges.
 - Dialogs.
+- Dropdowns.
 - Selects.
-- Skeletons.
 - Alerts.
+- Skeletons.
 
-Ejemplo para tarjetas de habilidades:
+## Lucide React
 
-```jsx
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+Usar para iconos de:
 
-export function SkillCard({ skill }) {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{skill.title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p>{skill.description}</p>
-        <Badge>{skill.status || "Disponible"}</Badge>
-      </CardContent>
-    </Card>
-  )
-}
-```
+- Inicio.
+- Habilidades.
+- Solicitudes.
+- Intercambios.
+- Valoraciones.
+- Perfil.
+- Editar.
+- Eliminar.
+- Buscar.
+- Cerrar sesión.
 
 ---
 
-## 10. Uso recomendado de Lucide React
-
-Lucide React debe usarse para iconos de navegación, acciones y estados.
-
-Iconos sugeridos:
-
-| Uso | Icono |
-|---|---|
-| Buscar | `Search` |
-| Crear | `Plus` |
-| Usuario | `User` |
-| Logout | `LogOut` |
-| Habilidades | `BookOpen` |
-| Solicitudes | `Handshake` |
-| Intercambios | `RefreshCcw` |
-| Valoraciones | `Star` |
-| Editar | `Pencil` |
-| Eliminar | `Trash2` |
-
-Ejemplo:
-
-```jsx
-import { BookOpen } from "lucide-react"
-
-export function SkillsTitle() {
-  return (
-    <div className="flex items-center gap-2">
-      <BookOpen className="h-5 w-5" />
-      <h2 className="text-xl font-semibold">Habilidades</h2>
-    </div>
-  )
-}
-```
-
----
-
-## 11. API REST mínima
+## 10. API REST principal
 
 ## Auth
 
@@ -522,7 +397,7 @@ export function SkillsTitle() {
 
 ---
 
-## 12. Modelo relacional
+## 11. Modelo relacional
 
 Entidades completas del proyecto:
 
@@ -535,83 +410,9 @@ exchanges
 ratings
 ```
 
-Para la entrega final deben estar implementadas:
-
-```text
-roles
-users
-skills
-requests
-exchanges
-ratings
-```
-
 ---
 
-## 13. Diagrama ER
-
-```mermaid
-erDiagram
-    roles {
-      INT id PK
-      VARCHAR name
-    }
-
-    users {
-      INT id PK
-      VARCHAR username
-      VARCHAR email
-      VARCHAR password
-      INT role_id FK
-      TIMESTAMP created_at
-    }
-
-    skills {
-      INT id PK
-      INT user_id FK
-      VARCHAR title
-      TEXT description
-      TIMESTAMP created_at
-    }
-
-    requests {
-      INT id PK
-      INT requester_id FK
-      INT skill_id FK
-      ENUM status
-      TIMESTAMP created_at
-    }
-
-    exchanges {
-      INT id PK
-      INT request_id FK
-      TIMESTAMP agreed_at
-      ENUM status
-    }
-
-    ratings {
-      INT id PK
-      INT exchange_id FK
-      INT rated_by FK
-      INT rated_to FK
-      INT score
-      TEXT comment
-      TIMESTAMP created_at
-    }
-
-    roles ||--o{ users : "tiene"
-    users ||--o{ skills : "publica"
-    users ||--o{ requests : "solicita"
-    skills ||--o{ requests : "recibe"
-    requests ||--o| exchanges : "genera"
-    exchanges ||--o{ ratings : "recibe"
-    users ||--o{ ratings : "emite"
-    users ||--o{ ratings : "recibe"
-```
-
----
-
-## 14. Reglas de negocio
+## 12. Reglas de negocio
 
 - Un usuario debe estar registrado para iniciar sesión.
 - Un usuario debe estar logueado para crear habilidades.
@@ -627,7 +428,7 @@ erDiagram
 
 ---
 
-## 15. Seguridad mínima
+## 13. Seguridad mínima
 
 - Guardar contraseñas con `bcrypt`.
 - No devolver `password` en respuestas JSON.
@@ -640,7 +441,7 @@ erDiagram
 
 ---
 
-## 16. Variables de entorno
+## 14. Variables de entorno
 
 Backend:
 
@@ -661,7 +462,7 @@ VITE_API_URL=http://localhost:3000/api
 
 ---
 
-## 17. Puertos de desarrollo
+## 15. Puertos de desarrollo
 
 ```text
 Frontend: http://localhost:5173
@@ -671,20 +472,6 @@ MySQL:    localhost:3306
 
 ---
 
-## 18. Referencias oficiales del stack visual
+## 16. Criterio técnico principal
 
-- Tailwind CSS con Vite: https://tailwindcss.com/docs/installation/using-vite
-- shadcn/ui con Vite: https://ui.shadcn.com/docs/installation/vite
-- Lucide React: https://lucide.dev/guide/react
-
----
-
-## 19. Criterio técnico principal
-
-La arquitectura debe permitir empezar rápido, mantener el código ordenado y ampliar el proyecto después sin rehacerlo desde cero.
-
-Prioridad:
-
-```text
-Primero MVP funcional. Después entrega final completa.
-```
+La arquitectura funcional ya está definida. En la última fase no se debe rehacer el proyecto: solo integrar Tailwind CSS, shadcn/ui y Lucide React para mejorar la presentación final.
