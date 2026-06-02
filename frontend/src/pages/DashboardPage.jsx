@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { ArrowRight, BookOpen, Search, Send } from 'lucide-react'
 import { useAuth } from '../context/AuthContext.jsx'
 import { Button } from '@/components/ui/button'
@@ -33,6 +34,14 @@ const steps = [
 
 function DashboardPage() {
   const { token } = useAuth()
+  const navigate = useNavigate()
+  const [searchValue, setSearchValue] = useState('')
+
+  const handleSubmitSearch = (event) => {
+    event.preventDefault()
+    const query = searchValue.trim()
+    navigate(query ? `/skills?q=${encodeURIComponent(query)}` : '/skills')
+  }
 
   return (
     <section className="space-y-6 pb-8">
@@ -52,6 +61,26 @@ function DashboardPage() {
                 desde la plataforma.
               </p>
             </div>
+
+            <form onSubmit={handleSubmitSearch} className="grid gap-3 md:grid-cols-[minmax(0,1fr)_auto]">
+              <div className="relative">
+                <Search
+                  size={18}
+                  aria-hidden="true"
+                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                />
+                <input
+                  type="search"
+                  placeholder="Busca una habilidad para aprender desde aquí"
+                  value={searchValue}
+                  onChange={(event) => setSearchValue(event.target.value)}
+                  className="h-12 w-full rounded-2xl border border-slate-200 bg-slate-50 pl-11 pr-4 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                />
+              </div>
+              <Button type="submit" className="h-12 rounded-2xl bg-blue-600 px-5 text-white hover:bg-blue-700">
+                Buscar
+              </Button>
+            </form>
 
             <div className="flex flex-wrap gap-3">
               {!token ? (

@@ -105,17 +105,19 @@ export function useSkillSwapData() {
 
   const filteredSkills = useMemo(() => {
     const normalizedQuery = searchText.trim().toLowerCase()
+    const visibleSkills =
+      token && user?.id ? skills.filter((skill) => skill.user_id !== user.id) : skills
 
     if (!normalizedQuery) {
-      return skills
+      return visibleSkills
     }
 
-    return skills.filter((skill) =>
+    return visibleSkills.filter((skill) =>
       [skill.title, skill.description, skill.owner, skill.category, skill.level, skill.format]
         .filter(Boolean)
         .some((value) => value.toLowerCase().includes(normalizedQuery)),
     )
-  }, [searchText, skills])
+  }, [searchText, skills, token, user?.id])
 
   const mySkills = useMemo(
     () => skills.filter((skill) => token && skill.user_id === user?.id),

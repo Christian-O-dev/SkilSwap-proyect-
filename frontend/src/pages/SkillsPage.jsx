@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Compass, Search, Sparkles } from 'lucide-react'
 import EmptyState from '@/components/common/EmptyState.jsx'
 import ErrorState from '@/components/common/ErrorState.jsx'
@@ -13,6 +15,7 @@ import { Button } from '@/components/ui/button'
 import { useSkillSwapData } from '@/hooks/useSkillSwapData.js'
 
 function SkillsPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
   const {
     error,
     filteredSkills,
@@ -26,6 +29,27 @@ function SkillsPage() {
     handleRequestSkill,
     setSearchText,
   } = useSkillSwapData()
+
+  useEffect(() => {
+    const query = searchParams.get('q') || ''
+    if (query !== searchText) {
+      setSearchText(query)
+    }
+  }, [searchParams, searchText, setSearchText])
+
+  const handleSearchChange = (value) => {
+    setSearchText(value)
+    if (value.trim()) {
+      setSearchParams({ q: value })
+      return
+    }
+    setSearchParams({})
+  }
+
+  const handleClearSearch = () => {
+    setSearchText('')
+    setSearchParams({})
+  }
 
   if (loading) {
     return (
@@ -53,7 +77,11 @@ function SkillsPage() {
         }
       />
 
-      <SkillSearchBar value={searchText} onChange={setSearchText} />
+      <SkillSearchBar
+        value={searchText}
+        onChange={handleSearchChange}
+        onClear={handleClearSearch}
+      />
 
       {!token ? (
         <div className="rounded-2xl border border-dashed border-slate-300 bg-white/90 p-4 shadow-sm">
@@ -80,32 +108,30 @@ function SkillsPage() {
       ) : null}
 
       <div className="grid gap-4">
-        {filteredSkills.map((skill) => (
-          (() => {
-            const isOwnerSkill = token && skill.user_id === user?.id
-            const alreadyRequested = requestedSkillIds.has(skill.id)
+        {filteredSkills.map((skill) => {
+          const isOwnerSkill = token && skill.user_id === user?.id
+          const alreadyRequested = requestedSkillIds.has(skill.id)
 
-            return (
-              <SkillCard
-                key={skill.id}
-                skill={skill}
-                onRequest={handleRequestSkill}
-                disabled={Boolean(requestingSkillId) || isOwnerSkill || alreadyRequested}
-                isOwner={false}
-                requested={alreadyRequested}
-                actionLabel={
-                  isOwnerSkill
-                    ? 'Es tu habilidad'
-                    : alreadyRequested
-                      ? 'Solicitud enviada'
-                      : requestingSkillId === skill.id
-                        ? 'Enviando...'
-                        : 'Enviar solicitud'
-                }
-              />
-            )
-          })()
-        ))}
+          return (
+            <SkillCard
+              key={skill.id}
+              skill={skill}
+              onRequest={handleRequestSkill}
+              disabled={Boolean(requestingSkillId) || isOwnerSkill || alreadyRequested}
+              isOwner={false}
+              requested={alreadyRequested}
+              actionLabel={
+                isOwnerSkill
+                  ? 'Es tu habilidad'
+                  : alreadyRequested
+                    ? 'Solicitud enviada'
+                    : requestingSkillId === skill.id
+                      ? 'Enviando...'
+                      : 'Enviar solicitud'
+              }
+            />
+          )
+        })}
 
         {filteredSkills.length === 0 ? (
           <EmptyState
@@ -119,7 +145,7 @@ function SkillsPage() {
             }
             action={
               searchText.trim() ? (
-                <Button type="button" variant="outline" className="rounded-full" onClick={() => setSearchText('')}>
+                <Button type="button" variant="outline" className="rounded-full" onClick={handleClearSearch}>
                   Limpiar búsqueda
                 </Button>
               ) : (
