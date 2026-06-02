@@ -3,7 +3,6 @@ import RequestCard from './RequestCard.jsx'
 
 function RequestsList({
   title,
-  eyebrow,
   requests,
   type,
   loading,
@@ -13,9 +12,13 @@ function RequestsList({
   onReject,
 }) {
   return (
-    <section className="request-box">
-      <span className="eyebrow">{eyebrow}</span>
-      <strong>{title}</strong>
+    <section className="space-y-4">
+      <div className="flex items-center justify-between gap-3">
+        <strong className="text-lg text-slate-900">{title}</strong>
+        <span className="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-600">
+          {requests.length}
+        </span>
+      </div>
       <div className="request-list">
         {requests.map((request) => (
           <RequestCard
@@ -31,7 +34,7 @@ function RequestsList({
           <EmptyState
             title="Sin solicitudes"
             description={emptyMessage}
-            className="border-0 bg-transparent shadow-none"
+            className="border-slate-200 bg-white shadow-sm"
           />
         ) : null}
       </div>
