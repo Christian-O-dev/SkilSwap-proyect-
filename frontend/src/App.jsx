@@ -9,6 +9,8 @@ import SkillsPage from './pages/SkillsPage.jsx'
 
 function App() {
   const { token, loading, user } = useAuth()
+  const protectedSkillsView = token ? <SkillsPage /> : <Navigate to="/login" replace />
+  const protectedProfileView = token ? <DashboardPage /> : <Navigate to="/login" replace />
 
   if (loading) {
     return (
@@ -39,6 +41,10 @@ function App() {
             element={token ? <Navigate to="/dashboard" replace /> : <RegisterPage />}
           />
           <Route path="/skills" element={<SkillsPage />} />
+          <Route path="/my-skills" element={protectedSkillsView} />
+          <Route path="/requests" element={protectedSkillsView} />
+          <Route path="/exchanges" element={protectedSkillsView} />
+          <Route path="/profile" element={protectedProfileView} />
           <Route
             path="/admin"
             element={token && user?.role_id === 1 ? <AdminPage /> : <Navigate to="/dashboard" replace />}
