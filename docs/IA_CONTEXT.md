@@ -2,7 +2,7 @@
 
 # Contexto para IA - SkillSwap
 
-Este archivo es la guía principal para cualquier IA que trabaje en este repositorio: ChatGPT, Codex u otro asistente. Su objetivo es evitar confusión, cambios de stack innecesarios y decisiones que se salgan del alcance del proyecto.
+Este archivo es la guÃ­a principal para cualquier IA que trabaje en este repositorio: ChatGPT, Codex u otro asistente. Su objetivo es evitar confusiÃ³n, cambios de stack innecesarios y decisiones que se salgan del alcance inicial.
 
 ---
 
@@ -14,47 +14,39 @@ SkillSwap
 
 ---
 
-## 2. Descripción corta
+## 2. DescripciÃ³n corta
 
-SkillSwap es una aplicación web para intercambiar habilidades técnicas entre usuarios.
+SkillSwap es una aplicaciÃ³n web para intercambiar habilidades tÃ©cnicas entre usuarios.
 
 Funciona como una comunidad o marketplace P2P, pero sin pagos directos. Los usuarios publican habilidades que ofrecen y pueden solicitar intercambios con otros usuarios.
 
-Flujo principal:
+Flujo principal del MVP:
 
 ```text
-Registro → Login → Crear habilidad → Ver habilidades → Solicitar intercambio → Aceptar solicitud → Completar intercambio → Valorar usuario
+Registro â†’ Login â†’ Crear habilidad â†’ Ver habilidades â†’ Solicitar intercambio
 ```
 
 ---
 
-## 3. Estado actual del proyecto
+## 3. Objetivo actual
 
-Las fases funcionales principales ya se consideran terminadas o definidas. La IA no debe replanificar todo el proyecto desde cero.
+Preparar una **primera entrega funcional para el viernes 5 de junio de 2026**.
 
-El objetivo actual es trabajar en la **última fase de entrega definitiva**, centrada en mejorar la presentación visual del frontend agregando:
-
-```text
-Tailwind CSS
-shadcn/ui
-Lucide React
-```
-
-Estas tecnologías deben añadirse como mejora visual, no como excusa para rehacer la arquitectura, cambiar el backend o modificar el modelo de datos sin necesidad.
+La entrega no debe ser perfecta ni completa. Debe demostrar que el proyecto funciona de principio a fin con datos reales en MySQL.
 
 ---
 
-## 4. Stack base del proyecto
+## 4. Stack oficial
 
-La IA debe respetar este stack base salvo instrucción explícita del usuario.
+La IA debe respetar este stack salvo instrucciÃ³n explÃ­cita del usuario.
 
 ```text
 Frontend: React + Vite
 Backend: Node.js + Express
 Base de datos: MySQL
-Autenticación: JWT
-Hash de contraseñas: bcrypt
-Conexión MySQL: mysql2
+AutenticaciÃ³n: JWT
+Hash de contraseÃ±as: bcrypt
+ConexiÃ³n MySQL: mysql2
 Peticiones HTTP: Axios
 Rutas frontend: React Router DOM
 Variables de entorno: dotenv
@@ -64,27 +56,7 @@ Editor: VS Code
 
 ---
 
-## 5. Stack visual para la última fase
-
-En la última fase de entrega definitiva se añadirá:
-
-```text
-Tailwind CSS
-shadcn/ui
-Lucide React
-```
-
-Uso de cada tecnología:
-
-- **Tailwind CSS:** estilos, layout, responsive, espaciado, colores, bordes, sombras y estados visuales.
-- **shadcn/ui:** componentes reutilizables como botones, inputs, tarjetas, diálogos, badges, alerts y skeletons.
-- **Lucide React:** iconos claros para navegación, acciones y estados.
-
-La IA debe usar estas tecnologías solo para mejorar la interfaz existente.
-
----
-
-## 6. Decisiones que NO debe cambiar la IA
+## 5. Decisiones que NO debe cambiar la IA
 
 No convertir el proyecto a:
 
@@ -98,171 +70,59 @@ No convertir el proyecto a:
 - TypeScript obligatorio.
 - Docker obligatorio.
 
-Tampoco debe:
+Docker puede proponerse como mejora posterior, pero no debe bloquear la primera entrega.
 
-- Rehacer todo el frontend si no hace falta.
-- Rehacer todo el backend.
-- Cambiar rutas de API sin necesidad.
-- Cambiar el modelo de datos sin pedir confirmación.
-- Añadir dependencias innecesarias.
+Swagger tambiÃ©n puede quedar como mejora posterior; no debe ser obligatorio para el MVP.
 
 ---
 
-## 7. Prioridad de la última fase
+## 6. Prioridad mÃ¡xima para empezar el proyecto
 
 La IA debe priorizar:
 
-1. Instalar Tailwind CSS en el frontend.
-2. Configurar Tailwind en Vite.
-3. Configurar alias `@`.
-4. Inicializar shadcn/ui.
-5. Añadir componentes base de shadcn/ui.
-6. Instalar Lucide React.
-7. Mejorar el Navbar.
-8. Mejorar tarjetas de habilidades.
-9. Mejorar formularios.
-10. Mejorar páginas de solicitudes, intercambios, valoraciones y perfil si existen.
-11. Añadir iconos con Lucide React.
-12. Revisar responsive.
-13. Revisar la demo final.
+1. Crear backend funcional.
+2. Crear conexiÃ³n a MySQL.
+3. Crear base de datos mÃ­nima.
+4. Implementar registro.
+5. Implementar login con JWT.
+6. Crear middleware de autenticaciÃ³n.
+7. Implementar listado de habilidades.
+8. Implementar creaciÃ³n de habilidades.
+9. Implementar solicitud de intercambio.
+10. Crear frontend bÃ¡sico conectado al backend.
+11. AÃ±adir CSS simple y presentable.
+12. Preparar demo.
 
 ---
 
-## 8. Instalación del stack visual
+## 7. Fuera de alcance para la primera entrega
 
-Todos los comandos se ejecutan dentro de `frontend`.
+No implementar todavÃ­a salvo peticiÃ³n explÃ­cita del usuario:
 
-```bash
-cd frontend
-```
+- Chat.
+- Valoraciones.
+- Sistema avanzado de ratings.
+- Panel avanzado de administrador.
+- RecuperaciÃ³n de contraseÃ±a.
+- Subida de imÃ¡genes.
+- Notificaciones por email.
+- Swagger completo obligatorio.
+- Docker obligatorio.
+- Testing avanzado.
+- Despliegue en producciÃ³n.
+- Pasarela de pago.
 
-Instalar Tailwind CSS con Vite:
-
-```bash
-npm install tailwindcss @tailwindcss/vite
-```
-
-Instalar tipos de Node si se configura alias con `path`:
-
-```bash
-npm install -D @types/node
-```
-
-Inicializar shadcn/ui:
-
-```bash
-npx shadcn@latest init
-```
-
-Añadir componentes base:
-
-```bash
-npx shadcn@latest add button card input label textarea badge dialog dropdown-menu select avatar separator skeleton alert
-```
-
-Instalar Lucide React:
-
-```bash
-npm install lucide-react
-```
-
----
-
-## 9. Configuración esperada
-
-## `vite.config.js`
-
-Debe incluir Tailwind y alias `@`:
-
-```js
-import { defineConfig } from "vite"
-import react from "@vitejs/plugin-react"
-import tailwindcss from "@tailwindcss/vite"
-import path from "path"
-
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
-})
-```
-
-## `src/index.css`
-
-Debe incluir:
-
-```css
-@import "tailwindcss";
-```
-
-## `jsconfig.json`
-
-Debe incluir alias `@`:
-
-```json
-{
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
-}
-```
-
-## shadcn/ui
-
-La configuración esperada es:
+Regla:
 
 ```text
-Components: src/components/ui
-Utils: src/lib/utils.js
-CSS file: src/index.css
+No aÃ±adir funciones grandes antes de cerrar el flujo principal.
 ```
 
 ---
 
-## 10. Componentes visuales recomendados
+## 8. Modelo relacional resumido
 
-Usar shadcn/ui para:
-
-- `Button`
-- `Card`
-- `Input`
-- `Label`
-- `Textarea`
-- `Badge`
-- `Dialog`
-- `DropdownMenu`
-- `Select`
-- `Avatar`
-- `Separator`
-- `Skeleton`
-- `Alert`
-
-Usar Lucide React para:
-
-- `Home`
-- `Search`
-- `Plus`
-- `User`
-- `LogOut`
-- `BookOpen`
-- `Handshake`
-- `RefreshCcw`
-- `Star`
-- `Pencil`
-- `Trash2`
-- `Settings`
-
----
-
-## 11. Modelo relacional resumido
-
-Entidades del proyecto:
+Entidades completas del proyecto:
 
 ```text
 roles
@@ -273,34 +133,185 @@ exchanges
 ratings
 ```
 
+Para la primera entrega son obligatorias:
+
+```text
+roles
+users
+skills
+requests
+```
+
+Opcional si hay tiempo:
+
+```text
+exchanges
+```
+
+Para fase final:
+
+```text
+ratings
+```
+
 ---
 
-## 12. Reglas de negocio obligatorias
+## 9. Tablas mÃ­nimas
+
+## `roles`
+
+Campos:
+
+```text
+id
+name
+```
+
+Roles iniciales:
+
+```text
+admin
+user
+```
+
+---
+
+## `users`
+
+Campos:
+
+```text
+id
+username
+email
+password
+role_id
+created_at
+```
+
+Notas:
+
+- `email` debe ser Ãºnico.
+- `username` debe ser Ãºnico.
+- `password` debe guardar hash, no texto plano.
+- `role_id` debe apuntar a `roles.id`.
+- El rol por defecto debe ser `user`.
+
+---
+
+## `skills`
+
+Campos:
+
+```text
+id
+user_id
+title
+description
+created_at
+```
+
+Notas:
+
+- Cada habilidad pertenece a un usuario.
+- `user_id` viene del usuario autenticado.
+
+---
+
+## `requests`
+
+Campos:
+
+```text
+id
+requester_id
+skill_id
+status
+created_at
+```
+
+Estados:
+
+```text
+open
+accepted
+rejected
+```
+
+Notas:
+
+- `requester_id` viene del usuario autenticado.
+- `skill_id` apunta a la habilidad solicitada.
+- Un usuario no puede solicitar su propia habilidad.
+
+---
+
+## `exchanges`
+
+Tabla para fase posterior.
+
+Campos:
+
+```text
+id
+request_id
+agreed_at
+status
+```
+
+Notas:
+
+- Una solicitud aceptada genera como mÃ¡ximo un intercambio.
+- `request_id` debe ser `UNIQUE`.
+
+---
+
+## `ratings`
+
+Tabla para fase posterior.
+
+Campos:
+
+```text
+id
+exchange_id
+rated_by
+rated_to
+score
+comment
+created_at
+```
+
+Notas:
+
+- Sirve para valorar intercambios completados.
+- Un usuario no puede valorarse a sÃ­ mismo.
+- Un usuario solo puede valorar una vez por intercambio.
+
+---
+
+## 10. Reglas de negocio obligatorias
 
 La IA debe respetar estas reglas:
 
-- Un usuario debe estar registrado para iniciar sesión.
+- Un usuario debe estar registrado para iniciar sesiÃ³n.
 - Un usuario debe estar logueado para crear habilidades.
 - Un usuario debe estar logueado para crear solicitudes.
-- Un usuario no puede solicitar una habilidad que él mismo publicó.
+- Un usuario no puede solicitar una habilidad que Ã©l mismo publicÃ³.
 - Una habilidad pertenece siempre a un usuario.
 - Una habilidad puede recibir muchas solicitudes.
-- Una solicitud aceptada puede generar un intercambio.
-- Un intercambio puede completarse o cancelarse.
-- Una valoración solo puede registrarse cuando el intercambio está completado.
-- Un usuario no puede valorarse a sí mismo.
-- Un usuario solo puede valorar una vez por intercambio.
-- Las contraseñas siempre se guardan con `bcrypt`.
+- Las contraseÃ±as siempre se guardan con `bcrypt`.
 - Las rutas privadas se protegen con JWT.
 - El frontend debe enviar el token como `Bearer Token`.
-- El backend no debe devolver la contraseña del usuario.
+- El backend no debe devolver la contraseÃ±a del usuario.
 - Las consultas SQL deben ser preparadas.
+- La primera entrega debe priorizar funcionalidad antes que diseÃ±o avanzado.
 
 ---
 
-## 13. Endpoints principales
+## 11. Endpoints mÃ­nimos esperados
 
-## Autenticación
+## AutenticaciÃ³n
 
 ```text
 POST /api/auth/register
@@ -314,6 +325,11 @@ GET /api/users/me
 GET /api/skills
 GET /api/skills/:id
 POST /api/skills
+```
+
+Opcionales:
+
+```text
 PUT /api/skills/:id
 DELETE /api/skills/:id
 ```
@@ -323,77 +339,222 @@ DELETE /api/skills/:id
 ```text
 POST /api/requests
 GET /api/requests
-PUT /api/requests/:id/accept
-PUT /api/requests/:id/reject
-```
-
-## Intercambios
-
-```text
-GET /api/exchanges
-POST /api/exchanges
-PUT /api/exchanges/:id/complete
-```
-
-## Valoraciones
-
-```text
-POST /api/ratings
-GET /api/users/:id/ratings
 ```
 
 ---
 
-## 14. Prompts útiles para Codex en esta última fase
-
-## Instalar stack visual
+## 12. Estructura backend recomendada
 
 ```text
-Configura Tailwind CSS, shadcn/ui y Lucide React en el frontend React + Vite sin cambiar la arquitectura del proyecto. Usa alias @ hacia src, configura vite.config.js, jsconfig.json, src/index.css y añade componentes base de shadcn/ui.
-```
-
-## Mejorar Navbar
-
-```text
-Mejora el Navbar existente usando Tailwind CSS, shadcn/ui y Lucide React. No cambies la lógica de autenticación ni las rutas existentes.
-```
-
-## Mejorar tarjetas de habilidades
-
-```text
-Mejora las tarjetas de habilidades usando Card, Badge y Button de shadcn/ui, Tailwind CSS para responsive e iconos de Lucide React. No cambies la API ni el modelo de datos.
-```
-
-## Mejorar formularios
-
-```text
-Mejora los formularios existentes usando Input, Label, Textarea, Button y Alert de shadcn/ui. Mantén la lógica actual y solo mejora diseño, accesibilidad y mensajes visuales.
+backend/
+â”œâ”€â”€ package.json
+â”œâ”€â”€ .env
+â””â”€â”€ src/
+    â”œâ”€â”€ app.js
+    â”œâ”€â”€ server.js
+    â”œâ”€â”€ routes/
+    â”‚   â”œâ”€â”€ auth.routes.js
+    â”‚   â”œâ”€â”€ users.routes.js
+    â”‚   â”œâ”€â”€ skills.routes.js
+    â”‚   â””â”€â”€ requests.routes.js
+    â”œâ”€â”€ controllers/
+    â”‚   â”œâ”€â”€ auth.controller.js
+    â”‚   â”œâ”€â”€ users.controller.js
+    â”‚   â”œâ”€â”€ skills.controller.js
+    â”‚   â””â”€â”€ requests.controller.js
+    â”œâ”€â”€ models/
+    â”‚   â”œâ”€â”€ user.model.js
+    â”‚   â”œâ”€â”€ skill.model.js
+    â”‚   â””â”€â”€ request.model.js
+    â”œâ”€â”€ middleware/
+    â”‚   â””â”€â”€ auth.middleware.js
+    â””â”€â”€ config/
+        â””â”€â”€ db.js
 ```
 
 ---
 
-## 15. Criterios de aceptación de la última fase
+## 13. Estructura frontend recomendada
 
-La mejora visual se considera terminada si:
-
-- Tailwind CSS funciona.
-- shadcn/ui está configurado.
-- Lucide React está instalado y usado.
-- El Navbar se ve presentable.
-- Las tarjetas de habilidades se ven claras.
-- Los formularios se ven ordenados.
-- Las páginas principales son responsive.
-- No se rompe el login.
-- No se rompe la conexión con backend.
-- No se rompen las rutas existentes.
-- El proyecto sigue arrancando con `npm run dev`.
+```text
+frontend/
+â”œâ”€â”€ package.json
+â”œâ”€â”€ .env
+â””â”€â”€ src/
+    â”œâ”€â”€ main.jsx
+    â”œâ”€â”€ App.jsx
+    â”œâ”€â”€ pages/
+    â”‚   â”œâ”€â”€ LoginPage.jsx
+    â”‚   â”œâ”€â”€ RegisterPage.jsx
+    â”‚   â”œâ”€â”€ DashboardPage.jsx
+    â”‚   â””â”€â”€ SkillsPage.jsx
+    â”œâ”€â”€ components/
+    â”‚   â”œâ”€â”€ Navbar.jsx
+    â”‚   â””â”€â”€ SkillCard.jsx
+    â”œâ”€â”€ services/
+    â”‚   â”œâ”€â”€ api.js
+    â”‚   â”œâ”€â”€ authService.js
+    â”‚   â”œâ”€â”€ skillsService.js
+    â”‚   â””â”€â”€ requestsService.js
+    â”œâ”€â”€ context/
+    â”‚   â””â”€â”€ AuthContext.jsx
+    â””â”€â”€ styles/
+        â””â”€â”€ global.css
+```
 
 ---
 
-## 16. Regla principal para la IA
+## 14. Convenciones de cÃ³digo
+
+## Backend
+
+- Usar CommonJS o ES Modules de forma consistente.
+- No mezclar `require` e `import` sin necesidad.
+- Usar `async/await`.
+- Separar rutas, controladores y modelos.
+- Evitar SQL largo dentro de controladores si puede ir en modelos.
+- Responder siempre en JSON.
+- Usar cÃ³digos HTTP correctos.
+
+CÃ³digos recomendados:
 
 ```text
-No rehacer el proyecto. Solo mejorar la última fase visual.
+200 OK
+201 Created
+400 Bad Request
+401 Unauthorized
+403 Forbidden
+404 Not Found
+500 Internal Server Error
 ```
 
-La prioridad actual es pulir el frontend para la entrega definitiva usando Tailwind CSS, shadcn/ui y Lucide React.
+## Frontend
+
+- Usar componentes funcionales.
+- Usar hooks.
+- Separar servicios de API.
+- No repetir URLs del backend en todas las pÃ¡ginas.
+- Guardar la URL base en `services/api.js`.
+- Manejar errores con mensajes simples.
+- Mantener CSS claro y sencillo.
+
+---
+
+## 15. Variables de entorno
+
+Backend:
+
+```env
+PORT=3000
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=skillswap_db
+JWT_SECRET=skillswap_secret_dev
+```
+
+Frontend:
+
+```env
+VITE_API_URL=http://localhost:3000/api
+```
+
+---
+
+## 16. CÃ³mo debe trabajar la IA en este repositorio
+
+Cuando la IA proponga o modifique cÃ³digo, debe:
+
+1. Leer primero la estructura existente.
+2. No borrar archivos sin necesidad.
+3. Hacer cambios pequeÃ±os y verificables.
+4. Mantener nombres claros.
+5. Respetar el stack oficial.
+6. Priorizar la primera entrega.
+7. Explicar cÃ³mo probar cada cambio.
+8. Avisar si una funciÃ³n queda pendiente.
+9. Evitar sobrecomplicar el proyecto.
+10. No aÃ±adir dependencias innecesarias.
+
+---
+
+## 17. Prompts Ãºtiles para Codex
+
+## Crear backend base
+
+```text
+Crea el backend base de SkillSwap con Express, CORS, dotenv y conexiÃ³n a MySQL usando mysql2. Respeta la estructura backend/src con routes, controllers, models, middleware y config.
+```
+
+## Crear autenticaciÃ³n
+
+```text
+Implementa registro y login con bcrypt y JWT. Usa MySQL con consultas preparadas. Crea o actualiza auth.routes.js, auth.controller.js, user.model.js y auth.middleware.js.
+```
+
+## Crear habilidades
+
+```text
+Implementa GET /api/skills y POST /api/skills. La creaciÃ³n debe estar protegida con JWT y debe usar req.user.id como user_id.
+```
+
+## Crear solicitudes
+
+```text
+Implementa POST /api/requests para solicitar una habilidad. Debe verificar que el usuario estÃ© logueado y que no solicite una habilidad propia.
+```
+
+## Crear frontend
+
+```text
+Crea las pÃ¡ginas LoginPage, RegisterPage, DashboardPage y SkillsPage en React + Vite. Conecta el frontend con el backend usando Axios y localStorage para el token.
+```
+
+## Revisar errores
+
+```text
+Revisa el proyecto para detectar errores de imports, rutas rotas, problemas de CORS, conexiÃ³n a MySQL y manejo incorrecto del token JWT.
+```
+
+---
+
+## 18. Criterios de aceptaciÃ³n de la entrega
+
+La primera entrega se considera funcional si se puede demostrar:
+
+- El backend arranca.
+- El frontend arranca.
+- MySQL estÃ¡ conectado.
+- Se puede registrar un usuario.
+- Se puede iniciar sesiÃ³n.
+- Se genera un token JWT.
+- Se puede crear una habilidad.
+- Se pueden listar habilidades.
+- Se puede crear una solicitud de intercambio.
+- Los datos aparecen en MySQL.
+- El proyecto estÃ¡ subido a GitHub.
+
+---
+
+## 19. Demo esperada
+
+El dÃ­a de clase se debe poder mostrar:
+
+1. Abrir la web.
+2. Registrar un usuario.
+3. Iniciar sesiÃ³n.
+4. Ver el dashboard.
+5. Crear una habilidad.
+6. Ver la habilidad en el listado.
+7. Solicitar intercambio.
+8. EnseÃ±ar la base de datos con los datos guardados.
+
+---
+
+## 20. Regla principal para la IA
+
+```text
+Primero que funcione. DespuÃ©s se mejora.
+```
+
+La prioridad es terminar una versiÃ³n pequeÃ±a pero funcional. No aÃ±adir caracterÃ­sticas grandes antes de cerrar el flujo principal.
