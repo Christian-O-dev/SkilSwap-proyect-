@@ -1,89 +1,173 @@
 # Session Summary - SkillSwap
 
-Este archivo resume de forma breve lo que se hizo en el proyecto para poder retomarlo rapido desde cualquier PC.
+Este archivo resume el estado real del proyecto hasta este momento para poder retomarlo rápido desde cualquier PC o desde otra sesión.
 
 ## Resumen General
 
-- Se confirmo el stack oficial: React + Vite, Node.js + Express, MySQL, JWT, bcrypt, mysql2, Axios, React Router DOM y dotenv.
-- Se mantuvo el objetivo del MVP: Registro -> Login -> Crear habilidad -> Ver habilidades -> Solicitar intercambio.
-- Se preparo la estructura base del proyecto con `backend/`, `frontend/` y `database/`.
+- Se completó el MVP principal de SkillSwap con React + Vite en frontend y Node.js + Express + MySQL en backend.
+- El flujo base ya funciona de punta a punta: registro, login, publicación de habilidades, listado y solicitudes.
+- También quedaron completadas las fases posteriores 1, 2, 3 y 4.
+- La única fase grande pendiente en el roadmap es la `Fase posterior 5 - Profesionalización`.
 
-## Lo Hecho Por Fases
+## Fases Completadas
 
-### Fase 1
+### Fase 0 - Documentación y enfoque
 
-- Se creo la base del proyecto en backend y frontend.
-- Se instalaron las dependencias necesarias.
-- Se dejaron listos los archivos `.env` de desarrollo.
-- Se confirmo que el backend y el frontend podian arrancar.
+- Se definieron `ARCHITECTURE.md`, `IA_CONTEXT.md`, `ROADMAP.md` y `SESSION_SUMMARY.md`.
+- Se dejó fijado el stack oficial del proyecto.
+- Se mantuvo el alcance del proyecto sin desviarlo a otro framework o arquitectura.
 
-### Fase 2
+### Fase 1 - Preparación del proyecto
 
-- Se creo el script SQL de `skillswap_db`.
-- Se definieron las tablas `roles`, `users`, `skills`, `requests`, `exchanges` y `ratings`.
+- Se creó la estructura `backend/`, `frontend/` y `database/`.
+- Se inicializó el backend con Node.js.
+- Se creó el frontend con Vite + React.
+- Se instalaron dependencias principales en backend y frontend.
+- Se prepararon archivos `.env` de desarrollo.
 
-### Fase 3
+### Fase 2 - Base de datos
 
-- Se construyo la API base con Express.
-- Se agrego `GET /api/health`.
+- Se creó `database/skillswap.sql`.
+- Se definieron tablas `roles`, `users`, `skills`, `requests`, `exchanges` y `ratings`.
+- Se dejaron insertados los roles base `admin` y `user`.
+- Se añadieron migraciones para las fases posteriores:
+  - `001_phase_posterior_1_skills.sql`
+  - `002_phase_posterior_4_admin.sql`
+
+### Fase 3 - Backend base
+
+- Se construyó la API con Express.
+- Se configuró `express.json()` y `cors()`.
+- Se creó `GET /api/health`.
 - Se conectaron las rutas principales del backend.
 
-### Fase 4
+### Fase 4 - Autenticación
 
-- Se implemento autenticacion real con JWT.
-- Se agregaron `POST /api/auth/register`, `POST /api/auth/login` y `GET /api/users/me`.
-- Se guardan passwords con bcrypt y se usan consultas preparadas en MySQL.
+- Se implementó registro con validación de `username` y `email`.
+- Se hashean contraseñas con `bcrypt`.
+- Se implementó login con JWT.
+- Se protege `GET /api/users/me`.
+- Más adelante el login se cambió para entrar con `username + password`.
+- Se añadió bloqueo real de usuarios en login y en rutas autenticadas.
 
-### Fase 7
+### Fase 5 - Habilidades
 
-- Se reemplazo la demo inicial de Vite por la base real de SkillSwap.
-- Se agrego router con React Router DOM.
-- Se crearon `Navbar`, `LoginPage`, `RegisterPage`, `DashboardPage`, `SkillsPage` y `SkillCard`.
-- Se preparo el contexto global de autenticacion.
-- Se crearon los servicios `api.js`, `authService.js`, `skillsService.js` y `requestsService.js`.
-- Se aplico un diseño visual propio con CSS.
+- Se implementaron:
+  - `GET /api/skills`
+  - `GET /api/skills/:id`
+  - `POST /api/skills`
+- Las habilidades quedaron vinculadas al usuario autenticado.
 
-### Fase 8
+### Fase 6 - Solicitudes de intercambio
 
-- Se conecto el frontend con el backend real.
-- Login y registro ya consumen la API.
-- Se sincroniza el token JWT en `localStorage` y en Axios.
-- Se implemento backend real para habilidades y solicitudes.
-- Se conectaron `GET /api/skills`, `GET /api/skills/:id`, `POST /api/skills`, `GET /api/requests` y `POST /api/requests`.
-- La pantalla de habilidades ya permite listar, crear habilidades y crear solicitudes.
+- Se implementaron:
+  - `POST /api/requests`
+  - `GET /api/requests`
+- Se valida que la habilidad exista.
+- Se evita solicitar una habilidad propia.
+- Se guardan solicitudes con estado `open`.
 
-### Fase 9
+### Fase 7 - Frontend base
 
-- Se mejoro el diseño general de la interfaz.
-- Se pulieron fondos, tarjetas, botones, formularios, estados hover/focus y responsividad.
-- Se hizo una interfaz mas limpia y presentable para demo.
-- Se valido que el build de frontend siguiera funcionando.
+- Se sustituyó la demo inicial de Vite por la base real del proyecto.
+- Se creó navegación con React Router.
+- Se añadieron las páginas:
+  - `DashboardPage`
+  - `LoginPage`
+  - `RegisterPage`
+  - `SkillsPage`
+- Se añadieron componentes base como `Navbar` y `SkillCard`.
+- Se creó `AuthContext` para sesión global.
 
-### Fase 10
+### Fase 8 - Conexión frontend-backend
 
-- Se dejo el proyecto listo para pruebas finales.
-- Se verifico que backend y frontend siguieran funcionando.
-- Se reorganizo la documentacion.
-- Se movieron los Markdown a la carpeta `docs/`.
-- En la raiz solo quedo `README.md`.
+- Registro y login quedaron conectados a la API real.
+- El token se guarda en `localStorage`.
+- Axios añade automáticamente el `Bearer token`.
+- La pantalla de habilidades ya consume el backend real.
+- Se integraron creación de habilidades y solicitudes desde la UI.
 
-## Cambios Importantes Recientes
+### Fase 9 - Diseño básico
 
-- Se creo `backend/.env` real para que MySQL y JWT carguen correctamente.
-- Se resolvio el error de registro `500` causado por la falta de variables de entorno.
-- Se confirmo que `POST /api/auth/register` ya responde correctamente.
-- Se elimino la carpeta `private`.
+- Se creó `frontend/src/styles/global.css`.
+- Se diseñó una interfaz propia con fondos, paneles, botones, formularios y estados visuales.
+- Se revisó la responsividad general del frontend.
+- Se limpiaron textos temporales del frontend para dejar copy más final.
+
+### Fase 10 - Pruebas finales / cierre de primera entrega
+
+- Se comprobó que frontend y backend siguieran funcionando.
+- Se reorganizó la documentación dentro de `docs/`.
+- Se corrigieron problemas de codificación en los archivos Markdown.
+
+## Fases Posteriores Completadas
+
+### Fase posterior 1 - Mejoras de habilidades
+
+- Se añadió edición de habilidades.
+- Se añadió eliminación de habilidades.
+- Se añadió filtro por texto.
+- Se guardan de verdad `category`, `level` y `format`.
+- Se muestra la fecha formateada en la interfaz.
+
+### Fase posterior 2 - Intercambios
+
+- Se puede aceptar una solicitud.
+- Se puede rechazar una solicitud.
+- Al aceptar se crea automáticamente un `exchange`.
+- Se puede marcar un intercambio como `completed`.
+- Se puede cancelar un intercambio.
+- Se añadieron vistas en frontend para:
+  - solicitudes enviadas
+  - solicitudes recibidas
+  - intercambios
+
+### Fase posterior 3 - Valoraciones
+
+- Se aprovechó la tabla `ratings` ya definida en SQL.
+- Se puede valorar a otro usuario después de un intercambio `completed`.
+- Se impiden valoraciones duplicadas por usuario e intercambio.
+- Se impide que un usuario se valore a sí mismo.
+- Se calcula y muestra la puntuación media en las habilidades publicadas.
+
+### Fase posterior 4 - Administración
+
+- Se creó un panel `/admin`.
+- Se añadió middleware para acceso solo de administradores.
+- Se pueden listar usuarios.
+- Se pueden bloquear y desbloquear usuarios.
+- Se pueden eliminar habilidades desde administración.
+- Se pueden revisar solicitudes globales.
+- El panel admin se rehizo a formato más profesional y compacto, tipo lista/tabla.
+
+## Cambios Técnicos Importantes Recientes
+
+- El login ahora usa `username` en lugar de `email`.
+- Se añadió soporte real para admin con `role_id = 1`.
+- Se añadió el campo `is_blocked` en usuarios mediante migración.
+- Se crearon servicios frontend nuevos:
+  - `exchangesService.js`
+  - `ratingsService.js`
+  - `adminService.js`
+- Se añadieron rutas backend nuevas:
+  - `/api/exchanges`
+  - `/api/ratings`
+  - `/api/admin`
 
 ## Estado Actual
 
 - Backend funcionando.
 - Frontend funcionando.
-- Registro y login conectados.
-- Habilidades y solicitudes conectadas.
-- Base visual lista para demo.
-- Documentacion ordenada en `docs/`.
+- Build de frontend validado.
+- Registro funcionando.
+- Login con username funcionando.
+- Gestión de habilidades funcionando.
+- Solicitudes e intercambios funcionando.
+- Valoraciones funcionando.
+- Panel de administración funcionando.
+- Documentación actualizada.
 
-## Estructura De Documentacion Actual
+## Estructura de documentación actual
 
 - `README.md`
 - `docs/ARCHITECTURE.md`
@@ -93,6 +177,9 @@ Este archivo resume de forma breve lo que se hizo en el proyecto para poder reto
 
 ## Siguiente Paso Natural
 
-- Probar el flujo completo en navegador.
-- Revisar errores de demo.
-- Seguir con mejoras posteriores si hace falta.
+- Empezar `Fase posterior 5 - Profesionalización`.
+- Prioridades recomendadas:
+  - Swagger
+  - Tests
+  - mejoras de seguridad
+  - despliegue

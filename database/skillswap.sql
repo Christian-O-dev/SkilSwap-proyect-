@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS users (
   email VARCHAR(150) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
   role_id INT NOT NULL DEFAULT 2,
+  is_blocked BOOLEAN NOT NULL DEFAULT FALSE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_users_role
     FOREIGN KEY (role_id) REFERENCES roles(id)
@@ -30,6 +31,9 @@ CREATE TABLE IF NOT EXISTS skills (
   user_id INT NOT NULL,
   title VARCHAR(150) NOT NULL,
   description TEXT,
+  category ENUM('Frontend', 'Backend', 'Design', 'Data') NOT NULL DEFAULT 'Frontend',
+  level ENUM('Starter', 'Intermediate', 'Advanced') NOT NULL DEFAULT 'Starter',
+  format ENUM('Online', 'Presencial') NOT NULL DEFAULT 'Online',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_skills_user
     FOREIGN KEY (user_id) REFERENCES users(id)

@@ -364,6 +364,7 @@ textarea::placeholder {
 
 .auth-card,
 .composer-card,
+.filter-card,
 .info-card {
   border-radius: var(--radius-lg);
   padding: 1.35rem;
@@ -558,6 +559,52 @@ textarea::placeholder {
   gap: 1.3rem;
 }
 
+.admin-page {
+  gap: 1.3rem;
+}
+
+.admin-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.admin-hero {
+  min-height: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.admin-hero__copy {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.admin-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.admin-summary__item {
+  display: grid;
+  gap: 0.2rem;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.admin-summary__item strong {
+  color: var(--title);
+  font-size: 1.7rem;
+}
+
+.filter-card {
+  display: grid;
+}
+
 .section-head {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
@@ -566,6 +613,110 @@ textarea::placeholder {
 .skills-layout {
   grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
   align-items: start;
+}
+
+.admin-panel {
+  gap: 1rem;
+}
+
+.admin-panel__head {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.admin-table {
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.admin-table__body {
+  display: grid;
+}
+
+.admin-table__head {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.admin-table__row {
+  display: grid;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.9rem 1rem;
+}
+
+.admin-table__body .admin-table__row {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.admin-table__row--users {
+  grid-template-columns: minmax(220px, 1.6fr) 0.8fr 1fr 0.8fr 0.8fr 0.9fr;
+}
+
+.admin-table__row--skills {
+  grid-template-columns: minmax(240px, 1.8fr) 1fr 0.9fr 0.9fr 0.8fr 0.7fr;
+}
+
+.admin-table__row--requests {
+  grid-template-columns: minmax(240px, 1.7fr) 1fr 1fr 0.8fr 0.8fr;
+}
+
+.admin-cell {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.admin-cell strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.admin-actions .button {
+  min-height: 38px;
+  padding: 0.65rem 0.95rem;
+}
+
+.admin-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 92px;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.admin-status--active {
+  color: var(--success);
+  background: rgba(118, 227, 157, 0.1);
+  border: 1px solid rgba(118, 227, 157, 0.2);
+}
+
+.admin-status--blocked {
+  color: var(--danger);
+  background: rgba(255, 122, 122, 0.1);
+  border: 1px solid rgba(255, 122, 122, 0.2);
+}
+
+.admin-status--neutral {
+  color: var(--title);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
 }
 
 .skills-list {
@@ -633,6 +784,7 @@ textarea::placeholder {
 
 .skill-card__meta {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 1rem;
   color: var(--muted);
@@ -641,6 +793,8 @@ textarea::placeholder {
 
 .skill-card__actions {
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 .request-box {
@@ -650,6 +804,48 @@ textarea::placeholder {
   border-radius: 18px;
   border: 1px dashed var(--border-strong);
   background: rgba(255, 255, 255, 0.03);
+}
+
+.request-list {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 0.4rem;
+}
+
+.request-item {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.85rem;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.inline-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 0.35rem;
+}
+
+.inline-actions .button {
+  min-height: 40px;
+  padding: 0.7rem 1rem;
+}
+
+.rating-form {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.35rem;
+}
+
+.rating-summary {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.75rem;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.025);
 }
 
 .stat-pill {
@@ -702,6 +898,18 @@ textarea::placeholder {
     grid-template-columns: 1fr;
   }
 
+  .admin-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-table {
+    overflow-x: auto;
+  }
+
+  .admin-table__row {
+    min-width: 860px;
+  }
+
   .stat-strip {
     grid-template-columns: 1fr;
   }
@@ -724,6 +932,7 @@ textarea::placeholder {
   .hero-panel,
   .auth-card,
   .composer-card,
+  .filter-card,
   .info-card {
     padding: 1rem;
     border-radius: 18px;

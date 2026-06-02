@@ -1,4 +1,12 @@
-function SkillCard({ skill, onRequest, disabled = false, actionLabel = 'Solicitar intercambio' }) {
+function SkillCard({
+  skill,
+  onDelete,
+  onEdit,
+  onRequest,
+  disabled = false,
+  isOwner = false,
+  actionLabel = 'Solicitar intercambio',
+}) {
   return (
     <article className="skill-card">
       <div className="skill-card__head">
@@ -14,17 +22,34 @@ function SkillCard({ skill, onRequest, disabled = false, actionLabel = 'Solicita
       <div className="skill-card__meta">
         <span>{skill.owner}</span>
         <span>{skill.format}</span>
+        <span>
+          {skill.ratingsCount > 0
+            ? `${skill.averageRating.toFixed(1)}/5 · ${skill.ratingsCount} valoraciones`
+            : 'Sin valoraciones'}
+        </span>
+        <span>{skill.createdAtLabel}</span>
       </div>
 
       <div className="skill-card__actions">
-        <button
-          type="button"
-          className="button button--soft"
-          onClick={() => onRequest(skill)}
-          disabled={disabled}
-        >
-          {actionLabel}
-        </button>
+        {isOwner ? (
+          <>
+            <button type="button" className="button button--soft" onClick={() => onEdit(skill)}>
+              Editar
+            </button>
+            <button type="button" className="button button--ghost" onClick={() => onDelete(skill)}>
+              Eliminar
+            </button>
+          </>
+        ) : (
+          <button
+            type="button"
+            className="button button--soft"
+            onClick={() => onRequest(skill)}
+            disabled={disabled}
+          >
+            {actionLabel}
+          </button>
+        )}
       </div>
     </article>
   )

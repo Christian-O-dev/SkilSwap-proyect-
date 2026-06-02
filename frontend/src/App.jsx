@@ -1,13 +1,14 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import { useAuth } from './context/AuthContext.jsx'
+import AdminPage from './pages/AdminPage.jsx'
 import DashboardPage from './pages/DashboardPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import RegisterPage from './pages/RegisterPage.jsx'
 import SkillsPage from './pages/SkillsPage.jsx'
 
 function App() {
-  const { token, loading } = useAuth()
+  const { token, loading, user } = useAuth()
 
   if (loading) {
     return (
@@ -38,6 +39,10 @@ function App() {
             element={token ? <Navigate to="/dashboard" replace /> : <RegisterPage />}
           />
           <Route path="/skills" element={<SkillsPage />} />
+          <Route
+            path="/admin"
+            element={token && user?.role_id === 1 ? <AdminPage /> : <Navigate to="/dashboard" replace />}
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>

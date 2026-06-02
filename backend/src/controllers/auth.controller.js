@@ -76,20 +76,27 @@ const register = async (req, res, next) => {
 // Valida credenciales y devuelve un token JWT.
 const login = async (req, res, next) => {
   try {
-    const { email, password } = req.body
+    const { username, password } = req.body
 
-    if (!email || !password) {
+    if (!username || !password) {
       return res.status(400).json({
         ok: false,
-        message: 'Email y password son obligatorios',
+        message: 'Username y password son obligatorios',
       })
     }
 
-    const user = await findUserByEmail(email)
+    const user = await findUserByUsername(username)
     if (!user) {
       return res.status(401).json({
         ok: false,
         message: 'Credenciales invalidas',
+      })
+    }
+
+    if (user.is_blocked) {
+      return res.status(403).json({
+        ok: false,
+        message: 'Tu cuenta esta bloqueada. Contacta con un administrador',
       })
     }
 

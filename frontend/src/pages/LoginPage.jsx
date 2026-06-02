@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext.jsx'
 function LoginPage() {
   const navigate = useNavigate()
   const { signIn } = useAuth()
-  const [formData, setFormData] = useState({ email: '', password: '' })
+  const [formData, setFormData] = useState({ username: '', password: '' })
   const [feedback, setFeedback] = useState('')
   const [error, setError] = useState('')
 
@@ -51,17 +51,17 @@ function LoginPage() {
       <div className="card auth-card">
         <span className="eyebrow">Login</span>
         <h2>Iniciar sesion</h2>
-        <p className="muted">Usa tu email y contraseña para entrar en SkillSwap.</p>
+        <p className="muted">Usa tu nombre de usuario y contraseña para entrar en SkillSwap.</p>
 
         <form className="form-stack" onSubmit={handleSubmit}>
           <label className="field">
-            <span>Email</span>
+            <span>Nombre de usuario</span>
             <input
-              type="email"
-              name="email"
-              autoComplete="email"
-              placeholder="tu@email.com"
-              value={formData.email}
+              type="text"
+              name="username"
+              autoComplete="username"
+              placeholder="skillswap_user"
+              value={formData.username}
               onChange={handleChange}
               required
             />

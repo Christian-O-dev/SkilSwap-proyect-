@@ -114,9 +114,9 @@ export function AuthProvider({ children }) {
     }
   }, [])
 
-  const signIn = async ({ email, password }) => {
+  const signIn = async ({ username, password }) => {
     try {
-      const response = await loginUser({ email, password })
+      const response = await loginUser({ username, password })
       const nextToken = response.token
       const nextUser = response.user
 

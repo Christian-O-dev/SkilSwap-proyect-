@@ -4,6 +4,9 @@ const authRoutes = require('./routes/auth.routes')
 const usersRoutes = require('./routes/users.routes')
 const skillsRoutes = require('./routes/skills.routes')
 const requestsRoutes = require('./routes/requests.routes')
+const exchangesRoutes = require('./routes/exchanges.routes')
+const ratingsRoutes = require('./routes/ratings.routes')
+const adminRoutes = require('./routes/admin.routes')
 
 const app = express()
 
@@ -26,6 +29,9 @@ app.use('/api/auth', authRoutes)
 app.use('/api/users', usersRoutes)
 app.use('/api/skills', skillsRoutes)
 app.use('/api/requests', requestsRoutes)
+app.use('/api/exchanges', exchangesRoutes)
+app.use('/api/ratings', ratingsRoutes)
+app.use('/api/admin', adminRoutes)
 
 // Manejo basico de errores del servidor.
 app.use((error, req, res, next) => {

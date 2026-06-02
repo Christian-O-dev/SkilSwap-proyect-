@@ -23,6 +23,14 @@ function Navbar() {
         >
           Habilidades
         </NavLink>
+        {token && user?.role_id === 1 ? (
+          <NavLink
+            to="/admin"
+            className={({ isActive }) => (isActive ? 'nav-link is-active' : 'nav-link')}
+          >
+            Admin
+          </NavLink>
+        ) : null}
         {!token ? (
           <>
             <NavLink
