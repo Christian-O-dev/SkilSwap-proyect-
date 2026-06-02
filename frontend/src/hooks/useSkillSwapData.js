@@ -249,7 +249,7 @@ export function useSkillSwapData() {
     setNotice('')
 
     if (!token) {
-      setError('Necesitas iniciar sesion para solicitar una habilidad')
+      setError('Necesitas iniciar sesión para solicitar una habilidad')
       return
     }
 
@@ -385,7 +385,7 @@ export function useSkillSwapData() {
         return next
       })
 
-      setNotice('Valoracion enviada correctamente.')
+      setNotice('Valoración enviada correctamente.')
     } catch (apiError) {
       setError(getApiErrorMessage(apiError, 'No se pudo enviar la valoracion'))
     } finally {

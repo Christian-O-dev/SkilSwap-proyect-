@@ -5,6 +5,7 @@ import {
   Home,
   LogOut,
   Menu,
+  Repeat,
   Plus,
   Settings,
   User,
@@ -51,6 +52,11 @@ const authLinks = [
     label: 'Solicitudes',
     icon: Handshake,
   },
+  {
+    to: '/exchanges',
+    label: 'Intercambios',
+    icon: Repeat,
+  },
 ]
 
 function Navbar() {
@@ -74,20 +80,20 @@ function Navbar() {
   ]
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/75 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-slate-200/90 bg-white/92 backdrop-blur-xl">
       <div className="mx-auto flex min-h-20 w-full max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-8">
         <Link
           to="/"
-          className="flex shrink-0 items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-slate-50 transition hover:border-cyan-300/40 hover:bg-white/8"
+          className="flex shrink-0 items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-900 shadow-sm transition hover:border-blue-200 hover:bg-slate-50"
         >
-          <span className="flex size-9 items-center justify-center rounded-full bg-gradient-to-br from-cyan-300 to-amber-300 text-slate-950 shadow-lg shadow-cyan-400/20">
+          <span className="flex size-9 items-center justify-center rounded-full bg-blue-600 text-white shadow-sm">
             <BookOpen size={18} aria-hidden="true" />
           </span>
           <span className="hidden sm:block">
-            <span className="block font-semibold tracking-[0.18em] text-slate-50 uppercase">
+            <span className="block font-semibold uppercase tracking-[0.18em] text-slate-900">
               SkillSwap
             </span>
-            <span className="block text-xs text-slate-400">Intercambio de habilidades</span>
+            <span className="block text-xs text-slate-500">Intercambio de habilidades</span>
           </span>
         </Link>
 
@@ -102,8 +108,8 @@ function Navbar() {
                 end={item.to === '/'}
                 className={({ isActive }) =>
                   cn(
-                    'inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-white/6 hover:text-slate-50',
-                    isActive && 'bg-white/10 text-slate-50 shadow-sm',
+                    'inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900',
+                    isActive && 'bg-blue-50 text-blue-700 ring-1 ring-blue-100',
                   )
                 }
               >
@@ -115,7 +121,7 @@ function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <Button asChild className="rounded-full bg-cyan-300 text-slate-950 hover:bg-cyan-200">
+          <Button asChild className="rounded-full bg-blue-600 text-white hover:bg-blue-700">
             <Link to={publishHref}>
               <Plus size={16} aria-hidden="true" />
               Publicar habilidad
@@ -127,16 +133,16 @@ function Navbar() {
               <DropdownMenuTrigger asChild>
                 <button
                   type="button"
-                  className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-left text-slate-100 transition hover:border-cyan-300/40 hover:bg-white/10"
+                  className="flex items-center gap-3 rounded-full border border-slate-200 bg-white px-3 py-2 text-left text-slate-900 shadow-sm transition hover:border-blue-200 hover:bg-slate-50"
                 >
                   <Avatar size="default">
-                    <AvatarFallback className="bg-cyan-200 text-xs font-semibold text-slate-950">
+                    <AvatarFallback className="bg-blue-100 text-xs font-semibold text-blue-700">
                       {initials}
                     </AvatarFallback>
                   </Avatar>
                   <span className="flex flex-col">
-                    <span className="text-xs uppercase tracking-[0.16em] text-slate-400">Perfil</span>
-                    <span className="text-sm font-medium text-slate-50">{user?.username ?? 'usuario'}</span>
+                    <span className="text-xs uppercase tracking-[0.16em] text-slate-500">Perfil</span>
+                    <span className="text-sm font-medium text-slate-900">{user?.username ?? 'usuario'}</span>
                   </span>
                 </button>
               </DropdownMenuTrigger>
@@ -153,7 +159,7 @@ function Navbar() {
                   <DropdownMenuItem asChild>
                     <Link to="/admin">
                       <Settings size={16} aria-hidden="true" />
-                      Administracion
+                      Administración
                     </Link>
                   </DropdownMenuItem>
                 ) : null}
@@ -172,10 +178,10 @@ function Navbar() {
             </DropdownMenu>
           ) : (
             <>
-              <Button asChild variant="ghost" className="rounded-full text-slate-100 hover:bg-white/10">
+              <Button asChild variant="ghost" className="rounded-full text-slate-700 hover:bg-slate-100 hover:text-slate-900">
                 <Link to="/login">Login</Link>
               </Button>
-              <Button asChild variant="outline" className="rounded-full border-white/10 bg-white/5 text-slate-50 hover:bg-white/10">
+              <Button asChild variant="outline" className="rounded-full border-slate-200 bg-white text-slate-900 hover:bg-slate-50">
                 <Link to="/register">Registro</Link>
               </Button>
             </>
@@ -183,7 +189,7 @@ function Navbar() {
         </div>
 
         <div className="ml-auto flex items-center gap-2 lg:hidden">
-          <Button asChild size="sm" className="rounded-full bg-cyan-300 px-3 text-slate-950 hover:bg-cyan-200">
+          <Button asChild size="sm" className="rounded-full bg-blue-600 px-3 text-white hover:bg-blue-700">
             <Link to={publishHref}>
               <Plus size={16} aria-hidden="true" />
               <span className="hidden sm:inline">Publicar</span>
@@ -196,35 +202,35 @@ function Navbar() {
                 type="button"
                 variant="outline"
                 size="icon"
-                className="rounded-full border-white/10 bg-white/5 text-slate-50 hover:bg-white/10"
+                className="rounded-full border-slate-200 bg-white text-slate-900 hover:bg-slate-50"
               >
                 <Menu size={18} aria-hidden="true" />
-                <span className="sr-only">Abrir menu</span>
+                <span className="sr-only">Abrir menú</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[22rem] border-white/10 bg-slate-950/96 text-slate-50">
+            <SheetContent side="right" className="w-[22rem] border-slate-200 bg-white text-slate-900">
               <SheetHeader className="px-0 pt-8">
-                <SheetTitle className="text-left text-slate-50">Navegacion</SheetTitle>
-                <SheetDescription className="text-left text-slate-400">
-                  Accede rapido a las secciones principales de SkillSwap.
+                <SheetTitle className="text-left text-slate-900">Navegación</SheetTitle>
+                <SheetDescription className="text-left text-slate-500">
+                  Accede rápido a las secciones principales de SkillSwap.
                 </SheetDescription>
               </SheetHeader>
 
               {token ? (
-                <div className="mt-2 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div className="mt-2 flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4">
                   <Avatar size="lg">
-                    <AvatarFallback className="bg-cyan-200 font-semibold text-slate-950">
+                    <AvatarFallback className="bg-blue-100 font-semibold text-blue-700">
                       {initials}
                     </AvatarFallback>
                   </Avatar>
                   <div className="min-w-0">
-                    <p className="text-xs uppercase tracking-[0.16em] text-slate-400">Sesion activa</p>
-                    <p className="truncate text-base font-semibold text-slate-50">{user?.username ?? 'usuario'}</p>
+                    <p className="text-xs uppercase tracking-[0.16em] text-slate-500">Sesión activa</p>
+                    <p className="truncate text-base font-semibold text-slate-900">{user?.username ?? 'usuario'}</p>
                   </div>
                 </div>
               ) : null}
 
-              <nav className="mt-6 grid gap-2" aria-label="Movil">
+              <nav className="mt-6 grid gap-2" aria-label="Móvil">
                 {allLinks.map((item) => {
                   const Icon = item.icon
 
@@ -235,8 +241,8 @@ function Navbar() {
                         end={item.to === '/'}
                         className={({ isActive }) =>
                           cn(
-                            'flex items-center gap-3 rounded-2xl border border-transparent px-4 py-3 text-sm font-medium text-slate-300 transition hover:border-white/10 hover:bg-white/6 hover:text-slate-50',
-                            isActive && 'border-white/10 bg-white/10 text-slate-50',
+                            'flex items-center gap-3 rounded-2xl border border-transparent px-4 py-3 text-sm font-medium text-slate-600 transition hover:border-slate-200 hover:bg-slate-50 hover:text-slate-900',
+                            isActive && 'border-blue-100 bg-blue-50 text-blue-700',
                           )
                         }
                       >
@@ -248,13 +254,13 @@ function Navbar() {
                 })}
               </nav>
 
-              <Separator className="my-6 bg-white/10" />
+              <Separator className="my-6 bg-slate-200" />
 
               <div className="grid gap-3">
                 {token ? (
                   <>
                     <SheetClose asChild>
-                      <Button asChild variant="outline" className="justify-start rounded-2xl border-white/10 bg-white/5 text-slate-50 hover:bg-white/10">
+                      <Button asChild variant="outline" className="justify-start rounded-2xl border-slate-200 bg-white text-slate-900 hover:bg-slate-50">
                         <Link to="/profile">
                           <User size={16} aria-hidden="true" />
                           Perfil
@@ -264,7 +270,7 @@ function Navbar() {
                     <Button
                       type="button"
                       variant="ghost"
-                      className="justify-start rounded-2xl text-rose-200 hover:bg-rose-500/10 hover:text-rose-100"
+                      className="justify-start rounded-2xl text-red-600 hover:bg-red-50 hover:text-red-700"
                       onClick={signOut}
                     >
                       <LogOut size={16} aria-hidden="true" />
@@ -274,12 +280,12 @@ function Navbar() {
                 ) : (
                   <>
                     <SheetClose asChild>
-                      <Button asChild variant="ghost" className="justify-start rounded-2xl text-slate-100 hover:bg-white/10">
+                      <Button asChild variant="ghost" className="justify-start rounded-2xl text-slate-700 hover:bg-slate-100 hover:text-slate-900">
                         <Link to="/login">Login</Link>
                       </Button>
                     </SheetClose>
                     <SheetClose asChild>
-                      <Button asChild variant="outline" className="justify-start rounded-2xl border-white/10 bg-white/5 text-slate-50 hover:bg-white/10">
+                      <Button asChild variant="outline" className="justify-start rounded-2xl border-slate-200 bg-white text-slate-900 hover:bg-slate-50">
                         <Link to="/register">Registro</Link>
                       </Button>
                     </SheetClose>

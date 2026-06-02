@@ -18,34 +18,44 @@ function RequestsPage() {
   } = useSkillSwapData()
 
   return (
-    <section className="page skills-page">
+    <section className="space-y-6">
       <PageHeader
         eyebrow="Solicitudes"
         title="Gestiona las solicitudes enviadas y recibidas."
         description="Consulta el estado de tus peticiones y responde las que llegan a tus habilidades."
         stats={
           <>
-            <div className="stat-pill">
-              <strong>{requests.length}</strong>
-              <span>enviadas</span>
+            <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+              <strong className="block text-2xl font-semibold text-slate-900">{requests.length}</strong>
+              <span className="text-sm text-slate-600">enviadas</span>
             </div>
-            <div className="stat-pill">
-              <strong>{receivedRequests.length}</strong>
-              <span>recibidas</span>
+            <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+              <strong className="block text-2xl font-semibold text-slate-900">
+                {receivedRequests.length}
+              </strong>
+              <span className="text-sm text-slate-600">recibidas</span>
             </div>
           </>
         }
       />
 
-      {error ? <p className="notice notice--error">{error}</p> : null}
-      {notice ? <p className="notice notice--success">{notice}</p> : null}
+      {error ? (
+        <p className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+          {error}
+        </p>
+      ) : null}
+      {notice ? (
+        <p className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+          {notice}
+        </p>
+      ) : null}
 
       {loading ? <LoadingSkeleton /> : null}
 
       {!loading && requests.length === 0 && receivedRequests.length === 0 ? (
         <EmptyState
           title="No hay solicitudes disponibles"
-          description="Cuando envies o recibas solicitudes apareceran aqui."
+          description="Cuando envíes o recibas solicitudes aparecerán aquí."
         />
       ) : null}
 
@@ -67,7 +77,7 @@ function RequestsPage() {
                 requests={requests}
                 type="sent"
                 loading={loading}
-                emptyMessage="Todavia no has creado solicitudes."
+                emptyMessage="Todavía no has creado solicitudes."
               />
             </TabsContent>
 
@@ -77,7 +87,7 @@ function RequestsPage() {
                 requests={receivedRequests}
                 type="received"
                 loading={loading}
-                emptyMessage="Todavia no has recibido solicitudes."
+                emptyMessage="Todavía no has recibido solicitudes."
                 updatingRequestId={updatingRequestId}
                 onAccept={(request) => handleIncomingRequest(request, 'accepted')}
                 onReject={(request) => handleIncomingRequest(request, 'rejected')}

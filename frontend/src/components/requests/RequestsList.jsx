@@ -19,7 +19,7 @@ function RequestsList({
           {requests.length}
         </span>
       </div>
-      <div className="request-list">
+      <div className="grid gap-4">
         {requests.map((request) => (
           <RequestCard
             key={request.id}

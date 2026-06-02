@@ -20,15 +20,17 @@ function SkillsPage() {
   } = useSkillSwapData()
 
   return (
-    <section className="page skills-page">
+    <section className="space-y-6">
       <PageHeader
         eyebrow="Habilidades"
-        title="Catalogo publico de habilidades disponibles."
-        description="Explora lo que otras personas pueden ensenar y solicita un intercambio cuando encuentres una buena opcion."
+        title="Catálogo público de habilidades disponibles."
+        description="Explora lo que otras personas pueden enseñar y solicita un intercambio cuando encuentres una buena opción."
         stats={
-          <div className="stat-pill">
-            <strong>{filteredSkills.length}</strong>
-            <span>{searchText.trim() ? 'resultados' : 'habilidades visibles'}</span>
+          <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+            <strong className="block text-2xl font-semibold text-slate-900">{filteredSkills.length}</strong>
+            <span className="text-sm text-slate-600">
+              {searchText.trim() ? 'resultados' : 'habilidades visibles'}
+            </span>
           </div>
         }
       />
@@ -36,17 +38,27 @@ function SkillsPage() {
       <SkillSearchBar value={searchText} onChange={setSearchText} />
 
       {!token ? (
-        <div className="request-box">
-          <span className="eyebrow">Acceso</span>
-          <p className="muted">Inicia sesion para solicitar intercambios.</p>
+        <div className="rounded-2xl border border-dashed border-slate-300 bg-white/90 p-4 shadow-sm">
+          <span className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-slate-700">
+            Acceso
+          </span>
+          <p className="mt-3 text-sm text-slate-600">Inicia sesión para solicitar intercambios.</p>
         </div>
       ) : null}
 
       {loading ? <LoadingSkeleton /> : null}
-      {error ? <p className="notice notice--error">{error}</p> : null}
-      {notice ? <p className="notice notice--success">{notice}</p> : null}
+      {error ? (
+        <p className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+          {error}
+        </p>
+      ) : null}
+      {notice ? (
+        <p className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+          {notice}
+        </p>
+      ) : null}
 
-      <div className="skills-list">
+      <div className="grid gap-4">
         {filteredSkills.map((skill) => (
           <SkillCard
             key={skill.id}
@@ -69,8 +81,8 @@ function SkillsPage() {
             title={searchText.trim() ? 'No hay coincidencias' : 'No hay habilidades cargadas'}
             description={
               searchText.trim()
-                ? 'Prueba con otra busqueda para encontrar mas habilidades.'
-                : 'Aun no hay publicaciones disponibles.'
+                ? 'Prueba con otra búsqueda para encontrar más habilidades.'
+                : 'Aún no hay publicaciones disponibles.'
             }
           />
         ) : null}

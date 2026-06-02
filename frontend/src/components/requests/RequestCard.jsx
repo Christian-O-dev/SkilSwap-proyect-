@@ -1,4 +1,5 @@
 import StatusBadge from '@/components/common/StatusBadge.jsx'
+import { Button } from '@/components/ui/button'
 
 function RequestCard({
   request,
@@ -13,7 +14,9 @@ function RequestCard({
         <div className="space-y-1">
           <strong className="block text-base text-slate-900">{request.skill_title}</strong>
           <span className="block text-sm text-slate-600">
-            {type === 'received' ? `Solicita: ${request.requester_username}` : `Propietario: ${request.skill_owner}`}
+            {type === 'received'
+              ? `Solicita: ${request.requester_username}`
+              : `Propietario: ${request.skill_owner}`}
           </span>
         </div>
 
@@ -24,22 +27,24 @@ function RequestCard({
 
       {type === 'received' && request.status === 'open' ? (
         <div className="mt-4 flex flex-wrap gap-3">
-          <button
+          <Button
             type="button"
-            className="button button--soft"
+            variant="secondary"
+            className="rounded-full"
             disabled={isUpdating}
             onClick={() => onAccept?.(request)}
           >
             {isUpdating ? 'Guardando...' : 'Aceptar'}
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
-            className="button button--ghost"
+            variant="outline"
+            className="rounded-full"
             disabled={isUpdating}
             onClick={() => onReject?.(request)}
           >
             Rechazar
-          </button>
+          </Button>
         </div>
       ) : null}
     </article>
