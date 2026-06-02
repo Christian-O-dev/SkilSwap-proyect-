@@ -1,4 +1,5 @@
 import { NavLink, Link } from 'react-router-dom'
+import { BookOpen, Home, User } from 'lucide-react'
 import { useAuth } from '../context/AuthContext.jsx'
 
 function Navbar() {
@@ -15,12 +16,14 @@ function Navbar() {
 
       <nav className="topbar__nav" aria-label="Principal">
         <NavLink to="/" end className={({ isActive }) => (isActive ? 'nav-link is-active' : 'nav-link')}>
+          <Home size={16} aria-hidden="true" />
           Inicio
         </NavLink>
         <NavLink
           to="/skills"
           className={({ isActive }) => (isActive ? 'nav-link is-active' : 'nav-link')}
         >
+          <BookOpen size={16} aria-hidden="true" />
           Habilidades
         </NavLink>
         {token && user?.role_id === 1 ? (
@@ -54,7 +57,10 @@ function Navbar() {
           <>
             <span className="user-chip">
               <span className="user-chip__label">Sesion</span>
-              <strong>{user?.username ?? 'usuario'}</strong>
+              <strong>
+                <User size={14} aria-hidden="true" />
+                <span>{user?.username ?? 'usuario'}</span>
+              </strong>
             </span>
             <button type="button" className="button button--ghost" onClick={signOut}>
               Salir
