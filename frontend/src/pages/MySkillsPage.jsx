@@ -1,11 +1,15 @@
+import { useState } from 'react'
+import ConfirmDialog from '@/components/common/ConfirmDialog.jsx'
 import EmptyState from '@/components/common/EmptyState.jsx'
 import LoadingSkeleton from '@/components/common/LoadingSkeleton.jsx'
 import PageHeader from '@/components/common/PageHeader.jsx'
 import SkillCard from '@/components/skills/SkillCard.jsx'
 import SkillForm from '@/components/skills/SkillForm.jsx'
+import { Button } from '@/components/ui/button'
 import { useSkillSwapData } from '@/hooks/useSkillSwapData.js'
 
 function MySkillsPage() {
+  const [deleteTarget, setDeleteTarget] = useState(null)
   const {
     creatingSkill,
     deletingSkillId,
@@ -23,12 +27,39 @@ function MySkillsPage() {
     resetSkillForm,
   } = useSkillSwapData()
 
+  const handleStartCreate = () => {
+    resetSkillForm()
+
+    if (typeof window !== 'undefined') {
+      window.requestAnimationFrame(() => {
+        document.getElementById('skill-form-panel')?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        })
+      })
+    }
+  }
+
+  const handleConfirmDelete = async () => {
+    if (!deleteTarget) {
+      return
+    }
+
+    await handleDeleteSkill(deleteTarget)
+    setDeleteTarget(null)
+  }
+
   return (
     <section className="page skills-page">
       <PageHeader
         eyebrow="Mis habilidades"
         title="Gestiona lo que puedes ensenar."
         description="Desde aqui puedes crear, editar y eliminar tus habilidades publicadas."
+        actions={
+          <Button type="button" className="rounded-full" onClick={handleStartCreate}>
+            Publicar habilidad
+          </Button>
+        }
       />
 
       {error ? <p className="notice notice--error">{error}</p> : null}
@@ -47,7 +78,7 @@ function MySkillsPage() {
             <SkillCard
               key={skill.id}
               skill={skill}
-              onDelete={handleDeleteSkill}
+              onDelete={setDeleteTarget}
               onEdit={handleEditSkill}
               isOwner
               disabled={Boolean(deletingSkillId)}
@@ -56,7 +87,7 @@ function MySkillsPage() {
           ))}
         </div>
 
-        <aside className="card composer-card">
+        <aside id="skill-form-panel" className="card composer-card">
           <span className="eyebrow">{editingSkillId ? 'Editar habilidad' : 'Nueva habilidad'}</span>
           <h2>{editingSkillId ? 'Actualizar una habilidad' : 'Crear una habilidad'}</h2>
           <p className="muted">Describe lo que puedes ensenar para que otras personas te encuentren.</p>
@@ -79,6 +110,20 @@ function MySkillsPage() {
           ) : null}
         </aside>
       </div>
+
+      <ConfirmDialog
+        open={Boolean(deleteTarget)}
+        onOpenChange={(open) => {
+          if (!open) {
+            setDeleteTarget(null)
+          }
+        }}
+        title="Eliminar habilidad"
+        description="Esta accion no se puede deshacer."
+        confirmLabel="Eliminar"
+        loading={Boolean(deleteTarget) && deletingSkillId === deleteTarget?.id}
+        onConfirm={handleConfirmDelete}
+      />
     </section>
   )
 }

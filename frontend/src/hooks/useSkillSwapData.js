@@ -396,7 +396,7 @@ export function useSkillSwapData() {
   const handleEditSkill = (skill) => {
     setError('')
     setNotice('')
-    setSelectedSkill(null)
+    setSelectedSkill(skill)
     setEditingSkillId(skill.id)
     setNewSkill({
       title: skill.title,
@@ -408,12 +408,6 @@ export function useSkillSwapData() {
   }
 
   const handleDeleteSkill = async (skill) => {
-    const confirmed = window.confirm(`Quieres eliminar la habilidad "${skill.title}"?`)
-
-    if (!confirmed) {
-      return
-    }
-
     setDeletingSkillId(skill.id)
     setError('')
     setNotice('')
