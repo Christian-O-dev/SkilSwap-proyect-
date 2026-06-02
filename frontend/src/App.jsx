@@ -3,14 +3,20 @@ import Navbar from './components/Navbar.jsx'
 import { useAuth } from './context/AuthContext.jsx'
 import AdminPage from './pages/AdminPage.jsx'
 import DashboardPage from './pages/DashboardPage.jsx'
+import ExchangesPage from './pages/ExchangesPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
+import MySkillsPage from './pages/MySkillsPage.jsx'
+import ProfilePage from './pages/ProfilePage.jsx'
+import RequestsPage from './pages/RequestsPage.jsx'
 import RegisterPage from './pages/RegisterPage.jsx'
 import SkillsPage from './pages/SkillsPage.jsx'
 
 function App() {
   const { token, loading, user } = useAuth()
-  const protectedSkillsView = token ? <SkillsPage /> : <Navigate to="/login" replace />
-  const protectedProfileView = token ? <DashboardPage /> : <Navigate to="/login" replace />
+  const protectedMySkillsView = token ? <MySkillsPage /> : <Navigate to="/login" replace />
+  const protectedRequestsView = token ? <RequestsPage /> : <Navigate to="/login" replace />
+  const protectedExchangesView = token ? <ExchangesPage /> : <Navigate to="/login" replace />
+  const protectedProfileView = token ? <ProfilePage /> : <Navigate to="/login" replace />
 
   if (loading) {
     return (
@@ -41,9 +47,9 @@ function App() {
             element={token ? <Navigate to="/dashboard" replace /> : <RegisterPage />}
           />
           <Route path="/skills" element={<SkillsPage />} />
-          <Route path="/my-skills" element={protectedSkillsView} />
-          <Route path="/requests" element={protectedSkillsView} />
-          <Route path="/exchanges" element={protectedSkillsView} />
+          <Route path="/my-skills" element={protectedMySkillsView} />
+          <Route path="/requests" element={protectedRequestsView} />
+          <Route path="/exchanges" element={protectedExchangesView} />
           <Route path="/profile" element={protectedProfileView} />
           <Route
             path="/admin"
