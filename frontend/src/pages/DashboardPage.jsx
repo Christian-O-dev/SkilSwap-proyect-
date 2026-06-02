@@ -8,10 +8,9 @@ function DashboardPage() {
     <section className="page dashboard-page">
       <div className="hero-panel hero-panel--wide">
         <span className="eyebrow">SkillSwap</span>
-        <h1>Base visual conectada al flujo real de intercambio de habilidades.</h1>
+        <h1>Aprende, enseña y conecta con personas que comparten tus intereses.</h1>
         <p className="lead">
-          Registro, login, listado de habilidades y solicitudes ya quedan enlazados con la API
-          para poder probar el MVP de principio a fin.
+          Publica lo que sabes, descubre nuevas habilidades y crea intercambios con la comunidad.
         </p>
 
         <div className="action-row">
@@ -32,37 +31,32 @@ function DashboardPage() {
 
       <div className="dashboard-grid">
         <article className="card info-card">
-          <span className="eyebrow">Sesion</span>
-          <h2>{token ? 'Usuario activo' : 'Sin sesion'}</h2>
+          <span className="eyebrow">Perfil</span>
+          <h2>{token ? 'Bienvenido de nuevo' : 'Únete a la comunidad'}</h2>
           <p className="muted">
             {token
-              ? `Hola, ${user?.username ?? 'skillmate'}. Ya puedes navegar por la base de la app.`
-              : 'Puedes explorar el layout base sin depender del backend.'}
+              ? `Hola, ${user?.username ?? 'skillmate'}. Explora habilidades y conecta con nuevas personas.`
+              : 'Crea tu cuenta para compartir conocimientos y empezar a intercambiar habilidades.'}
           </p>
           <div className="key-value">
-            <span>Estado</span>
-            <strong>{token ? 'Activa' : 'Anonima'}</strong>
+            <span>Cuenta</span>
+            <strong>{token ? 'Activa' : 'Invitado'}</strong>
           </div>
         </article>
 
         <article className="card info-card">
-          <span className="eyebrow">Flujo MVP</span>
-          <h2>Ruta principal</h2>
-          <ol className="step-list">
-            <li>Registro</li>
-            <li>Login</li>
-            <li>Crear habilidad</li>
-            <li>Ver habilidades</li>
-            <li>Solicitar intercambio</li>
-          </ol>
+          <span className="eyebrow">Comparte</span>
+          <h2>Publica tus habilidades</h2>
+          <p className="muted">
+            Crea publicaciones claras sobre lo que puedes enseñar y encuentra personas interesadas.
+          </p>
         </article>
 
         <article className="card info-card">
-          <span className="eyebrow">Estado API</span>
-          <h2>Conexion activa</h2>
+          <span className="eyebrow">Conecta</span>
+          <h2>Solicita intercambios</h2>
           <p className="muted">
-            El frontend ya habla con el backend real, asi que ahora podemos probar el flujo con
-            datos de MySQL y tokens JWT.
+            Descubre nuevas oportunidades para aprender y empieza conversaciones con otros usuarios.
           </p>
         </article>
       </div>

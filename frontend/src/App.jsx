@@ -16,8 +16,8 @@ function App() {
         <main className="app-loading">
           <div className="loading-card">
             <span className="eyebrow">SkillSwap</span>
-            <h1>Cargando experiencia inicial</h1>
-            <p>Preparando la interfaz base y restaurando la sesion local.</p>
+            <h1>Cargando SkillSwap</h1>
+            <p>Preparando tu experiencia.</p>
           </div>
         </main>
       </div>

@@ -34,24 +34,24 @@ function LoginPage() {
   return (
     <section className="page page--split">
       <div className="hero-panel">
-        <span className="eyebrow">Acceso rapido</span>
-        <h1>Entra y sigue el flujo del MVP sin perder contexto.</h1>
+        <span className="eyebrow">Bienvenido</span>
+        <h1>Accede a tu cuenta y sigue aprendiendo con la comunidad.</h1>
         <p>
-          Esta pantalla ya inicia sesion contra la API real y guarda el token para seguir
-          navegando por la app.
+          Entra para gestionar tus habilidades, descubrir nuevos perfiles y solicitar
+          intercambios.
         </p>
 
         <ul className="bullet-list">
-          <li>Sesiones guardadas en localStorage.</li>
-          <li>Formulario listo para conectar con la API.</li>
-          <li>Navegacion directa hacia dashboard y habilidades.</li>
+          <li>Publica lo que sabes.</li>
+          <li>Encuentra personas con intereses afines.</li>
+          <li>Organiza tus intercambios en un solo lugar.</li>
         </ul>
       </div>
 
       <div className="card auth-card">
         <span className="eyebrow">Login</span>
         <h2>Iniciar sesion</h2>
-        <p className="muted">Usa tu email y password para entrar en la experiencia base.</p>
+        <p className="muted">Usa tu email y contraseña para entrar en SkillSwap.</p>
 
         <form className="form-stack" onSubmit={handleSubmit}>
           <label className="field">

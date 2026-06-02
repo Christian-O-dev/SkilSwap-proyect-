@@ -11,7 +11,6 @@ function Navbar() {
           <span className="brand-mark__dot" aria-hidden="true" />
           <span>SkillSwap</span>
         </Link>
-        <span className="brand-tag">fase 8 activa</span>
       </div>
 
       <nav className="topbar__nav" aria-label="Principal">
@@ -54,7 +53,7 @@ function Navbar() {
             </button>
           </>
         ) : (
-          <span className="status-note">Listo para conectar con la API</span>
+          <span className="status-note">Comparte y descubre habilidades</span>
         )}
       </div>
     </header>

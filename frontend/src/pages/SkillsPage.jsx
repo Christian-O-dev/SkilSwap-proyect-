@@ -168,10 +168,10 @@ function SkillsPage() {
       <div className="section-head">
         <div>
           <span className="eyebrow">Habilidades</span>
-          <h1>Listado de habilidades conectado a la API.</h1>
+          <h1>Descubre habilidades para aprender y compartir.</h1>
           <p className="lead">
-            Aqui ya se cargan las habilidades desde el backend y tambien puedes crear nuevas
-            publicaciones y solicitudes.
+            Explora publicaciones de la comunidad, comparte tu experiencia y encuentra tu próximo
+            intercambio.
           </p>
         </div>
 
@@ -207,7 +207,8 @@ function SkillsPage() {
               <span className="eyebrow">Sin datos</span>
               <h2>No hay habilidades cargadas</h2>
               <p className="muted">
-                Cuando la API responda, aqui apareceran las habilidades publicadas desde MySQL.
+                Aún no hay publicaciones disponibles. Sé la primera persona en compartir una
+                habilidad.
               </p>
             </article>
           ) : null}
@@ -216,9 +217,7 @@ function SkillsPage() {
         <aside className="card composer-card">
           <span className="eyebrow">Nueva habilidad</span>
           <h2>Crear una habilidad</h2>
-          <p className="muted">
-            Este formulario guarda la habilidad en MySQL a traves de la API.
-          </p>
+          <p className="muted">Describe lo que puedes enseñar para que otras personas te encuentren.</p>
 
           <form className="form-stack" onSubmit={handleCreateSkill}>
             <label className="field">
@@ -279,11 +278,9 @@ function SkillsPage() {
 
           {selectedSkill ? (
             <div className="request-box">
-              <span className="eyebrow">Solicitud preparada</span>
+              <span className="eyebrow">Habilidad seleccionada</span>
               <strong>{selectedSkill.title}</strong>
-              <p className="muted">
-                La tarjeta seleccionada puede enviarse como solicitud real desde esta pantalla.
-              </p>
+              <p className="muted">Puedes solicitar este intercambio cuando quieras.</p>
             </div>
           ) : null}
 
@@ -303,7 +300,7 @@ function SkillsPage() {
           ) : (
             <div className="request-box">
               <span className="eyebrow">Solicitudes</span>
-              <p className="muted">Inicia sesion para listar y crear solicitudes desde la API.</p>
+              <p className="muted">Inicia sesión para ver tus solicitudes y crear nuevos intercambios.</p>
             </div>
           )}
         </aside>

@@ -34,25 +34,24 @@ function RegisterPage() {
   return (
     <section className="page page--split">
       <div className="hero-panel hero-panel--accent">
-        <span className="eyebrow">Nuevo usuario</span>
-        <h1>Prepara una cuenta base para probar el flujo completo.</h1>
+        <span className="eyebrow">Nueva cuenta</span>
+        <h1>Crea tu perfil y empieza a compartir lo que sabes.</h1>
         <p>
-          El registro crea usuarios reales en el backend y deja la sesion lista para seguir con el
-          recorrido.
+          Únete a una comunidad donde cada habilidad puede abrir una nueva oportunidad de aprender.
         </p>
 
         <div className="stat-strip">
           <article>
-            <strong>4</strong>
-            <span>pantallas base</span>
+            <strong>Comparte</strong>
+            <span>lo que dominas</span>
           </article>
           <article>
-            <strong>1</strong>
-            <span>router central</span>
+            <strong>Descubre</strong>
+            <span>nuevas habilidades</span>
           </article>
           <article>
-            <strong>1</strong>
-            <span>contexto de sesion</span>
+            <strong>Conecta</strong>
+            <span>con otras personas</span>
           </article>
         </div>
       </div>
@@ -60,7 +59,7 @@ function RegisterPage() {
       <div className="card auth-card">
         <span className="eyebrow">Registro</span>
         <h2>Crear cuenta</h2>
-        <p className="muted">Completa los campos para crear una sesion local de prueba.</p>
+        <p className="muted">Completa los campos para unirte a SkillSwap.</p>
 
         <form className="form-stack" onSubmit={handleSubmit}>
           <label className="field">
