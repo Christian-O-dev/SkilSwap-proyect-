@@ -123,7 +123,7 @@ function RegisterPage() {
               />
             </label>
 
-            <Button type="submit" className="rounded-full bg-blue-600 text-white hover:bg-blue-700">
+            <Button type="submit" className="rounded-full">
               Crear cuenta
             </Button>
           </form>
