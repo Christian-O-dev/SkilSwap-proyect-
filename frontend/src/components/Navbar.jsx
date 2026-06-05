@@ -93,16 +93,19 @@ function Navbar() {
                 <span className="sr-only">Abrir menú</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[22rem] border-slate-200 bg-white text-slate-900">
-              <SheetHeader className="px-0 pt-8">
-                <SheetTitle className="text-left text-slate-900">Navegación</SheetTitle>
-                <SheetDescription className="text-left text-slate-500">
-                  Accede rápido a las secciones principales de SkillSwap.
+            <SheetContent
+              side="right"
+              className="top-3 right-3 bottom-auto h-auto max-h-[calc(100dvh-1.5rem)] w-[min(20rem,calc(100vw-1.5rem))] max-w-none overflow-y-auto rounded-2xl border border-slate-200 bg-white p-4 text-slate-900 shadow-2xl sm:top-4 sm:right-4 sm:max-h-[calc(100dvh-2rem)]"
+            >
+              <SheetHeader className="px-0 pt-1 pr-8 pb-0">
+                <SheetTitle className="text-left text-base text-slate-900">Navegación</SheetTitle>
+                <SheetDescription className="text-left text-xs text-slate-500">
+                  Acceso rápido a SkillSwap.
                 </SheetDescription>
               </SheetHeader>
 
               {token ? (
-                <div className="mt-2 flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <div className="mt-2 flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
                   <Avatar size="lg">
                     <AvatarFallback className="bg-blue-100 font-semibold text-blue-700">
                       {initials}
@@ -117,7 +120,7 @@ function Navbar() {
                 </div>
               ) : null}
 
-              <nav className="mt-6 grid gap-2" aria-label="Móvil">
+              <nav className="mt-4 grid gap-1" aria-label="Móvil">
                 {allLinks.map((item) => {
                   const Icon = item.icon
 
@@ -128,7 +131,7 @@ function Navbar() {
                         end={item.to === '/'}
                         className={({ isActive }) =>
                           cn(
-                            'flex items-center gap-3 rounded-2xl border border-transparent px-4 py-3 text-sm font-medium text-slate-600 transition hover:border-slate-200 hover:bg-slate-50 hover:text-slate-900',
+                            'flex items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 text-sm font-medium text-slate-600 transition hover:border-slate-200 hover:bg-slate-50 hover:text-slate-900',
                             isActive && 'border-blue-100 bg-blue-50 text-blue-700',
                           )
                         }
@@ -141,16 +144,16 @@ function Navbar() {
                 })}
               </nav>
 
-              <Separator className="my-6 bg-slate-200" />
+              <Separator className="my-3 bg-slate-200" />
 
-              <div className="grid gap-3">
+              <div className="grid gap-2">
                 {token ? (
                   <>
                     <SheetClose asChild>
                       <Button
                         asChild
                         variant="outline"
-                        className="justify-start rounded-2xl border-slate-200 bg-white text-slate-900 hover:bg-slate-50"
+                        className="justify-start rounded-xl border-slate-200 bg-white text-slate-900 hover:bg-slate-50"
                       >
                         <Link to="/profile">
                           <User size={16} aria-hidden="true" />
@@ -161,7 +164,7 @@ function Navbar() {
                     <Button
                       type="button"
                       variant="ghost"
-                      className="justify-start rounded-2xl text-red-600 hover:bg-red-50 hover:text-red-700"
+                      className="justify-start rounded-xl text-red-600 hover:bg-red-50 hover:text-red-700"
                       onClick={signOut}
                     >
                       <LogOut size={16} aria-hidden="true" />
@@ -174,7 +177,7 @@ function Navbar() {
                       <Button
                         asChild
                         variant="ghost"
-                        className="justify-start rounded-2xl text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+                        className="justify-start rounded-xl text-slate-700 hover:bg-slate-100 hover:text-slate-900"
                       >
                         <Link to="/login">Login</Link>
                       </Button>
@@ -183,7 +186,7 @@ function Navbar() {
                       <Button
                         asChild
                         variant="outline"
-                        className="justify-start rounded-2xl border-slate-200 bg-white text-slate-900 hover:bg-slate-50"
+                        className="justify-start rounded-xl border-slate-200 bg-white text-slate-900 hover:bg-slate-50"
                       >
                         <Link to="/register">Registro</Link>
                       </Button>
