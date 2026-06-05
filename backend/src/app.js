@@ -1,4 +1,5 @@
 const express = require('express')
+const helmet = require('helmet')
 const cors = require('cors')
 const authRoutes = require('./routes/auth.routes')
 const usersRoutes = require('./routes/users.routes')
@@ -9,6 +10,9 @@ const ratingsRoutes = require('./routes/ratings.routes')
 const adminRoutes = require('./routes/admin.routes')
 
 const app = express()
+
+// Anade cabeceras de seguridad HTTP basicas.
+app.use(helmet())
 
 // Activa CORS para permitir peticiones desde el frontend.
 app.use(cors())
