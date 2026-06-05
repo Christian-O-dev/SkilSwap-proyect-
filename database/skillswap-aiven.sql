@@ -1,12 +1,5 @@
--- SkillSwap - esquema unico para importar en local o en hosting.
--- Importalo dentro de la base de datos que vayas a usar.
--- En local normalmente sera `skillswap_db`.
---
--- Si quieres crear la base en local desde cero, puedes ejecutar antes:
--- CREATE DATABASE IF NOT EXISTS skillswap_db
--- CHARACTER SET utf8mb4
--- COLLATE utf8mb4_unicode_ci;
--- USE skillswap_db;
+-- Base de datos de produccion en Aiven.
+USE defaultdb;
 
 -- Guarda los roles disponibles del sistema.
 CREATE TABLE IF NOT EXISTS roles (

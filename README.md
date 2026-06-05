@@ -14,7 +14,7 @@ Incluye frontend en React, backend en Node.js + Express y base de datos MySQL.
 
 - `frontend/`: interfaz web
 - `backend/`: API y logica del servidor
-- `database/`: script SQL y migraciones
+- `database/`: script SQL principal y migraciones historicas
 - `docs/`: documentacion del proyecto
 
 ## Como levantar el proyecto
@@ -22,10 +22,13 @@ Incluye frontend en React, backend en Node.js + Express y base de datos MySQL.
 ### 1. Importar la base de datos
 
 1. Abre MySQL Workbench, phpMyAdmin o tu cliente MySQL favorito.
-2. Crea o selecciona la base de datos `skillswap_db`.
+2. Crea o selecciona la base de datos donde quieras instalar el proyecto.
 3. Importa el archivo `database/skillswap.sql`.
 
-Si el dump ya crea la base, solo ejecútalo.
+El archivo `database/skillswap.sql` ya agrupa el esquema y los seeds base en un unico script.
+Las migraciones de `database/migrations/` quedan solo como historico y no hace falta ejecutarlas por separado.
+
+En local, lo normal es usar una base llamada `skillswap_db`.
 
 ### 2. Configurar el backend
 
@@ -43,7 +46,7 @@ DB_NAME=skillswap_db
 JWT_SECRET=skillswap_secret_dev
 ```
 
-Si cambias la configuracion de MySQL, ajusta esos valores.
+Si cambias la configuracion de MySQL o el nombre real de la base en tu hosting, ajusta esos valores.
 
 ### 3. Levantar el backend
 
@@ -132,4 +135,3 @@ npm run build
 - Base de datos: MySQL
 - Autenticacion: JWT
 - Cliente HTTP: Axios
-
