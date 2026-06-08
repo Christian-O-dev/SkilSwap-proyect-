@@ -54,7 +54,7 @@ function DashboardPage() {
 
             <div className="space-y-4">
               <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-slate-900 md:text-5xl">
-                Intercambia habilidades técnicas de forma simple
+                Intercambia tus habilidades técnicas de forma simple
               </h1>
               <p className="max-w-3xl text-base leading-7 text-slate-600 md:text-lg">
                 Publica lo que sabes, busca algo nuevo para aprender y solicita el intercambio
