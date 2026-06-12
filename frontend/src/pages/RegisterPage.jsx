@@ -27,7 +27,7 @@ function RegisterPage() {
     try {
       await signUp(formData)
       setFeedback('Cuenta creada y sesión iniciada.')
-      navigate('/dashboard')
+      navigate('/my-skills?onboarding=step1')
     } catch (err) {
       setError(err?.message || 'No se pudo crear la cuenta.')
     }

@@ -5,13 +5,15 @@ import { listExchanges, updateExchangeStatus } from '../services/exchangesServic
 import { createRating } from '../services/ratingsService.js'
 import { createRequest, listRequests, updateRequestStatus } from '../services/requestsService.js'
 import { createSkill, deleteSkill, listSkills, updateSkill } from '../services/skillsService.js'
+import { getDesiredSkills, updateDesiredSkills } from '../services/desiredSkillsService.js'
 
 export const emptySkillForm = {
   title: '',
   description: '',
-  category: 'Frontend',
+  category: 'Tecnología',
   level: 'Starter',
   format: 'Online',
+  location: '',
 }
 
 const formatSkillDate = (value) => {
@@ -40,9 +42,11 @@ const normalizeSkill = (skill) => ({
   category: skill.category || 'General',
   level: skill.level || 'Disponible',
   format: skill.format || 'Online',
+  location: skill.location || '',
   averageRating: Number(skill.average_rating || 0),
   ratingsCount: Number(skill.ratings_count || 0),
   user_id: skill.user_id,
+  matchPercentage: skill.matchPercentage ?? null,
   created_at: skill.created_at,
   createdAtLabel: formatSkillDate(skill.created_at),
 })
@@ -88,10 +92,12 @@ export function useSkillSwapData() {
   const [requests, setRequests] = useState([])
   const [receivedRequests, setReceivedRequests] = useState([])
   const [exchanges, setExchanges] = useState([])
+  const [desiredSkills, setDesiredSkills] = useState([])
   const [newSkill, setNewSkill] = useState(emptySkillForm)
   const [searchText, setSearchText] = useState('')
   const [loading, setLoading] = useState(true)
   const [creatingSkill, setCreatingSkill] = useState(false)
+  const [updatingDesiredSkills, setUpdatingDesiredSkills] = useState(false)
   const [editingSkillId, setEditingSkillId] = useState(null)
   const [requestingSkillId, setRequestingSkillId] = useState(null)
   const [updatingRequestId, setUpdatingRequestId] = useState(null)
@@ -113,7 +119,7 @@ export function useSkillSwapData() {
     }
 
     return visibleSkills.filter((skill) =>
-      [skill.title, skill.description, skill.owner, skill.category, skill.level, skill.format]
+      [skill.title, skill.description, skill.owner, skill.category, skill.level, skill.format, skill.location]
         .filter(Boolean)
         .some((value) => value.toLowerCase().includes(normalizedQuery)),
     )
@@ -142,10 +148,11 @@ export function useSkillSwapData() {
       setError('')
 
       try {
-        const [skillsResponse, requestsResponse, exchangesResponse] = await Promise.all([
+        const [skillsResponse, requestsResponse, exchangesResponse, desiredSkillsResponse] = await Promise.all([
           listSkills(),
           token ? listRequests() : Promise.resolve({ requests: [], received_requests: [] }),
           token ? listExchanges() : Promise.resolve({ exchanges: [] }),
+          token ? getDesiredSkills() : Promise.resolve({ desired_skills: [] }),
         ])
 
         if (!isMounted) {
@@ -156,6 +163,7 @@ export function useSkillSwapData() {
         setRequests((requestsResponse.requests || []).map(normalizeRequest))
         setReceivedRequests((requestsResponse.received_requests || []).map(normalizeRequest))
         setExchanges((exchangesResponse.exchanges || []).map(normalizeExchange))
+        setDesiredSkills(desiredSkillsResponse.desired_skills || [])
       } catch (apiError) {
         if (!isMounted) {
           return
@@ -179,6 +187,28 @@ export function useSkillSwapData() {
       isMounted = false
     }
   }, [token])
+
+  const handleUpdateDesiredSkills = async (categories) => {
+    setUpdatingDesiredSkills(true)
+    setError('')
+    setNotice('')
+
+    try {
+      const response = await updateDesiredSkills(categories)
+      setDesiredSkills(response.desired_skills)
+      setNotice('Preferencias de aprendizaje actualizadas. Tus porcentajes de Match han sido recalculados.')
+      
+      // Recargar habilidades para obtener los nuevos % de match
+      const skillsResponse = await listSkills()
+      setSkills((skillsResponse.skills || []).map(normalizeSkill))
+      return true
+    } catch (apiError) {
+      setError(getApiErrorMessage(apiError, 'No se pudieron actualizar tus preferencias'))
+      return false
+    } finally {
+      setUpdatingDesiredSkills(false)
+    }
+  }
 
   const handleSkillChange = (event) => {
     const { name, value } = event.target
@@ -218,6 +248,7 @@ export function useSkillSwapData() {
         category: newSkill.category,
         level: newSkill.level,
         format: newSkill.format,
+        location: newSkill.location,
       }
 
       if (editingSkillId) {
@@ -243,6 +274,7 @@ export function useSkillSwapData() {
       }
 
       resetSkillForm()
+      return true
     } catch (apiError) {
       setError(
         getApiErrorMessage(
@@ -250,6 +282,7 @@ export function useSkillSwapData() {
           editingSkillId ? 'No se pudo actualizar la habilidad' : 'No se pudo crear la habilidad',
         ),
       )
+      return false
     } finally {
       setCreatingSkill(false)
     }
@@ -420,6 +453,7 @@ export function useSkillSwapData() {
       category: skill.category,
       level: skill.level,
       format: skill.format,
+      location: skill.location || '',
     })
   }
 
@@ -458,10 +492,12 @@ export function useSkillSwapData() {
     requests,
     receivedRequests,
     exchanges,
+    desiredSkills,
     newSkill,
     searchText,
     loading,
     creatingSkill,
+    updatingDesiredSkills,
     editingSkillId,
     requestingSkillId,
     updatingRequestId,
@@ -482,6 +518,7 @@ export function useSkillSwapData() {
     handleCreateRating,
     handleEditSkill,
     handleDeleteSkill,
+    handleUpdateDesiredSkills,
     resetSkillForm,
     setNotice,
     setError,

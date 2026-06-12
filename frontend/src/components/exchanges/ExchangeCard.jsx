@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import StatusBadge from '@/components/common/StatusBadge.jsx'
-import { CheckCircle2, MessageSquareQuote, Star } from 'lucide-react'
+import { CheckCircle2, MessageSquareQuote, Star, MessageCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import RatingForm from './RatingForm.jsx'
+import ChatBox from '@/components/chat/ChatBox.jsx'
 
 function ExchangeCard({
   exchange,
@@ -13,6 +15,8 @@ function ExchangeCard({
   onRatingChange,
   onCreateRating,
 }) {
+  const [showChat, setShowChat] = useState(false)
+
   return (
     <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -30,26 +34,44 @@ function ExchangeCard({
 
       <p className="mt-3 text-sm text-slate-500">Fecha: {exchange.agreedAtLabel}</p>
 
-      {exchange.status === 'pending' ? (
-        <div className="mt-4 flex flex-wrap gap-3">
-          <Button
-            type="button"
-            variant="secondary"
-            className="rounded-full"
-            disabled={isUpdating}
-            onClick={() => onStatusChange(exchange, 'completed')}
-          >
-            {isUpdating ? 'Guardando...' : 'Completar'}
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            className="rounded-full"
-            disabled={isUpdating}
-            onClick={() => onStatusChange(exchange, 'cancelled')}
-          >
-            Cancelar
-          </Button>
+      <div className="mt-4 flex flex-wrap gap-3">
+        {exchange.status === 'pending' ? (
+          <>
+            <Button
+              type="button"
+              variant="secondary"
+              className="rounded-full"
+              disabled={isUpdating}
+              onClick={() => onStatusChange(exchange, 'completed')}
+            >
+              {isUpdating ? 'Guardando...' : 'Completar'}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              className="rounded-full"
+              disabled={isUpdating}
+              onClick={() => onStatusChange(exchange, 'cancelled')}
+            >
+              Cancelar
+            </Button>
+          </>
+        ) : null}
+
+        <Button
+          type="button"
+          variant={showChat ? 'secondary' : 'default'}
+          className="rounded-full"
+          onClick={() => setShowChat(!showChat)}
+        >
+          <MessageCircle size={16} className="mr-2" />
+          {showChat ? 'Ocultar Chat' : 'Abrir Chat'}
+        </Button>
+      </div>
+
+      {showChat ? (
+        <div className="mt-5 pt-5 border-t border-slate-100">
+          <ChatBox exchange={exchange} />
         </div>
       ) : null}
 
@@ -112,3 +134,4 @@ function ExchangeCard({
 }
 
 export default ExchangeCard
+

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { ArrowRight, BookOpen, Search, Send } from 'lucide-react'
 import { useAuth } from '../context/AuthContext.jsx'
 import { Button } from '@/components/ui/button'
@@ -14,20 +14,20 @@ import {
 const steps = [
   {
     number: '01',
-    title: 'Crear habilidad',
-    description: 'Publica lo que sabes hacer para que otras personas puedan encontrarte.',
+    title: 'Publica y configura',
+    description: 'Publica lo que puedes enseñar y dinos qué te gustaría aprender a cambio.',
     icon: BookOpen,
   },
   {
     number: '02',
-    title: 'Buscar habilidad para aprender',
-    description: 'Explora el catálogo y encuentra una habilidad que quieras aprender.',
+    title: 'Encuentra tu Match',
+    description: 'Nuestro sistema inteligente resaltará a las personas con las que tengas intereses en común.',
     icon: Search,
   },
   {
     number: '03',
-    title: 'Solicitar intercambio',
-    description: 'Envía la solicitud y empieza a organizar el aprendizaje con la otra persona.',
+    title: 'Solicita y conecta',
+    description: 'Envía una solicitud para iniciar el intercambio y empezad a aprender juntos.',
     icon: Send,
   },
 ]
@@ -36,6 +36,8 @@ function DashboardPage() {
   const { token } = useAuth()
   const navigate = useNavigate()
   const [searchValue, setSearchValue] = useState('')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const isOnboardingComplete = searchParams.get('onboarding') === 'complete'
 
   const handleSubmitSearch = (event) => {
     event.preventDefault()
@@ -45,6 +47,22 @@ function DashboardPage() {
 
   return (
     <section className="space-y-6 pb-8">
+      {isOnboardingComplete && (
+        <div className="rounded-2xl bg-emerald-50 border border-emerald-200 p-4 flex justify-between items-center shadow-sm">
+          <div>
+            <h3 className="text-emerald-800 font-semibold text-sm uppercase tracking-wider mb-1">¡Todo listo!</h3>
+            <p className="text-emerald-700 text-sm">Tu perfil está configurado. Ya puedes empezar a buscar habilidades o esperar a que alguien solicite las tuyas.</p>
+          </div>
+          <button 
+            onClick={() => setSearchParams({})} 
+            className="text-emerald-600 hover:text-emerald-800 p-2"
+            aria-label="Cerrar mensaje"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       <Card className="overflow-hidden border-slate-200 bg-white shadow-sm">
         <CardContent className="space-y-8 px-6 py-8 md:px-10 md:py-10">
           <div className="space-y-4">
@@ -54,33 +72,14 @@ function DashboardPage() {
 
             <div className="space-y-4">
               <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-slate-900 md:text-5xl">
-                Intercambia tus habilidades técnicas de forma simple
+                Intercambia cualquier tipo de habilidad de forma simple
               </h1>
               <p className="max-w-3xl text-base leading-7 text-slate-600 md:text-lg">
-                Publica lo que sabes, busca algo nuevo para aprender y solicita el intercambio
-                desde la plataforma.
+                Publica lo que sabes, encuentra a la persona ideal con nuestro sistema de Matches Inteligentes, y solicita un intercambio.
               </p>
             </div>
 
-            <form onSubmit={handleSubmitSearch} className="grid gap-3 md:grid-cols-[minmax(0,1fr)_auto]">
-              <div className="relative">
-                <Search
-                  size={18}
-                  aria-hidden="true"
-                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                />
-                <input
-                  type="search"
-                  placeholder="Busca una habilidad para aprender desde aquí"
-                  value={searchValue}
-                  onChange={(event) => setSearchValue(event.target.value)}
-                  className="h-12 w-full rounded-2xl border border-slate-200 bg-slate-50 pl-11 pr-4 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
-                />
-              </div>
-              <Button type="submit" className="h-12 rounded-2xl bg-blue-600 px-5 text-white hover:bg-blue-700">
-                Buscar
-              </Button>
-            </form>
+
 
             <div className="flex flex-wrap gap-3">
               {!token ? (

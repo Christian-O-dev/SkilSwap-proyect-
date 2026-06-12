@@ -8,6 +8,8 @@ const requestsRoutes = require('./routes/requests.routes')
 const exchangesRoutes = require('./routes/exchanges.routes')
 const ratingsRoutes = require('./routes/ratings.routes')
 const adminRoutes = require('./routes/admin.routes')
+const messagesRoutes = require('./routes/messages.routes')
+const desiredSkillsRoutes = require('./routes/desired_skills.routes')
 
 const app = express()
 
@@ -36,6 +38,8 @@ app.use('/api/requests', requestsRoutes)
 app.use('/api/exchanges', exchangesRoutes)
 app.use('/api/ratings', ratingsRoutes)
 app.use('/api/admin', adminRoutes)
+app.use('/api/messages', messagesRoutes)
+app.use('/api/desired-skills', desiredSkillsRoutes)
 
 // Manejo basico de errores del servidor.
 app.use((error, req, res, next) => {

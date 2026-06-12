@@ -4,6 +4,8 @@ const {
   updateExchangeStatus,
 } = require('../models/exchange.model')
 const { findRatingByExchangeAndUser } = require('../models/rating.model')
+const { findUserById } = require('../models/user.model')
+const { sendEmail } = require('../services/email.service')
 
 const allowedStatuses = ['completed', 'cancelled']
 
@@ -82,6 +84,19 @@ const updateExchangeStatusHandler = async (req, res, next) => {
       id: exchangeId,
       status,
     })
+
+    const otherUserId = exchange.requester_id === req.user.id ? exchange.skill_owner_id : exchange.requester_id
+    const otherUser = await findUserById(otherUserId)
+
+    if (otherUser && otherUser.email) {
+      const statusText = status === 'completed' ? 'completado' : 'cancelado'
+      sendEmail(
+        otherUser.email,
+        `El intercambio ha sido ${statusText}`,
+        `Hola ${otherUser.username}, tu intercambio para la habilidad ${exchange.skill_title} ha sido ${statusText} por ${req.user.username}.`,
+        `<h3>Actualización de tu intercambio</h3><p>Hola ${otherUser.username}, tu intercambio para la habilidad <b>${exchange.skill_title}</b> ha sido <b>${statusText}</b> por <b>${req.user.username}</b>.</p>`
+      )
+    }
 
     return res.json({
       ok: true,

@@ -8,6 +8,7 @@ const mapSkillRow = (row) => ({
   category: row.category,
   level: row.level,
   format: row.format,
+  location: row.location,
   average_rating: Number(row.average_rating || 0),
   ratings_count: Number(row.ratings_count || 0),
   created_at: row.created_at,
@@ -17,7 +18,7 @@ const mapSkillRow = (row) => ({
 
 const findAllSkills = async () => {
   const [rows] = await pool.execute(
-    `SELECT s.id, s.user_id, s.title, s.description, s.category, s.level, s.format, s.created_at,
+    `SELECT s.id, s.user_id, s.title, s.description, s.category, s.level, s.format, s.location, s.created_at,
             u.username, u.email,
             COALESCE(rs.average_rating, 0) AS average_rating,
             COALESCE(rs.ratings_count, 0) AS ratings_count
@@ -38,7 +39,7 @@ const findAllSkills = async () => {
 
 const findSkillById = async (id) => {
   const [rows] = await pool.execute(
-    `SELECT s.id, s.user_id, s.title, s.description, s.category, s.level, s.format, s.created_at,
+    `SELECT s.id, s.user_id, s.title, s.description, s.category, s.level, s.format, s.location, s.created_at,
             u.username, u.email,
             COALESCE(rs.average_rating, 0) AS average_rating,
             COALESCE(rs.ratings_count, 0) AS ratings_count
@@ -59,22 +60,22 @@ const findSkillById = async (id) => {
   return rows[0] ? mapSkillRow(rows[0]) : null
 }
 
-const createSkill = async ({ userId, title, description, category, level, format }) => {
+const createSkill = async ({ userId, title, description, category, level, format, location }) => {
   const [result] = await pool.execute(
-    `INSERT INTO skills (user_id, title, description, category, level, format)
-     VALUES (?, ?, ?, ?, ?, ?)`,
-    [userId, title, description || null, category, level, format],
+    `INSERT INTO skills (user_id, title, description, category, level, format, location)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    [userId, title, description || null, category, level, format, location || null],
   )
 
   return findSkillById(result.insertId)
 }
 
-const updateSkill = async ({ id, title, description, category, level, format }) => {
+const updateSkill = async ({ id, title, description, category, level, format, location }) => {
   await pool.execute(
     `UPDATE skills
-     SET title = ?, description = ?, category = ?, level = ?, format = ?
+     SET title = ?, description = ?, category = ?, level = ?, format = ?, location = ?
      WHERE id = ?`,
-    [title, description || null, category, level, format, id],
+    [title, description || null, category, level, format, location || null, id],
   )
 
   return findSkillById(id)

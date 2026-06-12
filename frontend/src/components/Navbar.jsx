@@ -1,4 +1,5 @@
-import { Link, NavLink } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, NavLink, useNavigate, useSearchParams } from 'react-router-dom'
 import {
   BookOpen,
   Handshake,
@@ -7,6 +8,7 @@ import {
   Menu,
   Plus,
   Repeat,
+  Search,
   Settings,
   User,
 } from 'lucide-react'
@@ -34,7 +36,6 @@ import {
 import { cn } from '@/lib/utils'
 
 const primaryLinks = [
-  { to: '/', label: 'Inicio', icon: Home },
   { to: '/skills', label: 'Habilidades', icon: BookOpen },
 ]
 
@@ -45,9 +46,19 @@ const authLinks = [
 
 function Navbar() {
   const { token, user, signOut } = useAuth()
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const [searchValue, setSearchValue] = useState(searchParams.get('q') || '')
+
   const isAdmin = token && user?.role_id === 1
   const publishHref = token ? '/my-skills' : '/login'
   const initials = (user?.username || 'SS').slice(0, 2).toUpperCase()
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault()
+    const query = searchValue.trim()
+    navigate(query ? `/skills?q=${encodeURIComponent(query)}` : '/skills')
+  }
 
   const allLinks = [
     ...primaryLinks,
@@ -199,8 +210,9 @@ function Navbar() {
         </div>
       </div>
 
-      <div className="mx-auto hidden min-h-20 w-full max-w-7xl grid-cols-[280px_minmax(0,1fr)_280px] items-center gap-4 px-4 sm:px-6 lg:grid lg:px-8">
-        <div className="flex min-w-0 justify-start">
+      <div className="hidden flex-col w-full lg:flex">
+        {/* Fila superior: Logo, Buscador, Acciones */}
+        <div className="mx-auto flex min-h-20 w-full max-w-full items-center justify-between gap-4 px-4 sm:px-6 lg:px-12 xl:px-16">
           <Link
             to="/"
             className="flex shrink-0 items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-900 shadow-sm transition hover:border-blue-200 hover:bg-slate-50"
@@ -212,110 +224,131 @@ function Navbar() {
               <span className="block font-semibold uppercase tracking-[0.18em] text-slate-900">
                 SkillSwap
               </span>
-              <span className="block text-xs text-slate-500">Intercambio de habilidades</span>
             </span>
           </Link>
-        </div>
 
-        <nav className="flex min-w-0 items-center justify-center gap-2" aria-label="Principal">
-          {allLinks.map((item) => {
-            const Icon = item.icon
+          <div className="flex flex-1 items-center justify-center px-8">
+            <form onSubmit={handleSearchSubmit} className="relative w-full max-w-[800px]">
+              <Search
+                size={18}
+                aria-hidden="true"
+                className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+              />
+              <input
+                type="search"
+                placeholder="Buscar habilidades (ej. React, Backend, Inglés)..."
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                className="h-12 w-full rounded-full border border-slate-200 bg-slate-50/80 pl-12 pr-4 text-sm text-slate-900 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
+              />
+            </form>
+          </div>
 
-            return (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.to === '/'}
-                className={({ isActive }) =>
-                  cn(
-                    'inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900',
-                    isActive && 'bg-blue-50 text-blue-700 ring-1 ring-blue-100',
-                  )
-                }
-              >
-                <Icon size={16} aria-hidden="true" />
-                <span>{item.label}</span>
-              </NavLink>
-            )
-          })}
-        </nav>
+          <div className="flex shrink-0 items-center justify-end gap-3">
 
-        <div className="flex min-w-0 items-center justify-end gap-3">
-          <Button asChild className="rounded-full bg-blue-600 text-white hover:bg-blue-700">
-            <Link to={publishHref}>
-              <Plus size={16} aria-hidden="true" />
-              Publicar habilidad
-            </Link>
-          </Button>
 
-          {token ? (
-            <DropdownMenu modal={false}>
-              <DropdownMenuTrigger asChild>
-                <button
-                  type="button"
-                  className="flex items-center gap-3 rounded-full border border-slate-200 bg-white px-3 py-2 text-left text-slate-900 shadow-sm transition hover:border-blue-200 hover:bg-slate-50"
-                >
-                  <Avatar size="default">
-                    <AvatarFallback className="bg-blue-100 text-xs font-semibold text-blue-700">
-                      {initials}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="flex min-w-0 flex-col">
-                    <span className="text-xs uppercase tracking-[0.16em] text-slate-500">Perfil</span>
-                    <span className="max-w-32 truncate text-sm font-medium text-slate-900">
-                      {user?.username ?? 'usuario'}
+            {token ? (
+              <DropdownMenu modal={false}>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    type="button"
+                    className="shrink-0 flex items-center gap-3 rounded-full border border-slate-200 bg-white px-3 py-2 text-left text-slate-900 shadow-sm transition hover:border-blue-200 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  >
+                    <Avatar size="default">
+                      <AvatarFallback className="bg-blue-100 text-xs font-semibold text-blue-700">
+                        {initials}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="flex min-w-0 flex-col">
+                      <span className="max-w-32 truncate text-sm font-medium text-slate-900">
+                        {user?.username ?? 'usuario'}
+                      </span>
                     </span>
-                  </span>
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-64">
-                <DropdownMenuLabel>Tu cuenta</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link to="/profile">
-                    <User size={16} aria-hidden="true" />
-                    Perfil
-                  </Link>
-                </DropdownMenuItem>
-                {isAdmin ? (
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-64">
+                  <DropdownMenuLabel>Tu cuenta</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link to="/admin">
-                      <Settings size={16} aria-hidden="true" />
-                      Administración
+                    <Link to="/profile">
+                      <User size={16} aria-hidden="true" />
+                      Perfil
                     </Link>
                   </DropdownMenuItem>
-                ) : null}
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  variant="destructive"
-                  onSelect={(event) => {
-                    event.preventDefault()
-                    signOut()
-                  }}
+                  {isAdmin ? (
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin">
+                        <Settings size={16} aria-hidden="true" />
+                        Administración
+                      </Link>
+                    </DropdownMenuItem>
+                  ) : null}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    variant="destructive"
+                    onSelect={(event) => {
+                      event.preventDefault()
+                      signOut()
+                    }}
+                  >
+                    <LogOut size={16} aria-hidden="true" />
+                    Salir
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <>
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="shrink-0 rounded-full text-slate-700 hover:bg-slate-100 hover:text-slate-900"
                 >
-                  <LogOut size={16} aria-hidden="true" />
-                  Salir
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <>
-              <Button
-                asChild
-                variant="ghost"
-                className="rounded-full text-slate-700 hover:bg-slate-100 hover:text-slate-900"
-              >
-                <Link to="/login">Login</Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                className="rounded-full border-slate-200 bg-white text-slate-900 hover:bg-slate-50"
-              >
-                <Link to="/register">Registro</Link>
-              </Button>
-            </>
-          )}
+                  <Link to="/login">Login</Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="shrink-0 rounded-full border-slate-200 bg-white text-slate-900 hover:bg-slate-50"
+                >
+                  <Link to="/register">Registro</Link>
+                </Button>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Fila inferior: Navegación tipo Amazon (fondo oscuro) */}
+        <div className="w-full bg-slate-800 text-slate-200">
+          <div className="mx-auto flex h-12 w-full max-w-full items-center justify-center gap-8 px-4 sm:px-6 lg:px-12 xl:px-16 overflow-x-auto">
+            {allLinks.map((item) => {
+              const Icon = item.icon
+              return (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    cn(
+                      'flex items-center gap-2 whitespace-nowrap border-b-2 px-1 py-3 text-sm font-medium transition-colors hover:text-white',
+                      isActive ? 'border-blue-400 text-white' : 'border-transparent'
+                    )
+                  }
+                >
+                  <Icon size={16} aria-hidden="true" />
+                  {item.label}
+                </NavLink>
+              )
+            })}
+            
+            <div className="h-4 w-px bg-slate-600 mx-1" aria-hidden="true" />
+            
+            <Link 
+              to={publishHref}
+              className="flex items-center gap-2 whitespace-nowrap rounded-full bg-blue-500/10 border border-blue-400/30 px-4 py-1.5 text-sm font-medium text-blue-300 transition-colors hover:bg-blue-500/20 hover:text-blue-200"
+            >
+              <Plus size={16} aria-hidden="true" />
+              Publicar
+            </Link>
+          </div>
         </div>
       </div>
     </header>

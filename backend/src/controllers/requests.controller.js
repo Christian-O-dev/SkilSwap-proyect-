@@ -8,6 +8,8 @@ const {
   updateRequestStatus,
 } = require('../models/request.model')
 const { createExchange, findExchangeByRequestId } = require('../models/exchange.model')
+const { findUserById } = require('../models/user.model')
+const { sendEmail } = require('../services/email.service')
 
 const listRequests = async (req, res, next) => {
   try {
@@ -71,6 +73,13 @@ const createRequestHandler = async (req, res, next) => {
       skillId: normalizedSkillId,
     })
 
+    sendEmail(
+      skill.email,
+      '¡Nueva solicitud en SkillSwap!',
+      `Hola ${skill.username}, tienes una nueva solicitud para tu habilidad: ${skill.title}.`,
+      `<h3>¡Nueva solicitud en SkillSwap!</h3><p>Hola ${skill.username}, tienes una nueva solicitud de <b>${req.user.username}</b> para tu habilidad: <b>${skill.title}</b>.</p><p>Entra en la plataforma para aceptarla o rechazarla.</p>`
+    )
+
     return res.status(201).json({
       ok: true,
       message: 'Solicitud creada correctamente',
@@ -133,6 +142,17 @@ const updateRequestStatusHandler = async (req, res, next) => {
     if (status === 'accepted') {
       const existingExchange = await findExchangeByRequestId(requestId)
       exchange = existingExchange || (await createExchange({ requestId }))
+    }
+
+    const requester = await findUserById(request.requester_id)
+    if (requester && requester.email) {
+      const statusText = status === 'accepted' ? 'aceptado' : 'rechazado'
+      sendEmail(
+        requester.email,
+        `Tu solicitud ha sido ${statusText}`,
+        `Hola ${requester.username}, tu solicitud para la habilidad ${request.skill_title} ha sido ${statusText} por ${req.user.username}.`,
+        `<h3>Actualización de tu solicitud</h3><p>Hola ${requester.username}, tu solicitud para la habilidad <b>${request.skill_title}</b> ha sido <b>${statusText}</b> por <b>${req.user.username}</b>.</p>`
+      )
     }
 
     return res.json({

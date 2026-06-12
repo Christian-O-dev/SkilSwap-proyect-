@@ -41,7 +41,7 @@ function App() {
           <Route path="/login" element={token ? <Navigate to="/dashboard" replace /> : <LoginPage />} />
           <Route
             path="/register"
-            element={token ? <Navigate to="/dashboard" replace /> : <RegisterPage />}
+            element={token ? <Navigate to="/my-skills?onboarding=step1" replace /> : <RegisterPage />}
           />
           <Route path="/skills" element={<SkillsPage />} />
           <Route path="/my-skills" element={protectedMySkillsView} />

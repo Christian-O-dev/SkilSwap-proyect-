@@ -1,5 +1,6 @@
 const express = require('express')
 const authMiddleware = require('../middleware/auth.middleware')
+const optionalAuthMiddleware = require('../middleware/optionalAuth.middleware')
 const {
   createSkill,
   deleteSkill,
@@ -11,7 +12,7 @@ const {
 const router = express.Router()
 
 // Lista habilidades publicadas.
-router.get('/', listSkills)
+router.get('/', optionalAuthMiddleware, listSkills)
 
 // Devuelve una habilidad concreta.
 router.get('/:id', getSkill)

@@ -34,9 +34,10 @@ CREATE TABLE IF NOT EXISTS skills (
   user_id INT NOT NULL,
   title VARCHAR(150) NOT NULL,
   description TEXT,
-  category ENUM('Frontend', 'Backend', 'Design', 'Data') NOT NULL DEFAULT 'Frontend',
+  category ENUM('Tecnología', 'Música', 'Arte y Diseño', 'Idiomas', 'Deportes', 'Oficios', 'Otros') NOT NULL DEFAULT 'Otros',
   level ENUM('Starter', 'Intermediate', 'Advanced') NOT NULL DEFAULT 'Starter',
   format ENUM('Online', 'Presencial') NOT NULL DEFAULT 'Online',
+  location VARCHAR(255) DEFAULT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_skills_user
     FOREIGN KEY (user_id) REFERENCES users(id)
@@ -96,6 +97,36 @@ CREATE TABLE IF NOT EXISTS ratings (
     ON UPDATE CASCADE,
   CONSTRAINT chk_ratings_score CHECK (score BETWEEN 1 AND 5),
   CONSTRAINT uq_rating_exchange_user UNIQUE (exchange_id, rated_by)
+);
+
+-- Guarda los mensajes enviados dentro de un intercambio.
+CREATE TABLE IF NOT EXISTS messages (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  exchange_id INT NOT NULL,
+  sender_id INT NOT NULL,
+  content TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_messages_exchange
+    FOREIGN KEY (exchange_id) REFERENCES exchanges(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT fk_messages_sender
+    FOREIGN KEY (sender_id) REFERENCES users(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+-- Guarda las categorias de interes del usuario.
+CREATE TABLE IF NOT EXISTS desired_skills (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  category ENUM('Tecnología', 'Música', 'Arte y Diseño', 'Idiomas', 'Deportes', 'Oficios', 'Otros') NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_desired_user
+    FOREIGN KEY (user_id) REFERENCES users(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT uq_user_category UNIQUE (user_id, category)
 );
 
 -- Inserta los roles base del sistema.
