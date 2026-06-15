@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { io } from 'socket.io-client'
 import { useAuth } from '@/context/AuthContext'
-import { getMessagesByExchange } from '@/services/messagesService'
+import { getMessagesByRequest } from '@/services/messagesService'
 import { Send } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -9,7 +9,7 @@ const SOCKET_URL = import.meta.env.VITE_API_URL
   ? import.meta.env.VITE_API_URL.replace('/api', '')
   : 'http://localhost:3000'
 
-function ChatBox({ exchange }) {
+function ChatBox({ requestId }) {
   const { user, token } = useAuth()
   const [messages, setMessages] = useState([])
   const [inputValue, setInputValue] = useState('')
@@ -18,7 +18,7 @@ function ChatBox({ exchange }) {
   useEffect(() => {
     const loadMessages = async () => {
       try {
-        const response = await getMessagesByExchange(exchange.id)
+        const response = await getMessagesByRequest(requestId)
         if (response.ok) {
           setMessages(response.messages)
         }
@@ -33,7 +33,7 @@ function ChatBox({ exchange }) {
     })
 
     socketRef.current.on('connect', () => {
-      socketRef.current.emit('join_exchange_room', exchange.id)
+      socketRef.current.emit('join_request_room', requestId)
     })
 
     socketRef.current.on('new_message', (message) => {
@@ -43,7 +43,7 @@ function ChatBox({ exchange }) {
     return () => {
       socketRef.current.disconnect()
     }
-  }, [exchange.id, token])
+  }, [requestId, token])
 
   const scrollContainerRef = useRef(null)
 
@@ -58,7 +58,7 @@ function ChatBox({ exchange }) {
     if (!inputValue.trim()) return
 
     socketRef.current.emit('send_message', {
-      exchangeId: exchange.id,
+      requestId: requestId,
       senderId: user.id,
       content: inputValue.trim()
     })

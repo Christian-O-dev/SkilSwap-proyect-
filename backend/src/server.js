@@ -19,26 +19,26 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
   console.log('Usuario conectado al socket:', socket.id)
 
-  socket.on('join_exchange_room', (exchangeId) => {
-    socket.join(`exchange_${exchangeId}`)
-    console.log(`Socket ${socket.id} se unió a la sala exchange_${exchangeId}`)
+  socket.on('join_request_room', (requestId) => {
+    socket.join(`request_${requestId}`)
+    console.log(`Socket ${socket.id} se unió a la sala request_${requestId}`)
   })
 
   socket.on('send_message', async (data) => {
     try {
-      // data: { exchangeId, senderId, content }
+      // data: { requestId, senderId, content }
       const messageId = await createMessage(data)
       
       const newMessage = {
         id: messageId,
-        exchange_id: data.exchangeId,
+        request_id: data.requestId,
         sender_id: data.senderId,
         content: data.content,
         created_at: new Date().toISOString()
       }
 
       // Emitimos el mensaje a todos los que estén en la sala
-      io.to(`exchange_${data.exchangeId}`).emit('new_message', newMessage)
+      io.to(`request_${data.requestId}`).emit('new_message', newMessage)
     } catch (error) {
       console.error('Error guardando mensaje de socket:', error)
     }

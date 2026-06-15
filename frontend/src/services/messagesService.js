@@ -1,6 +1,6 @@
 import api from './api.js'
 
-export const getMessagesByExchange = async (exchangeId) => {
-  const { data } = await api.get(`/messages/${exchangeId}`)
+export const getMessagesByRequest = async (requestId) => {
+  const { data } = await api.get(`/messages/${requestId}`)
   return data
 }

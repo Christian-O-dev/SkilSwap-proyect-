@@ -71,7 +71,7 @@ function ExchangeCard({
 
       {showChat ? (
         <div className="mt-5 pt-5 border-t border-slate-100">
-          <ChatBox exchange={exchange} />
+          <ChatBox requestId={exchange.request_id} />
         </div>
       ) : null}
 
